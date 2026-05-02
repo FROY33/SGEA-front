@@ -30,23 +30,35 @@ async function login() {
         const data = await response.json();
 
         if (response.ok) {
-            if (!sessionStorage.getItem('inicio_sesion')) {
-                sessionStorage.setItem('inicio_sesion', 'true');
+            alert('Abriendo sesión...');
+            sessionStorage.setItem('access_token', data.access_token);
+            sessionStorage.setItem('refresh_token', data.refresh_token);
+            const user = getUserNameFromToken(data.access_token);
+            sessionStorage.setItem('user_name', user.display_name);
 
-                alert('Abriendo sesión...');
-                sessionStorage.setItem('access_token', data.access_token);
-                sessionStorage.setItem('refresh_token', data.refresh_token);
-                const user = getUserNameFromToken(data.access_token);
-                sessionStorage.setItem('user_name', user.display_name);
-                
+            try {
+                // Verificar si es la primera vez que inicia sesión consultando los estresores
+                const estresoresResponse = await fetch('https://sgea.onrender.com/perfil/estresores', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${data.access_token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const estresoresData = await estresoresResponse.json();
+
+                // Si la respuesta es un arreglo vacío, es primera vez
+                const isPrimeraVez = Array.isArray(estresoresData) && estresoresData.length === 0;
+
+                setTimeout(() => {
+                    window.location.href = isPrimeraVez ? 'onboarding_1.html' : 'dashboard.html';
+                }, 1500);
+            } catch (error) {
+                console.error('Error al verificar estresores:', error);
+                // En caso de error, redirigir a onboarding_1 por defecto
                 setTimeout(() => {
                     window.location.href = 'onboarding_1.html';
-                }, 1500);
-            } else {
-                alert('Abriendo sesión...');
-
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
                 }, 1500);
             }
         } else {

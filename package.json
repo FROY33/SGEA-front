@@ -8,6 +8,7 @@
     "live-server": "^1.2.2"
   },
   "scripts": {
-    "serve": "live-server src --port=8000 --open"
+    "serve": "live-server src --port=8000 --open",
+    "build": "tailwindcss -i ./src/input.css -o ./src/output.css --watch"
   }
 }
