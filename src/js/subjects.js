@@ -3,6 +3,34 @@ spanNombre.textContent = sessionStorage.getItem('user_name');
 
 const crearMateriaBtn = document.querySelector('button[onclick="save_materia()"]');
 
+// Cargar avatar desde el endpoint
+async function cargarAvatar() {
+    try {
+        const response = await fetch('https://sgea.onrender.com/perfil', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.avatar_url) {
+            document.querySelectorAll('.avatarUsuario').forEach(img => {
+                img.src = data.avatar_url;
+            });
+        }
+
+    } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+    }
+}
+
 // Cargar materias al abrir la página
 async function cargarMaterias() {
     try {
@@ -40,7 +68,7 @@ function renderizarMateria(materia) {
         <p class="mb-5 font-light text-gray-500">No tienes actividades pendientes.</p>
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-4">
-                <img class="w-7 h-7 rounded-full" src="assets/user_avatar.png" alt="User Avatar"/>
+                <img class="avatarUsuario w-7 h-7 rounded-full" src="assets/user_avatar.png" alt="User Avatar"/>
                 <span class="font-medium">${sessionStorage.getItem('user_name')}</span>
             </div>
             <a href="subjects_details.html" class="inline-flex items-center font-medium text-gray-800 hover:underline">
@@ -50,6 +78,8 @@ function renderizarMateria(materia) {
     `;
 
     document.getElementById('contenedorMaterias').appendChild(nuevoArticle);
+
+    cargarAvatar();
 }
 
 function mostrarCrear() {
@@ -126,4 +156,4 @@ function cerrar_sesion() {
 }
 
 // Cargar materias cuando se carga la página
-cargarMaterias();
+document.addEventListener('DOMContentLoaded', cargarMaterias);
