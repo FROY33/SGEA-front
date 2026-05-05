@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', cargarPerfil);
 function mostrarPerfil() {
     const divPerfil = document.getElementById('divEditarPerfil');
     divPerfil.style.display="flex";
+    document.body.style.overflow = "hidden";
 }
 
 function ocultarPerfil() {
     const divPerfil = document.getElementById('divEditarPerfil');
     divPerfil.style.display="none";
+    document.body.style.overflow = "auto";
 }
 
 function cerrar_sesion() {
@@ -96,7 +98,7 @@ async function upload_avatar(file) {
 // Función para actualizar el perfil
 async function update_perfil(event) {
     event.preventDefault();
-    
+
     try {
         // Obtener valores del formulario
         const usuario = document.getElementById('name').value.trim();

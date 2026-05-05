@@ -46,24 +46,211 @@
 
     <main>
         <section class="bg-white mt-35 shadow">
-            <div class="w-full h-40 bg-primary-100"></div>
             <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
                 <div class="max-w-3xl">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Materia ejemplo</h2>
-                    <p class="mb-8 font-light text-gray-500 sm:text-xl">Aún no se agrega la rúbrica de evaluación</p>
-                    <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                        <a class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
-                            Añadir rúbrica de evaluación
+                    <h2 id="materia" class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Materia ejemplo</h2>
+                    <p id="texto_rubrica" class="mb-8 font-light text-gray-500 sm:text-xl">Aún no se agrega la rúbrica de evaluación</p>
+                    <div id="btnEditar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+                        <a onclick="mostrarEditar()" class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
+                            <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path></svg>
+                            Editar materia
                         </a>
                     </div>
-                    <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+                    <div id="btnActividades" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mb-9">
                         <a href="#actividades" class="mt-8 cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
-                            Ver actividades
+                            Actividades
+                        </a>
+                    </div>
+                    <div id="btnEliminar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 border-t border-gray-300">
+                        <a onclick="mostrarEliminar()" class="mt-8 cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-red-200 text-gray-900 bg-red-100 rounded-lg hover:bg-red-200">
+                            Eliminar materia
                         </a>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Div para editar materia (OCULTO) -->
+        <div id="divEditarMateria" tabindex="-1" aria-hidden="true" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+            <div class="relative p-4 w-full max-w-2xl h-fit md:h-auto">
+                <ul class="flex flex-wrap pl-4 text-sm font-medium text-center text-gray-900">
+                    <li class="me-1">
+                        <a data-tab="editar" class="tab cursor-pointer inline-block px-4 py-3 text-gray-500 hover:text-gray-900 bg-white rounded-t-md border-gray-500 border-b-2">Editar materia</a>
+                    </li>
+                    <li class="me-1">
+                        <a data-tab="rubrica" class="tab cursor-pointer inline-block px-4 py-3 text-gray-500 hover:text-gray-900 bg-white rounded-t-md border-gray-500">Rubrica de evaluación</a>
+                    </li>
+                    <li class="me-1">
+                        <a data-tab="equipo" class="tab cursor-pointer inline-block px-4 py-3 text-gray-500 hover:text-gray-900 bg-white rounded-t-md border-gray-500">Equipo</a>
+                    </li>
+                </ul>
+
+                <!-- Vista para EDITAR -->
+                <div id="vista-editar" class="relative p-4 bg-white rounded-lg shadow sm:p-5">
+
+                    <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
+                        <h3 class="text-lg font-semibold text-gray-900">Editar materia</h3>
+                        <button type="button" onclick="ocultarEditar()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+
+                    <form onsubmit="update_materia(event)">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                            <div class="w-full">
+                                <label for="nombre_materia" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la materia</label>
+                                <input type="text" name="nombre_materia" id="nombre_materia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Nombre de la materia" required="">
+                            </div>
+                            <div class="w-full">
+                                <label for="calificacion_profesor" class="block mb-2 text-sm font-medium text-gray-900">Calificación profesor (opcional)</label>
+                                <select id="calificacion_profesor" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                    <option value="" selected="">Selecciona una opción</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <label for="dificultad_examenes" class="block mb-2 text-sm font-medium text-gray-900">Dificultad de examenes (opcional)</label>
+                                <select id="dificultad_examenes" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                    <option value="" selected="">Selecciona una opción</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <label for="autonomia_percibida" class="block mb-2 text-sm font-medium text-gray-900">Autonomía percibida (opcional)</label>
+                                <select id="autonomia_percibida" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                    <option value="" selected="">Selecciona una opción</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="btnActualizar" type="submit" class="p-1.5 ml-auto inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                            <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                            Actualizar materia
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Vista para RUBRICA -->
+                <div id="vista-rubrica" class="relative p-4 bg-white rounded-lg shadow sm:p-5 hidden">
+
+                    <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
+                        <h3 class="text-lg font-semibold text-gray-900">Rubrica de evaluación</h3>
+                        <button type="button" onclick="ocultarEditar()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+
+                    <form onsubmit="save_rubrica(event)">
+                        <div id="rubrica-lines-container">
+                            <div id="rubrica-line-1" class="grid gap-4 mb-4 grid-cols-[1fr_1fr_auto]">
+                                <div class="w-full">
+                                    <label for="tipo_actividad" class="block mb-2 text-sm font-medium text-gray-900">Tipo de actividad</label>
+                                    <input type="text" name="tipo_actividad" id="tipo_actividad1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Tipo de actividad" required="">
+                                </div>
+                                <div class="w-full">
+                                    <label for="porcentaje" class="block mb-2 text-sm font-medium text-gray-900">Porcentaje (0 - 100)</label>
+                                    <input type="number" name="porcentaje" id="porcentaje1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Porcentaje de la actividad" required="">
+                                </div>
+                                <div class="w-full flex items-center">
+                                    <button type="button" onclick="borrar_linea_actividad(1)" class="bg-red-100 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-red-200 text-gray-900">
+                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="add_rubrica()" class="p-1.5 inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                Añadir rúbrica
+                            </button>
+                            <button type="submit" class="py-1.5 px-2.5 inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Vista para EQUIPO -->
+                <div id="vista-equipo" class="relative p-4 bg-white rounded-lg shadow sm:p-5 hidden">
+
+                    <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
+                        <h3 class="text-lg font-semibold text-gray-900">Equipo</h3>
+                        <button type="button" onclick="ocultarEditar()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+
+                    <form onsubmit="save_equipo(event)">
+                        <div class="grid gap-4 mb-4 grid-cols-[1fr_1fr_auto]">
+                            <div class="w-full col-span-3">
+                                <label for="nombre_equipo" class="block mb-2 text-sm font-medium text-gray-900">Nombre de equipo</label>
+                                <input type="text" name="nombre_equipo" id="nombre_equipo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Nombre de equipo" required="">
+                            </div>
+                        </div>
+                        <div id="integrantes-lines-container">
+                            <div id="integrante-line-1" class="grid gap-4 mb-4 grid-cols-[1fr_1fr_auto]">
+                                <div class="w-full">
+                                    <label for="nombre_integrante" class="block mb-2 text-sm font-medium text-gray-900">Nombre del integrante</label>
+                                    <input type="text" name="nombre_integrante" id="nombre_integrante1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Nombre del integrante" required="">
+                                </div>
+                                <div class="w-full">
+                                    <label for="email_integrante" class="block mb-2 text-sm font-medium text-gray-900">Email del integrante</label>
+                                    <input type="email" name="email_integrante" id="email_integrante1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Email del integrante" required="">
+                                </div>
+                                <div class="w-full flex items-center">
+                                    <button type="button" onclick="borrar_linea_integrante(1)" class="bg-red-100 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-red-200 text-gray-900">
+                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="add_integrante()" class="p-1.5 inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                Añadir integrante
+                            </button>
+                            <button type="submit" class="py-1.5 px-2.5 inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmación: eliminar materia -->
+        <div id="deleteModal" tabindex="-1" aria-hidden="true" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+            <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+                <!-- Modal content -->
+                <div class="relative p-4 text-center bg-white rounded-lg shadow sm:p-5">
+                    <button type="button" onclick="ocultarEliminar()" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="deleteModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                    <p class="mb-4 text-gray-500">Estás seguro de que quieres eliminar la materia?</p>
+                    <div class="flex justify-center items-center space-x-4">
+                        <button type="button" onclick="ocultarEliminar()" class="py-2 px-3 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300">
+                            No, cancelar
+                        </button>
+                        <button id="btnEliminar_emergente" type="button" onclick="eliminar_materia()" class="py-2 px-3 text-sm font-medium text-center text-gray-900 bg-red-100 border-red-200 border rounded-lg hover:bg-red-200">
+                            Si, estoy seguro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- FOOTER -->

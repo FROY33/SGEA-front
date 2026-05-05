@@ -45,7 +45,7 @@
     </header>
 
     <main>
-        <section class="bg-white antialiased md:py-8 mt-35 shadow">
+        <section class="bg-white antialiased py-8 mt-35 shadow">
             <div class="mx-auto max-w-5xl px-4 2xl:px-0 pb-4">
 
                 <h2 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl md:mb-6">Mi Perfil</h2>
@@ -90,7 +90,7 @@
                     Editar datos de perfil
                 </button>
                 </div>
-                <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-4 mb-4">
+                <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-4">
                     <h3 class="mb-4 text-xl font-semibold text-gray-900">Nivel de estrés: Medio</h3>
                     <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
                     <p class="mt-2 font-light text-gray-500">Duerme bien! Descansar lo suficiente durante la noche puede ayudarte a pensar con más claridad y a tener más energía.</p>
@@ -129,15 +129,15 @@
                                 <input type="number" name="semestre" id="semestre" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5" placeholder="Semestre" required="">
                             </div>
                             <div class="w-full">
-                                <label for="promedio" class="block mb-2 text-sm font-medium text-gray-900">Promedio (opcional)</label>
-                                <input type="number" step="0.01" name="promedio" id="promedio" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5" placeholder="Promedio general">
+                                <label for="promedio" class="block mb-2 text-sm font-medium text-gray-900">Promedio</label>
+                                <input type="number" step="0.01" name="promedio" id="promedio" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5" placeholder="Promedio general" required="">
                             </div>
                             <div class="w-full">
                                 <label for="avatar" class="block mb-2 text-sm font-medium text-gray-900">Avatar (opcional)</label>
                                 <input type="file" accept="image/*" name="avatar" id="avatar" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5">
                             </div>
                         </div>
-                        <button type="submit" onclick="update_perfil(event)" class="p-1.5 ml-auto inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                        <button id="btnActualizar" type="submit" onclick="update_perfil(event)" class="p-1.5 ml-auto inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
                             <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                             Actualizar perfil
                         </button>

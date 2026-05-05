@@ -3,6 +3,19 @@ spanNombre.textContent = sessionStorage.getItem('user_name');
 
 const crearMateriaBtn = document.querySelector('button[onclick="save_materia()"]');
 
+document.getElementById("contenedorMaterias").addEventListener("click", function(e) {
+  
+  const enlace = e.target.closest("a");
+  if (!enlace) return;
+
+  e.preventDefault();
+
+  const article = enlace.closest("article");
+  const id = article.id;
+
+  window.location.href = `subjects_details.html?id=${id}`;
+});
+
 // Cargar avatar desde el endpoint
 async function cargarAvatar() {
     try {
@@ -58,7 +71,7 @@ async function cargarMaterias() {
 
 function renderizarMateria(materia) {
     const nuevoArticle = document.createElement('article');
-    nuevoArticle.id = `materia${materia.id}_article`;
+    nuevoArticle.id = materia.id;
     nuevoArticle.className = 'p-6 bg-white rounded-lg border border-gray-200 shadow-md';
     nuevoArticle.innerHTML = `
         <div class="flex justify-between items-center mb-5 text-gray-500">
@@ -85,11 +98,13 @@ function renderizarMateria(materia) {
 function mostrarCrear() {
     const divCrear = document.getElementById('divCrearMateria');
     divCrear.style.display="flex";
+    document.body.style.overflow = "hidden";
 }
 
 function ocultarCrear() {
     const divCrear = document.getElementById('divCrearMateria');
     divCrear.style.display="none";
+    document.body.style.overflow = "auto";
 }
 
 async function save_materia() {
