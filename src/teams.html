@@ -9,7 +9,7 @@
     <link href="./output.css" rel="stylesheet">
 
     <!-- Título y logo -->
-    <title>Dashboard - Sereno</title>
+    <title>Materias - Sereno</title>
 </head>
 
 <body class="bg-gray-50">
@@ -47,24 +47,42 @@
         </nav>
     </header>
 
+    <!-- EQUIPOS -->
     <main class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-
-        <!-- NIVEL DE ESTRES -->
-        <section class="w-fit rounded-lg shadow mt-36 xl:p-0 bg-white">
-            <div class="gap-8 items-center py-8 px-4 mx-auto max-w-7xl xl:gap-16 md:grid md:grid-cols-2 sm:py-14 lg:px-14">
-                <img class="h-100 w-200 object-contain" src="assets/logo.jpeg" alt="sereno image">
-                <div class="mt-4 md:mt-0 flex flex-col">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h2>
-                    <p class="mb-6 font-light text-gray-500 text-justify md:text-lg">No olvides hacer ejercicio! La actividad física puede aumentar las endorfinas y otras sustancias químicas neuronales naturales que aumentan su sensación de bienestar.</p>
-                    <a href="#informe_completo" class="flex max-w-fit text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Ver informe completo</a>
-                </div>
+        <section class="w-auto rounded-lg shadow mt-36 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-10">
+            <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+                <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis equipos</h2>
+                <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todos tus equipos.</p>
             </div>
-        </section>
+            <div id="contenedorEquipos" class="grid gap-6">
+
+                <div id="equipo_ejemplo" class="flex">
+                    <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md">
+                        <div class="flex justify-between items-center mb-5 text-gray-500">
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Equipo</span>
+                        </div>
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><a href="teams_details.html">Equipo <span id="nombre_equipo">ejemplo</span></a></h2>
+                        <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
+                        <p class="mt-2 font-light text-gray-500">Integrantes: <span id="integrantes_equipo">Integrante 1, Integrante 2, Integrante 3, Integrante 4</span></p>
+                        <div class="mt-6 mb-2">
+                            <div class="flex -space-x-4 rtl:space-x-reverse">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-500 border border-gray-300 bg-gray-100 rounded-full">+1</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center rounded-r-lg bg-gray-100 mt-8 shadow-md"><a href="teams_details.html" class="rotate-270 text-gray-400 hover:text-gray-500">Ver detalles</a></div>
+                </div>
+
+            </div>
+        </div></section>
     </main>
 
     <!-- FOOTER -->
     <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
-        <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+        <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
             <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
             <span class="self-center text-xl text-heading font-semibold whitespace-nowrap ml-3">Sereno</span>
         </a>
@@ -77,7 +95,7 @@
                 <a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a>
             </li>
             <li>
-                <a href="actividades.html" class="mr-4 hover:underline md:mr-6 ">Actividades</a>
+                <a href="#actividades" class="mr-4 hover:underline md:mr-6 ">Actividades</a>
             </li>
             <li>
                 <a href="#calendario" class="mr-4 hover:underline md:mr-6">Calendario</a>
@@ -94,6 +112,6 @@
 </body>
 
 <!-- Scripts -->
-<script src="js/dashboard.js"></script>
+<script src="js/teams.js"></script>
 
 </html>
