@@ -38,6 +38,9 @@
                         <li>
                             <a href="subjects.html" class="text-heading hover:underline">Materias</a>
                         </li>
+                        <li>
+                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -86,7 +89,7 @@
                     </div>
                 </div>
                 <button type="button" onclick="mostrarPerfil()" class="inline-flex w-full items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 sm:w-auto">
-                    <svg class="-ms-0.5 me-1.5 h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path></svg>
+                    <svg class="-ms-0.5 me-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path></svg>
                     Editar datos de perfil
                 </button>
                 </div>
@@ -98,7 +101,7 @@
         </section>
 
         <!-- Div para editar perfil (OCULTO) -->
-        <div id="divEditarPerfil" tabindex="-1" aria-hidden="true" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+        <div id="divEditarPerfil" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
             <div class="relative p-4 w-full max-w-2xl h-fit md:h-auto">
 
                 <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
@@ -106,7 +109,7 @@
                     <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
                         <h3 class="text-lg font-semibold text-gray-900">Editar perfil</h3>
                         <button type="button" onclick="ocultarPerfil()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
 
@@ -159,7 +162,7 @@
                 <a href="subjects.html" class="mr-4 hover:underline md:mr-6 ">Materias</a>
             </li>
             <li>
-                <a href="#equipos" class="mr-4 hover:underline md:mr-6">Equipos</a>
+                <a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a>
             </li>
             <li>
                 <a href="#actividades" class="mr-4 hover:underline md:mr-6 ">Actividades</a>

@@ -9,7 +9,7 @@
     <link href="./output.css" rel="stylesheet">
 
     <!-- Título y logo -->
-    <title>Dashboard - Sereno</title>
+    <title>Materias - Sereno</title>
 </head>
 
 <body class="bg-gray-50">
@@ -47,16 +47,24 @@
         </nav>
     </header>
 
-    <main class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-
-        <!-- NIVEL DE ESTRES -->
-        <section class="w-fit rounded-lg shadow mt-36 xl:p-0 bg-white">
-            <div class="gap-8 items-center py-8 px-4 mx-auto max-w-7xl xl:gap-16 md:grid md:grid-cols-2 sm:py-14 lg:px-14">
-                <img class="h-100 w-200 object-contain" src="assets/logo.jpeg" alt="sereno image">
-                <div class="mt-4 md:mt-0 flex flex-col">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h2>
-                    <p class="mb-6 font-light text-gray-500 text-justify md:text-lg">No olvides hacer ejercicio! La actividad física puede aumentar las endorfinas y otras sustancias químicas neuronales naturales que aumentan su sensación de bienestar.</p>
-                    <a href="#informe_completo" class="flex max-w-fit text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Ver informe completo</a>
+    <main>
+        <section class="bg-white mt-35 shadow">
+            <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
+                <div class="max-w-full">
+                    <div class="flex items-center mb-4">
+                        <h2 id="nombre_equipo" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Equipo ejemplo</h2>
+                    </div>
+                    <p id="nombre_materia" class="flex-col mb-8 font-light text-gray-500 sm:text-xl">Materia: Materia ejemplo</p>
+                    <div class="flex justify-between rounded-lg border border-gray-200 bg-gray-50 px-6 py-4">
+                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 1</p></div>
+                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 2</p></div>
+                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 3</p></div>
+                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 4</p></div>
+                    </div>
+                    <div class="flex flex-col items-center mt-8">
+                        <p id="ne_equipo" class="font-semibold text-gray-500 sm:text-xl">Nivel de estrés del equipo: Medio</p>
+                        <img class="mt-5 w-14 h-14 rounded-full" src="assets/neutro.png">
+                    </div>
                 </div>
             </div>
         </section>
@@ -64,7 +72,7 @@
 
     <!-- FOOTER -->
     <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
-        <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+        <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
             <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
             <span class="self-center text-xl text-heading font-semibold whitespace-nowrap ml-3">Sereno</span>
         </a>
@@ -94,6 +102,6 @@
 </body>
 
 <!-- Scripts -->
-<script src="js/dashboard.js"></script>
+<script src="js/subjects_details.js"></script>
 
 </html>
