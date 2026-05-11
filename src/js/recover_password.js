@@ -5,7 +5,8 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const email = document.getElementById('email').value.trim();
-    const redirectTo = `${window.location.origin}/reset_password.html`;
+    const basePath = window.location.pathname.replace('recover_password.html', '');
+    const redirectTo = `${window.location.origin}${basePath}reset_password.html`;
 
     button.disabled = true;
     button.textContent = 'Enviando...';
