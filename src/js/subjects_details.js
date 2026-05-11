@@ -159,6 +159,10 @@ async function cargar_datos_materia() {
         deshabilitarBoton("btnEditar");
         deshabilitarBoton("btnActividades");
         deshabilitarBoton("btnEliminar");
+
+        const enlace_actividades = document.getElementById('actividades_enlace');
+        enlace_actividades.classList.add('cursor-not-allowed');
+        enlace_actividades.removeAttribute("onclick");
     } else {
         try {
             const response = await fetch(`https://sgea.onrender.com/materias/${id}`, {
@@ -610,6 +614,10 @@ function borrar_linea_integrante(lineNumber) {
 }
 
 // - - - FUNCIONES DE ENLACES - - -
+
+function abrir_actividades() {
+    window.location.href = `view_activities.html?id=${id}`;
+}
 
 function cerrar_sesion() {
     window.location.href = 'index.html';
