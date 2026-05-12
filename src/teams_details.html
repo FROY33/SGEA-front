@@ -9,7 +9,7 @@
     <link href="./output.css" rel="stylesheet">
 
     <!-- Título y logo -->
-    <title>Materias - Sereno</title>
+    <title>Equipos - Sereno</title>
 </head>
 
 <body class="bg-gray-50">
@@ -51,23 +51,74 @@
         <section class="bg-white mt-35 shadow">
             <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
                 <div class="max-w-full">
-                    <div class="flex items-center mb-4">
+                    <div class="flex items-center mb-6">
                         <h2 id="nombre_equipo" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Equipo ejemplo</h2>
                     </div>
                     <p id="nombre_materia" class="flex-col mb-8 font-light text-gray-500 sm:text-xl">Materia: Materia ejemplo</p>
-                    <div class="flex justify-between rounded-lg border border-gray-200 bg-gray-50 px-6 py-4">
-                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 1</p></div>
+                    <div id="btn_calificar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mb-10">
+                        <a onclick="mostrarCalificar()" class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
+                            Calificar dinámica de equipo
+                        </a>
+                    </div>
+                    <div id="integrantes_equipo" class="flex justify-around rounded-lg border border-gray-200 bg-gray-50 px-6 py-4">
+                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full avatar_usuarioMain" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 1</p></div>
                         <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 2</p></div>
                         <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 3</p></div>
                         <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 4</p></div>
                     </div>
                     <div class="flex flex-col items-center mt-8">
                         <p id="ne_equipo" class="font-semibold text-gray-500 sm:text-xl">Nivel de estrés del equipo: Medio</p>
-                        <img class="mt-5 w-14 h-14 rounded-full" src="assets/neutro.png">
+                        <img id="img_ne" class="mt-5 w-14 h-14 rounded-full" src="assets/neutro.png">
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Modal de confirmación: calificar equipo -->
+        <div id="calificarModal" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+            <div class="relative p-4 w-full max-w-md h-auto">
+                <!-- Modal content -->
+                <div class="relative p-4 text-center bg-white rounded-lg shadow sm:p-5">
+                    <button type="button" onclick="ocultarCalificar()" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="calificarModal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <svg class="mx-auto w-11 h-11 text-gray-400 mb-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"/></svg>
+
+                    <label class="text-gray-500">Dinámica de equipo</label>
+                    <div class="flex w-full justify-center py-4">
+                        <div class="flex items-center me-4">
+                            <input id="inline-1-radio" type="radio" value="1" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-1-radio" class="select-none ms-2 text-sm font-medium text-gray-900">1</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-2-radio" type="radio" value="2" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-2-radio" class="select-none ms-2 text-sm font-medium text-heading">2</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-3-radio" type="radio" value="3" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-3-radio" class="select-none ms-2 text-sm font-medium text-heading">3</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-4-radio" type="radio" value="4" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-4-radio" class="select-none ms-2 text-sm font-medium text-heading">4</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-5-radio" type="radio" value="5" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-5-radio" class="select-none ms-2 text-sm font-medium text-heading">5</label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center space-x-4">
+                        <button type="button" onclick="ocultarCalificar()" class="py-2 px-3 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300">
+                            Cancelar
+                        </button>
+                        <button id="btnCalificar" type="button" onclick="calificar_equipo()" class="py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300">
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- FOOTER -->
@@ -102,6 +153,7 @@
 </body>
 
 <!-- Scripts -->
-<script src="js/subjects_details.js"></script>
+<script src="js/teams_details.js"></script>
+<script src="main.js"></script>
 
 </html>

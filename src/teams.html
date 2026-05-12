@@ -9,7 +9,7 @@
     <link href="./output.css" rel="stylesheet">
 
     <!-- Título y logo -->
-    <title>Materias - Sereno</title>
+    <title>Equipos - Sereno</title>
 </head>
 
 <body class="bg-gray-50">
@@ -54,27 +54,27 @@
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis equipos</h2>
                 <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todos tus equipos.</p>
             </div>
-            <div id="contenedorEquipos" class="grid gap-6">
+            <div id="contenedorEquipos" class="grid place-items-center gap-6">
 
-                <div id="equipo_ejemplo" class="flex">
+                <article id="equipo_ejemplo" class="flex">
                     <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md">
                         <div class="flex justify-between items-center mb-5 text-gray-500">
                             <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Equipo</span>
                         </div>
-                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><a href="teams_details.html">Equipo <span id="nombre_equipo">ejemplo</span></a></h2>
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Equipo <span id="nombre_equipo">ejemplo</span></h2>
                         <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
-                        <p class="mt-2 font-light text-gray-500">Integrantes: <span id="integrantes_equipo">Integrante 1, Integrante 2, Integrante 3, Integrante 4</span></p>
+                        <p class="mt-2 font-light text-gray-500">Integrantes: <span id="integrantes_equipo">Aqui se mostrarán los integrantes</span></p>
                         <div class="mt-6 mb-2">
                             <div class="flex -space-x-4 rtl:space-x-reverse">
+                                <img class="w-10 h-10 rounded-full avatar_usuarioMain" src="assets/user_avatar.png">
                                 <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
                                 <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
-                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
-                                <a class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-500 border border-gray-300 bg-gray-100 rounded-full">+1</a>
+                                <span class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-500 border border-gray-300 bg-gray-100 rounded-full">+1</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center rounded-r-lg bg-gray-100 mt-8 shadow-md"><a href="teams_details.html" class="rotate-270 text-gray-400 hover:text-gray-500">Ver detalles</a></div>
-                </div>
+                    <div class="flex items-center rounded-r-lg bg-gray-100 mt-8 shadow-md"><span class="rotate-270 text-gray-400 hover:text-gray-500">Ver detalles</span></div>
+                </article>
 
             </div>
         </div></section>
@@ -113,5 +113,6 @@
 
 <!-- Scripts -->
 <script src="js/teams.js"></script>
+<script src="main.js"></script>
 
 </html>
