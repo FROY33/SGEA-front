@@ -116,14 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Los que aún no calculamos los dejamos en medio
                     const payload = {
                         factores: [
-                            { factor_id: 1, peso: 3 },
                             { factor_id: 2, peso: factor4 },
                             { factor_id: 3, peso: factor1 },
                             { factor_id: 4, peso: factor2 },
-                            { factor_id: 5, peso: factor3 },
-                            { factor_id: 6, peso: 3 },
-                            { factor_id: 7, peso: 3 },
-                            { factor_id: 8, peso: 3 }
+                            { factor_id: 5, peso: factor3 }
                         ]
                     };
 

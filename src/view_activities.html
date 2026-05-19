@@ -60,7 +60,7 @@
 
                     <div class="grid gap-8 lg:grid-cols-2 place-items-center" id="contenedorActividades">
 
-                        <article id="contenedorDetalle1" class="bg-white w-fit p-8.75 rounded-3xl shadow-sm">
+                        <article id="contenedorDetalle1" class="bg-white w-fit p-8.75 rounded-3xl shadow-md">
                             <div class="flex justify-between items-start mb-5">
                                 <div>
                                     <span class="text-sm text-gray-500 font-semibold">Detalles de actividad</span>
@@ -118,13 +118,13 @@
                             <!-- Nombre -->
                             <div class="sm:col-span-2">
                                 <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la actividad</label>
-                                <input type="text" id="nombre" required="" placeholder="Nombre de la actividad" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <input type="text" id="nombre" required="" placeholder="Nombre de la actividad" class="bg-gray-50 border border-gray-300 text-sm text-gray-900 rounded-lg block w-full p-3">
                             </div>
 
                             <!-- Tipo -->
                             <div>
                                 <label for="tipoActividad" class="block mb-2 text-sm font-medium text-gray-900">Tipo</label>
-                                <select id="tipoActividad" required="" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <select id="tipoActividad" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3">
                                     <option value="Actividad">Actividad</option>
                                 </select>
                             </div>
@@ -132,25 +132,25 @@
                             <!-- Fecha -->
                             <div>
                                 <label for="fecha" class="block mb-2 text-sm font-medium text-gray-900">Fecha de entrega</label>
-                                <input type="date" id="fecha" required="" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <input type="date" id="fecha" required="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3">
                             </div>
 
                             <!-- Dificultad -->
                             <div>
                                 <label for="dificultad" class="block mb-2 text-sm font-medium text-gray-900">Dificultad (opcional)</label>
-                                <input type="number" id="dificultad" min="1" max="5" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <input type="number" id="dificultad" min="1" max="5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3">
                             </div>
 
                             <!-- Tiempo -->
                             <div>
                                 <label for="tiempo" class="block mb-2 text-sm font-medium text-gray-900">Tiempo estimado (opcional)</label>
-                                <input type="text" id="tiempo" placeholder="Tiempo estimado en horas" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <input type="text" id="tiempo" placeholder="Tiempo estimado en horas" class="bg-gray-50 border border-gray-300 text-sm text-gray-900 rounded-lg block w-full p-3">
                             </div>
 
                             <!-- Utilidad -->
                             <div class="sm:col-span-2">
                                 <label for="calificacion" class="block mb-2 text-sm font-medium text-gray-900">Utilidad del contenido (opcional)</label>
-                                <select id="calificacion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <select id="calificacion" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block text-sm w-full p-3">
                                     <option value="">Seleccione una opción</option>
                                     <option value="muy">Muy útil</option>
                                     <option value="medio">Interesante</option>
@@ -161,13 +161,13 @@
                             <!-- Equipo -->
                             <div class="sm:col-span-2">
                                 <label for="equipo" class="block mb-2 text-sm font-medium text-gray-900">Equipo (opcional)</label>
-                                <input type="text" id="equipo" placeholder="Nombre del equipo" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3">
+                                <input type="text" id="equipo" placeholder="Nombre del equipo" class="bg-gray-50 border border-gray-300 text-sm text-gray-900 rounded-lg block w-full p-3">
                             </div>
 
                             <!-- Descripción -->
                             <div class="sm:col-span-2">
                                 <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900">Descripción (opcional)</label>
-                                <textarea id="descripcion" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3 resize-none"></textarea>
+                                <textarea id="descripcion" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-3 resize-none text-sm"></textarea>
                             </div>
                         </div>
 
@@ -213,5 +213,6 @@
 
 <!-- Scripts -->
 <script src="js/view_activities.js"></script>
+<script src="main.js"></script>
 
 </html>

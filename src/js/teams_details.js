@@ -18,11 +18,8 @@ async function cargar_materia() {
 
         const data = await response.json();
 
-        console.log(data.nombre);
-
         // Insertar nombre de materia
-        document.getElementById("nombre_materia").textContent =
-            `Materia: ${data.nombre}`;
+        document.getElementById("nombre_materia").textContent = `Materia: ${data.nombre}`;
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
@@ -40,8 +37,6 @@ async function cargar_ne() {
         });
 
         const data = await response.json();
-
-        console.log(data.categoria_equipo);
 
         // Insertar texto
         document.getElementById("ne_equipo").textContent =
@@ -77,8 +72,6 @@ async function cargar_equipo() {
 
         const data = await response.json();
 
-        console.log(data);
-
         document.getElementById('nombre_equipo').textContent = `Equipo: ${data[0].nombre}`;
 
         // Contenedor
@@ -96,17 +89,16 @@ async function cargar_equipo() {
         }
 
         // Crear integrantes
-        equipoActual.miembros_equipo.forEach((miembro, index) => {
+        for (const [index, miembro] of equipoActual.miembros_equipo.entries()) {
 
+            const avatar = await obtener_avatar(miembro.usuario_id);
             const integrante = document.createElement("div");
+
             integrante.className =
                 "grid gap-2 lg:grid-cols-2 items-center";
 
             integrante.innerHTML = `
-                <img 
-                    class="w-10 h-10 rounded-full ${index === 0 ? 'avatar_usuarioMain' : ''}" 
-                    src="assets/user_avatar.png"
-                >
+                <img class="w-10 h-10 rounded-full" src="${avatar}">
 
                 <p class="font-light text-gray-500">
                     ${miembro.nombre_miembro}
@@ -114,12 +106,18 @@ async function cargar_equipo() {
             `;
 
             contenedor.appendChild(integrante);
-        });
+        }
 
         await cargar_materia();
         await cargar_ne();
 
-        await obtener_avatar();
+        document.querySelectorAll(".loading").forEach((elemento) => {
+            elemento.classList.add("hidden");
+        });
+
+        document.querySelectorAll(".info_equipo").forEach((elemento) => {
+            elemento.classList.remove("hidden");
+        });
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
@@ -128,9 +126,9 @@ async function cargar_equipo() {
 
 // - - - FUNCIONES FETCH - - -
 
-async function obtener_avatar() {
+async function obtener_avatar(id_usuario) {
     try {
-        const response = await fetch('https://sgea.onrender.com/perfil', {
+        const response = await fetch(`https://sgea.onrender.com/perfil/avatar/${id_usuario}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
@@ -144,14 +142,7 @@ async function obtener_avatar() {
 
         const data = await response.json();
 
-        if (data.avatar_url) {
-            const avatares = document.querySelectorAll('.avatar_usuarioMain');
-            if (data.avatar_url && avatares.length > 0) {
-                avatares.forEach(img => {
-                    img.src = data.avatar_url;
-                });
-            }
-        }
+        return data.avatar_url;
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);

@@ -20,7 +20,7 @@ document.getElementById("contenedorEquipos").addEventListener("click", function(
 
 // - - - CARGAR DATOS - - -
 
-function crear_article_equipo(equipo, index) {
+async function crear_article_equipo(equipo, index) {
     const contenedor = document.getElementById('contenedorEquipos');
 
     // Obtener nombres de integrantes
@@ -35,15 +35,17 @@ function crear_article_equipo(equipo, index) {
     const maxAvatares = 3;
     const miembrosMostrar = equipo.miembros_equipo.slice(0, maxAvatares);
 
-    miembrosMostrar.forEach((miembro, i) => {
+    for (const miembro of miembrosMostrar) {
+        const avatar = await obtener_avatar(miembro.usuario_id);
+
         avatarsHTML += `
             <img 
-                class="w-10 h-10 rounded-full ${i === 0 ? 'avatar_usuarioMain' : ''}" 
-                src="assets/user_avatar.png"
+                class="w-10 h-10 rounded-full" 
+                src="${avatar}"
                 alt="${miembro.nombre_miembro}"
             >
         `;
-    });
+    }
 
     // Si hay más de 3 integrantes
     if (equipo.miembros_equipo.length > maxAvatares) {
@@ -64,10 +66,10 @@ function crear_article_equipo(equipo, index) {
     article.dataset.id = equipo.id;
     article.dataset.materiaId = equipo.materia_id;
 
-    article.className = 'flex';
+    article.className = 'flex w-full max-w-2xl';
 
     article.innerHTML = `
-        <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md">
+        <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md w-full">
             <div class="flex justify-between items-center mb-5 text-gray-500">
                 <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">
                     Equipo
@@ -96,8 +98,8 @@ function crear_article_equipo(equipo, index) {
             </div>
         </div>
 
-        <div class="flex items-center rounded-r-lg bg-gray-100 mt-8 shadow-md">
-            <a href="teams_details.html" class="rotate-270 text-gray-400 hover:text-gray-500">
+        <div class="flex items-center rounded-r-lg w-25 bg-gray-100 mt-8 shadow-md">
+            <a href="teams_details.html" class="rotate-270 w-full text-gray-400 hover:text-gray-500">
                 Ver detalles
             </a>
         </div>
@@ -107,6 +109,10 @@ function crear_article_equipo(equipo, index) {
 }
 
 async function cargar_equipos() { // Devuelve arreglo de equipos
+
+    document.getElementById('contenedorEquipos').classList.add("hidden");
+    document.getElementById('loading').classList.remove("hidden");
+
     try {
         const response = await fetch(`https://sgea.onrender.com/equipos/mis-equipos`, {
             method: 'GET',
@@ -118,18 +124,20 @@ async function cargar_equipos() { // Devuelve arreglo de equipos
 
         const data = await response.json();
 
-        console.log(data);
-
         // El article ejemplo ya ocupa el índice 1
         // Los reales inician en 2
         let index = 2;
 
-        data.forEach((equipo) => {
-            crear_article_equipo(equipo, index);
-            index++;
-        });
+        for (const [index, equipo] of data.entries()) {
+            await crear_article_equipo(equipo, index);
+        }
 
-        await obtener_avatar();
+        if (data) {
+            document.getElementById('equipo_ejemplo').classList.add("hidden");
+        }
+
+        document.getElementById('loading').classList.add("hidden");
+        document.getElementById('contenedorEquipos').classList.remove("hidden");
 
     } catch (error) {
         console.error('Error al cargar equipo:', error);
@@ -138,9 +146,9 @@ async function cargar_equipos() { // Devuelve arreglo de equipos
 
 // - - - FUNCIONES FETCH - - -
 
-async function obtener_avatar() {
+async function obtener_avatar(id_usuario) {
     try {
-        const response = await fetch('https://sgea.onrender.com/perfil', {
+        const response = await fetch(`https://sgea.onrender.com/perfil/avatar/${id_usuario}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
@@ -154,14 +162,7 @@ async function obtener_avatar() {
 
         const data = await response.json();
 
-        if (data.avatar_url) {
-            const avatares = document.querySelectorAll('.avatar_usuarioMain');
-            if (data.avatar_url && avatares.length > 0) {
-                avatares.forEach(img => {
-                    img.src = data.avatar_url;
-                });
-            }
-        }
+        return data.avatar_url;
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);

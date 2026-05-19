@@ -51,24 +51,42 @@
         <section class="bg-white mt-35 shadow">
             <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
                 <div class="max-w-full">
-                    <div class="flex items-center mb-6">
-                        <h2 id="nombre_equipo" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Equipo ejemplo</h2>
+                    <div class="hidden info_equipo">
+                        <div class="flex items-center mb-6">
+                            <h2 id="nombre_equipo" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Equipo ejemplo</h2>
+                        </div>
+                        <p id="nombre_materia" class="flex-col mb-8 font-light text-gray-500 sm:text-xl">Materia: Materia ejemplo</p>
                     </div>
-                    <p id="nombre_materia" class="flex-col mb-8 font-light text-gray-500 sm:text-xl">Materia: Materia ejemplo</p>
+                    <div class="max-w-sm animate-pulse mb-8 loading">
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
                     <div id="btn_calificar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mb-10">
                         <a onclick="mostrarCalificar()" class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
                             Calificar dinámica de equipo
                         </a>
                     </div>
-                    <div id="integrantes_equipo" class="flex justify-around rounded-lg border border-gray-200 bg-gray-50 px-6 py-4">
-                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full avatar_usuarioMain" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 1</p></div>
-                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 2</p></div>
-                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 3</p></div>
-                        <div class="grid gap-2 lg:grid-cols-2 items-center"><img class="w-10 h-10 rounded-full" src="assets/user_avatar.png"><p class="font-light text-gray-500">Integrante 4</p></div>
+                    <div class="animate-pulse loading">
+                        <div class="h-2.5 bg-neutral-400 rounded-full max-w-160 mb-2.5 mx-auto"></div>
+                        <div class="h-2.5 mx-auto bg-neutral-400 rounded-full max-w-135"></div>
+                        <div class="flex items-center justify-center mt-4">
+                            <svg class="w-7 h-7 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                            <div class="w-20 h-2.5 bg-neutral-400 rounded-full me-3"></div>
+                            <div class="w-24 h-2 bg-neutral-400 rounded-full"></div>
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
-                    <div class="flex flex-col items-center mt-8">
-                        <p id="ne_equipo" class="font-semibold text-gray-500 sm:text-xl">Nivel de estrés del equipo: Medio</p>
-                        <img id="img_ne" class="mt-5 w-14 h-14 rounded-full" src="assets/neutro.png">
+                    <div class="hidden info_equipo">
+                        <div id="integrantes_equipo" class="flex gap-6 justify-around flex-wrap rounded-lg border border-gray-200 bg-gray-50 px-6 py-4"></div>
+                        <div class="flex flex-col items-center mt-8">
+                            <p id="ne_equipo" class="font-semibold text-gray-500 sm:text-xl">Nivel de estrés del equipo: Medio</p>
+                            <img id="img_ne" class="mt-5 w-14 h-14 rounded-full" src="assets/neutro.png">
+                        </div>
                     </div>
                 </div>
             </div>

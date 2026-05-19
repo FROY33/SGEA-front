@@ -49,15 +49,15 @@
 
     <!-- EQUIPOS -->
     <main class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-        <section class="w-auto rounded-lg shadow mt-36 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-10">
+        <section class="w-auto rounded-lg shadow mt-36 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-20">
             <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis equipos</h2>
                 <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todos tus equipos.</p>
             </div>
-            <div id="contenedorEquipos" class="grid place-items-center gap-6">
+            <div id="contenedorEquipos" class="grid gap-6 justify-items-center">
 
-                <article id="equipo_ejemplo" class="flex">
-                    <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md">
+                <article id="equipo_ejemplo" class="flex w-full max-w-2xl">
+                    <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md w-full">
                         <div class="flex justify-between items-center mb-5 text-gray-500">
                             <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Equipo</span>
                         </div>
@@ -66,16 +66,35 @@
                         <p class="mt-2 font-light text-gray-500">Integrantes: <span id="integrantes_equipo">Aqui se mostrarán los integrantes</span></p>
                         <div class="mt-6 mb-2">
                             <div class="flex -space-x-4 rtl:space-x-reverse">
-                                <img class="w-10 h-10 rounded-full avatar_usuarioMain" src="assets/user_avatar.png">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
                                 <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
                                 <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
                                 <span class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-500 border border-gray-300 bg-gray-100 rounded-full">+1</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center rounded-r-lg bg-gray-100 mt-8 shadow-md"><span class="rotate-270 text-gray-400 hover:text-gray-500">Ver detalles</span></div>
+                    <div class="flex items-center rounded-r-lg w-28 bg-gray-100 shadow-md"><span class="rotate-270 text-gray-400 w-full hover:text-gray-500">Ver detalles</span></div>
                 </article>
 
+            </div>
+            
+            <div id="loading" class="hidden max-w-sm p-4 animate-pulse md:p-6">
+                <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                    <svg class="w-11 h-11 text-neutral-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM9 12h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Zm5.697 2.395v-.733l1.269-1.219v2.984l-1.268-1.032Z"/></svg>
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                <div class="h-2 bg-neutral-400 rounded-full"></div>
+                <div class="flex items-center mt-4">
+                    <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                    <div>
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                        <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                    </div>
+                </div>
+                <span class="sr-only">Loading...</span>
             </div>
         </div></section>
     </main>

@@ -64,6 +64,8 @@ async function cargarMaterias() {
         } else {
             console.error('Error al obtener materias');
         }
+
+        await cargarAvatar();
     } catch (error) {
         console.error('Error de conexión:', error);
     }
@@ -91,8 +93,6 @@ function renderizarMateria(materia) {
     `;
 
     document.getElementById('contenedorMaterias').appendChild(nuevoArticle);
-
-    cargarAvatar();
 }
 
 function mostrarCrear() {

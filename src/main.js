@@ -23,15 +23,12 @@ async function cargar_ne() {
         const barraAnterior = document.getElementById('barraNEContainer');
         if (barraAnterior) barraAnterior.remove();
 
-        // Limitar valor entre 0 y 100
-        const valor = Math.max(0, Math.min(100, data.valor));
-
         // Color dinámico
         let colorBarra = 'bg-green-500';
 
-        if (valor >= 70) {
+        if (data.valor >= 70) {
             colorBarra = 'bg-red-500';
-        } else if (valor >= 40) {
+        } else if (data.valor >= 40) {
             colorBarra = 'bg-yellow-400';
         }
 
@@ -68,7 +65,7 @@ async function cargar_ne() {
             transition-all duration-500
             ${colorBarra}
         `;
-        barra.style.width = `${valor}%`;
+        barra.style.width = `${data.valor}%`;
 
         // Ensamblar
         barraFondo.appendChild(barra);
