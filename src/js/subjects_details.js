@@ -163,6 +163,7 @@ async function cargar_datos_materia() {
         const enlace_actividades = document.getElementById('actividades_enlace');
         enlace_actividades.classList.add('cursor-not-allowed');
         enlace_actividades.removeAttribute("onclick");
+        enlace_actividades.classList.remove("cursor-pointer");
     } else {
         try {
             const response = await fetch(`https://sgea.onrender.com/materias/${id}`, {
@@ -186,6 +187,10 @@ async function cargar_datos_materia() {
 
             await cargar_datos_equipo();
             await cargar_datos_rubrica();
+
+            document.getElementById('loading').classList.add("hidden");
+            document.getElementById('titulo_materia').classList.replace("hidden", "flex");
+            document.getElementById('texto_rubrica').classList.remove("hidden");
 
         } catch (error) {
             console.error('Error de conexión:', error);

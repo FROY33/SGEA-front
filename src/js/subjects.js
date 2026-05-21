@@ -46,6 +46,10 @@ async function cargarAvatar() {
 
 // Cargar materias al abrir la página
 async function cargarMaterias() {
+
+    document.getElementById('contenedorMaterias').classList.add("hidden");
+    document.getElementById('loading').classList.replace("hidden", "grid");
+
     try {
         const response = await fetch('https://sgea.onrender.com/materias', {
             method: 'GET',
@@ -57,6 +61,10 @@ async function cargarMaterias() {
 
         const materias = await response.json();
 
+        if (materias != "") {
+            document.getElementById('materia_ejemplo').classList.add("hidden");
+        }
+
         if (response.ok && Array.isArray(materias)) {
             materias.forEach(materia => {
                 renderizarMateria(materia);
@@ -66,6 +74,11 @@ async function cargarMaterias() {
         }
 
         await cargarAvatar();
+
+        document.getElementById('loading').classList.add("hidden");
+        document.getElementById('contenedorMaterias').classList.remove("hidden");
+
+
     } catch (error) {
         console.error('Error de conexión:', error);
     }
@@ -74,7 +87,7 @@ async function cargarMaterias() {
 function renderizarMateria(materia) {
     const nuevoArticle = document.createElement('article');
     nuevoArticle.id = materia.id;
-    nuevoArticle.className = 'p-6 bg-white rounded-lg border border-gray-200 shadow-md';
+    nuevoArticle.className = 'p-6 bg-white rounded-lg border border-gray-200 shadow-md max-w-xl';
     nuevoArticle.innerHTML = `
         <div class="flex justify-between items-center mb-5 text-gray-500">
             <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Materia</span>
@@ -141,9 +154,6 @@ async function save_materia() {
         const data = await response.json();
 
         if (response.ok) {
-            // Renderizar la materia que devolvió la API
-            renderizarMateria(data);
-
             // Limpiar el formulario
             document.getElementById('nombre_materia').value = '';
             document.getElementById('calificacion_profesor').value = 'Selecciona una opción';
@@ -152,6 +162,11 @@ async function save_materia() {
 
             // Ocultar el modal
             ocultarCrear();
+
+            setTimeout(() => {
+                window.location.href = 'subjects.html';
+            }, "500");
+
         } else {
             alert('Error al crear la materia: ' + (data.message || 'Error desconocido'));
         }

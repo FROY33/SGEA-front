@@ -66,7 +66,7 @@ async function crear_article_equipo(equipo, index) {
     article.dataset.id = equipo.id;
     article.dataset.materiaId = equipo.materia_id;
 
-    article.className = 'flex w-full max-w-2xl';
+    article.className = 'flex w-full max-w-2xl min-w-2xl min-w-fit';
 
     article.innerHTML = `
         <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md w-full">
@@ -98,7 +98,7 @@ async function crear_article_equipo(equipo, index) {
             </div>
         </div>
 
-        <div class="flex items-center rounded-r-lg w-25 bg-gray-100 mt-8 shadow-md">
+        <div class="flex items-center rounded-r-lg min-w-23 bg-gray-100 mt-8 shadow-md">
             <a href="teams_details.html" class="rotate-270 w-full text-gray-400 hover:text-gray-500">
                 Ver detalles
             </a>
@@ -132,7 +132,7 @@ async function cargar_equipos() { // Devuelve arreglo de equipos
             await crear_article_equipo(equipo, index);
         }
 
-        if (data) {
+        if (data != "") {
             document.getElementById('equipo_ejemplo').classList.add("hidden");
         }
 

@@ -51,12 +51,21 @@
         <section class="bg-white mt-35 shadow">
             <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
                 <div class="max-w-full">
-                    <div class="flex items-center mb-4">
+                    <div id="titulo_materia" class="items-center mb-4 hidden">
                         <h2 id="materia" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Materia ejemplo</h2>
                         <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"></path></svg>
                         <span onclick="abrir_actividades()" id="actividades_enlace" class="cursor-pointer px-3 font-light text-gray-500 sm:text-xl mb-1">Actividades</span>
                     </div>
-                    <p id="texto_rubrica" class="flex-col mb-8 font-light text-gray-500 sm:text-lg">Aún no se agrega la rúbrica de evaluación</p>
+                    <p id="texto_rubrica" class="hidden flex-col mb-8 font-light text-gray-500 sm:text-lg">Aún no se agrega la rúbrica de evaluación</p>
+                    <div id="loading" class="max-w-sm animate-pulse mb-8">
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
                     <div id="btnEditar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
                         <a onclick="mostrarEditar()" class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
                             <svg class="-ms-0.5 me-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path></svg>

@@ -57,7 +57,7 @@
             <div class="grid gap-8 lg:grid-cols-2" id="contenedorMaterias">
 
                 <!-- Materias insertadas con js -->
-                <article id="materia_ejemplo" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md">
+                <article id="materia_ejemplo" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md max-w-xl">
                     <div class="flex justify-between items-center mb-5 text-gray-500">
                         <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Materia</span>
                     </div>
@@ -74,6 +74,46 @@
                     </div>
                 </article>
 
+            </div>
+
+            <div id="loading" class="gap-8 lg:grid-cols-2 hidden">
+                <div class="max-w-sm p-4 animate-pulse md:p-6">
+                    <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                        <svg class="w-11 h-11 text-neutral-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM9 12h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Zm5.697 2.395v-.733l1.269-1.219v2.984l-1.268-1.032Z"/></svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full"></div>
+                    <div class="flex items-center mt-4">
+                        <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        <div>
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                            <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+                <div class="max-w-sm p-4 animate-pulse md:p-6">
+                    <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                        <svg class="w-11 h-11 text-neutral-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM9 12h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Zm5.697 2.395v-.733l1.269-1.219v2.984l-1.268-1.032Z"/></svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full"></div>
+                    <div class="flex items-center mt-4">
+                        <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        <div>
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                            <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div></div>
             <div class="flex justify-center mx-6 mb-6">
                 <button onclick="mostrarCrear()" class="w-full text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
@@ -135,7 +175,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" onclick="save_materia()" class="p-1.5 ml-auto inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                        <button type="submit" onclick="save_materia()" class="p-1.5 ml-auto inline-flex pr-4 items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
                             <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                             Crear materia
                         </button>

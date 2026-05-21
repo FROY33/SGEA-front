@@ -6,27 +6,7 @@ const materiaId = params.get("materia");
 
 // - - - CARGAR DATOS - - - 
 
-async function cargar_materia() {
-    try {
-        const response = await fetch(`https://sgea.onrender.com/materias/${materiaId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            }
-        });
-
-        const data = await response.json();
-
-        // Insertar nombre de materia
-        document.getElementById("nombre_materia").textContent = `Materia: ${data.nombre}`;
-
-    } catch (error) {
-        console.error('Error al cargar el perfil:', error);
-    }
-}
-
-async function cargar_ne() {
+async function cargar_ne_equipo() {
     try {
         const response = await fetch(`https://sgea.onrender.com/equipos/${id}/nivel-estres`, {
             method: 'GET',
@@ -39,21 +19,58 @@ async function cargar_ne() {
         const data = await response.json();
 
         // Insertar texto
-        document.getElementById("ne_equipo").textContent =
-            `Nivel de estrés del equipo: ${data.categoria_equipo}`;
+        document.getElementById("ne_equipo").textContent = `Nivel de estrés del equipo: ${data.categoria_equipo}`;
 
-        // Imagen
-        const img = document.getElementById("img_ne");
+        const contenedor_ne = document.getElementById('contenedor_ne_equipo');
 
-        if (data.categoria_equipo === "Bajo") {
-            img.src = "assets/feliz.png";
+        let colorBarra = 'bg-green-500';
+
+        if (data.ne_equipo >= 70) {
+            colorBarra = 'bg-red-500';
+        } else if (data.ne_equipo >= 40) {
+            colorBarra = 'bg-yellow-400';
         }
-        else if (data.categoria_equipo === "Medio") {
-            img.src = "assets/neutro.png";
-        }
-        else if (data.categoria_equipo === "Alto") {
-            img.src = "assets/estresado.png";
-        }
+
+        // Contenedor principal
+        const container = document.createElement('div');
+        container.id = 'barraNEContainer';
+        container.className = `
+            flex items-center gap-3
+            bg-white/90 backdrop-blur-md
+            border border-gray-200
+            shadow-sm rounded-2xl
+            px-4 py-3
+        `;
+
+        // Texto "NE"
+        const texto = document.createElement('span');
+        texto.textContent = 'NE';
+        texto.className = 'font-bold text-gray-900';
+
+        // Fondo de la barra
+        const barraFondo = document.createElement('div');
+        barraFondo.className = `
+            w-44 h-4
+            bg-gray-200
+            rounded-full
+            overflow-hidden
+        `;
+
+        // Barra de progreso
+        const barra = document.createElement('div');
+        barra.className = `
+            h-full rounded-full
+            transition-all duration-500
+            ${colorBarra}
+        `;
+        barra.style.width = `${data.ne_equipo}%`;
+
+        // Ensamblar
+        barraFondo.appendChild(barra);
+        container.appendChild(texto);
+        container.appendChild(barraFondo);
+
+        contenedor_ne.appendChild(container);
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
@@ -73,6 +90,7 @@ async function cargar_equipo() {
         const data = await response.json();
 
         document.getElementById('nombre_equipo').textContent = `Equipo: ${data[0].nombre}`;
+        document.getElementById("nombre_materia").textContent = `Materia: ${data[0].materias.nombre}`;
 
         // Contenedor
         const contenedor = document.getElementById("integrantes_equipo");
@@ -95,21 +113,17 @@ async function cargar_equipo() {
             const integrante = document.createElement("div");
 
             integrante.className =
-                "grid gap-2 lg:grid-cols-2 items-center";
+                "flex justify-left items-center";
 
             integrante.innerHTML = `
-                <img class="w-10 h-10 rounded-full" src="${avatar}">
-
-                <p class="font-light text-gray-500">
-                    ${miembro.nombre_miembro}
-                </p>
+                <img class="w-10 h-10 mr-4 rounded-full" src="${avatar}">
+                <p class="font-light text-lg hidden md:block text-gray-500">${miembro.nombre_miembro}</p>
             `;
 
             contenedor.appendChild(integrante);
         }
 
-        await cargar_materia();
-        await cargar_ne();
+        await cargar_ne_equipo();
 
         document.querySelectorAll(".loading").forEach((elemento) => {
             elemento.classList.add("hidden");
