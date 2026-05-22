@@ -53,52 +53,95 @@
             <div class="mx-auto max-w-5xl px-4 2xl:px-0 pb-4">
 
                 <h2 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl md:mb-6">Mi Perfil</h2>
-                <div class="border-t border-gray-200 py-4"></div>
-                <div class="py-4 md:py-8">
+                <div class="border-t border-gray-200 py-4"></div><div class="py-4 md:py-8">
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
-                    <div class="space-y-4">
-                    <div class="flex space-x-4">
-                        <img id="avatarUsuario" class="h-16 w-16 rounded-lg" src="assets/user_avatar.png" alt="User avatar" />
-                        <div><h2 id="nombreUsuario" class="flex md:mt-4 items-center text-xl font-bold leading-none text-gray-900 sm:text-2xl"></h2></div>
+                    <div class="space-y-4 info_perfil hidden">
+                        <div class="flex space-x-4">
+                            <img id="avatarUsuario" class="h-16 w-16 rounded-lg" src="assets/user_avatar.png" alt="User avatar"/>
+                            <div><h2 id="nombreUsuario1" class="flex md:mt-4 items-center text-xl font-bold leading-none text-gray-900 sm:text-2xl"></h2></div>
+                        </div>
+                        
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Correo electrónico</dt>
+                            <dd class="text-gray-500" id="correoUsuario">ejemplo@email.com</dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Institución</dt>
+                            <dd id="institucionUsuario" class="flex items-center gap-1 text-gray-500">Institución académica</dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Carrera</dt>
+                            <dd id="carreraUsuario" class="flex items-center gap-1 text-gray-500">Ingeniería/Licenciatura</dd>
+                        </dl>
                     </div>
-                    <dl class="">
-                        <dt class="font-semibold text-gray-900">Correo electrónico</dt>
-                        <dd class="text-gray-500" id="correoUsuario">ejemplo@email.com</dd>
-                    </dl>
-                    <dl>
-                        <dt class="font-semibold text-gray-900">Institución</dt>
-                        <dd id="institucionUsuario" class="flex items-center gap-1 text-gray-500">Institución académica</dd>
-                    </dl>
-                    <dl>
-                        <dt class="font-semibold text-gray-900">Carrera</dt>
-                        <dd id="carreraUsuario" class="flex items-center gap-1 text-gray-500">Ingeniería/Licenciatura</dd>
-                    </dl>
+
+                    <div class="space-y-4 loading">
+                        <div class="flex space-x-4">
+                            <img class="h-16 w-16 rounded-lg" src="assets/user_avatar.png" alt="User avatar"/>
+                            <div><h2 id="nombreUsuario2" class="flex md:mt-4 items-center text-xl font-bold leading-none text-gray-900 sm:text-2xl"></h2></div>
+                        </div>
+
+                        <div class="max-w-sm animate-pulse mt-8 mb-2">
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
-                    <div class="space-y-4">
-                    <dl>
-                        <dt class="font-semibold text-gray-900">Semestre</dt>
-                        <dd id="semestreUsuario" class="flex items-center gap-1 text-gray-500">1</dd>
-                    </dl>
-                    <dl>
-                        <dt class="font-semibold text-gray-900">Promedio general</dt>
-                        <dd id="promedioUsuario" class="text-gray-500">10</dd>
-                    </dl>
-                    <dl>
-                        <dt class="font-semibold text-gray-900">Cuenta creada el: </dt>
-                        <dd id="fechaCreacionUsuario" class="flex items-center gap-1 text-gray-500">01/01/0001</dd>
-                    </dl>
+
+                    <div class="space-y-4 info_perfil hidden">
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Semestre</dt>
+                            <dd id="semestreUsuario" class="flex items-center gap-1 text-gray-500">1</dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Promedio general</dt>
+                            <dd id="promedioUsuario" class="text-gray-500">10</dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900">Cuenta creada el: </dt>
+                            <dd id="fechaCreacionUsuario" class="flex items-center gap-1 text-gray-500">01/01/0001</dd>
+                        </dl>
+                    </div>
+
+                    <div class="space-y-4 loading">
+                        <div class="max-w-sm animate-pulse mb-6">
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                            <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
                 </div>
-                <button type="button" onclick="mostrarPerfil()" class="inline-flex w-full items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 sm:w-auto">
+
+                <button type="button" onclick="mostrarPerfil()" class="cursor-pointer inline-flex w-full items-center justify-center rounded-lg px-5 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 mt-2 sm:w-auto">
                     <svg class="-ms-0.5 me-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"></path></svg>
                     Editar datos de perfil
                 </button>
+
                 </div>
                 <div class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-4">
-                    <h3 class="mb-4 text-xl font-semibold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h3>
-                    <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
-                    <p class="mt-2 font-light text-gray-500">Duerme bien! Descansar lo suficiente durante la noche puede ayudarte a pensar con más claridad y a tener más energía.</p>
+
+                    <div class="info_perfil hidden">
+                        <h3 class="mb-4 text-xl font-semibold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h3>
+                        <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
+                        <p class="mt-2 font-light text-gray-500">Duerme bien! Descansar lo suficiente durante la noche puede ayudarte a pensar con más claridad y a tener más energía.</p>
+                    </div>
+
+                    <div class="animate-pulse loading my-2">
+                        <div class="h-2.5 bg-neutral-400 rounded-full max-w-160 mb-2.5 mx-auto"></div>
+                        <div class="h-2.5 mx-auto bg-neutral-400 rounded-full max-w-135"></div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    
                 </div>
+            </div>
         </section>
 
         <!-- Div para editar perfil (OCULTO) -->

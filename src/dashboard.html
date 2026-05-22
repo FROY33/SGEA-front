@@ -55,9 +55,24 @@
             <div class="gap-8 items-center py-8 px-4 mx-auto max-w-7xl xl:gap-16 md:grid md:grid-cols-2 sm:py-14 lg:px-14">
                 <img class="h-100 w-200 object-contain" src="assets/logo.jpeg" alt="sereno image">
                 <div class="mt-4 md:mt-0 flex flex-col">
-                    <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h2>
-                    <p class="mb-6 font-light text-gray-500 text-justify md:text-lg">No olvides hacer ejercicio! La actividad física puede aumentar las endorfinas y otras sustancias químicas neuronales naturales que aumentan su sensación de bienestar.</p>
+
+                    <div class="max-w-sm animate-pulse loading mb-6">
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+                    <div class="info_dashboard hidden">
+                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h2>
+                        <p class="mb-6 font-light text-gray-500 text-justify md:text-lg">No olvides hacer ejercicio! La actividad física puede aumentar las endorfinas y otras sustancias químicas neuronales naturales que aumentan su sensación de bienestar.</p>
+                    </div>
+
                     <a href="#informe_completo" class="flex max-w-fit text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Ver informe completo</a>
+                    
                 </div>
             </div>
         </section>
@@ -96,6 +111,5 @@
 
 <!-- Scripts -->
 <script src="js/dashboard.js"></script>
-<script src="main.js"></script>
 
 </html>

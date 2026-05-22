@@ -1,5 +1,7 @@
-const divNombre = document.getElementById('nombreUsuario');
-divNombre.textContent = sessionStorage.getItem('user_name');
+const divNombre1 = document.getElementById('nombreUsuario1');
+const divNombre2 = document.getElementById('nombreUsuario2');
+divNombre1.textContent = sessionStorage.getItem('user_name');
+divNombre2.textContent = sessionStorage.getItem('user_name');
 
 // Cargar datos del perfil desde el endpoint
 async function cargarPerfil() {
@@ -41,6 +43,14 @@ async function cargarPerfil() {
         document.getElementById('carrera').value = data.carrera;
         document.getElementById('semestre').value = data.semestre;
         document.getElementById('promedio').value = data.promedio_general;
+
+        document.querySelectorAll(".loading").forEach((elemento) => {
+            elemento.classList.add("hidden");
+        });
+
+        document.querySelectorAll(".info_perfil").forEach((elemento) => {
+            elemento.classList.remove("hidden");
+        });
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
