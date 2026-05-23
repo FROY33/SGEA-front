@@ -177,7 +177,9 @@ async function cargar_datos_materia() {
             const materia = await response.json();
 
             // Cargar nombre de la materia en el titulo
-            document.getElementById('materia').textContent = materia.nombre;
+            document.querySelectorAll(".materia_nombre").forEach((elemento) => {
+                elemento.textContent = materia.nombre;
+            });
 
             // Cargar datos en el modal
             document.getElementById('nombre_materia').value = materia.nombre;
@@ -242,6 +244,13 @@ async function update_materia(event) {
         return;
     }
 
+    const btnActualizar = document.getElementById('btnActualizar');
+
+    // Cambiar estado del botón
+    btnActualizar.disabled = true;
+    btnActualizar.innerHTML = '<svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>Actualizando...'
+
+
     try {
         const response = await fetch(`https://sgea.onrender.com/materias/${id}`, {
             method: 'PATCH',
@@ -266,6 +275,10 @@ async function update_materia(event) {
 
         await cargar_datos_materia()
         ocultarEditar()
+
+        // Cambiar estado del botón
+        btnActualizar.disabled = true;
+        btnActualizar.innerHTML = '<svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>Actualizar materia'
 
     } catch (error) {
         console.error('Error de conexión:', error);

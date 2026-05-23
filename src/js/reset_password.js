@@ -18,7 +18,7 @@ async function init() {
 
     if (params.type !== 'recovery' || !params.access_token) {
         form.innerHTML = `
-            <p class="text-red-500 text-sm text-center">
+            <p class="text-gray-900 text-sm text-center">
                 Enlace inválido o expirado.
             </p>
             <a href="recover_password.html" class="block w-full text-center text-sm text-gray-500 hover:underline mt-4">
@@ -35,7 +35,7 @@ async function init() {
 
     if (error) {
         form.innerHTML = `
-            <p class="text-red-500 text-sm text-center">
+            <p class="text-gray-900 text-sm text-center">
                 Sesión inválida. El enlace puede haber expirado.
             </p>
             <a href="recover_password.html" class="block w-full text-center text-sm text-gray-500 hover:underline mt-4">
@@ -72,7 +72,7 @@ async function handleSubmit(e) {
     }
 
     form.innerHTML = `
-        <p class="text-green-600 font-medium text-center text-sm">
+        <p class="text-gray-900 font-medium text-center text-sm">
             ¡Contraseña actualizada correctamente!
         </p>
         <a href="index.html" class="block w-full text-center text-sm text-gray-500 hover:underline mt-4">
@@ -86,7 +86,7 @@ function showError(message) {
     if (!el) {
         el = document.createElement('p');
         el.id = 'error-msg';
-        el.className = 'text-red-500 text-sm';
+        el.className = 'text-gray-500 text-sm';
         button.before(el);
     }
     el.textContent = message;

@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
         if (!res.ok) throw new Error(data.message || 'Error al enviar el correo');
 
         form.innerHTML = `
-            <p class="text-green-600 font-medium text-center text-sm">
+            <p class="text-gray-900 font-medium text-center text-sm">
                 Si el correo existe, recibirás un enlace de recuperación en tu bandeja de entrada.
             </p>
             <a href="index.html" class="block w-full text-center text-sm text-gray-500 hover:underline mt-4">
@@ -42,7 +42,7 @@ function showError(message) {
     if (!el) {
         el = document.createElement('p');
         el.id = 'error-msg';
-        el.className = 'text-red-500 text-sm';
+        el.className = 'text-gray-500 text-sm';
         button.before(el);
     }
     el.textContent = message;
