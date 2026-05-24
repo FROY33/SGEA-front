@@ -2,6 +2,7 @@
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
+let equipo_id;
 
 // - - - LÓGICA DEL TAB MODAL - - -
 
@@ -118,6 +119,8 @@ async function cargar_datos_equipo() {
         }
 
         equipo_data = data[0];
+
+        equipo_id = equipo_data.id;
 
         // Limpiar contenedor
         const container = document.getElementById('integrantes-lines-container');
@@ -634,7 +637,7 @@ function borrar_linea_integrante(lineNumber) {
 // - - - FUNCIONES DE ENLACES - - -
 
 function abrir_actividades() {
-    window.location.href = `view_activities.html?id=${id}`;
+    window.location.href = `view_activities.html?id=${id}&equipo=${equipo_id}`;
 }
 
 function cerrar_sesion() {

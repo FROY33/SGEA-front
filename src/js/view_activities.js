@@ -1,7 +1,11 @@
 // - - - ID DE LA MATERIA - - -
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
+const equipoID = params.get("equipo");
+
+// - - - ESTADO GLOBAL - - -
+const actividadesEstado = {}; // { actividadId: { indice, estatus_actual, estatus_original } }
+let contadorIndices = 0;
 
 // - - - CARGAR DATOS - - -
 async function cargar_datos_materia() {
@@ -21,6 +25,15 @@ async function cargar_datos_materia() {
 
         await cargar_rubricas_select();
         await cargar_actividades();
+
+        document.querySelectorAll(".loading").forEach((elemento) => {
+            elemento.classList.add("hidden");
+        });
+
+        document.getElementById('info_actividad').classList.replace("hidden", "flex");
+        document.getElementById('actividades_pendientes').classList.replace("hidden", "flex");
+        document.getElementById('actividades_progreso').classList.replace("hidden", "flex");
+        document.getElementById('actividades_completadas').classList.replace("hidden", "flex");
 
     } catch (error) {
         console.error('Error de conexión:', error);
@@ -74,135 +87,265 @@ async function cargar_actividades() {
 
         const actividades = await response.json();
 
-        // Si no devuelve nada, hacer return
         if (!actividades || actividades.length === 0) {
+            actualizar_contadores();
             return;
         }
 
-         console.log(actividades);
+        // Limpiar los contenedores
+        document.getElementById('actividades_pendientes').innerHTML = '';
+        document.getElementById('actividades_progreso').innerHTML = '';
+        document.getElementById('actividades_completadas').innerHTML = '';
 
-        const contenedor = document.getElementById('contenedorActividades');
-        
-        // Para cada actividad
-        actividades.forEach((actividad, index) => {
-            const indice = index + 2;
-            
-            // Usar generar_actividad para que se muestren con DOM
-            const nuevoArticle = generar_actividad(indice);
-            
-            // Guardar el id de la actividad en un atributo data
-            nuevoArticle.dataset.actividadId = actividad.id;
-            
-            // Insertar nombre en id="tituloTarea{indice}"
-            nuevoArticle.querySelector(`#tituloTarea${indice}`).textContent = actividad.nombre;
-            
-            // Si importancia está en [0-33]: Baja, [34-66]: Media, [67-100]: Alta
-            let importancia = 'Baja';
-            if (actividad.importancia !== null) {
-                if (actividad.importancia >= 67) {
-                    importancia = 'Alta';
-                } else if (actividad.importancia >= 34) {
-                    importancia = 'Media';
-                }
+        // Distribuir actividades por estado
+        actividades.forEach((actividad) => {
+            contadorIndices++;
+            const indice = contadorIndices;
+
+            // Crear elemento de actividad
+            const article = crear_actividad(indice, actividad);
+
+            // Guardar en estado global
+            actividadesEstado[actividad.id] = {
+                indice: indice,
+                estatus_actual: actividad.estatus,
+                estatus_original: actividad.estatus,
+                id_elemento: `actividad_${indice}`
+            };
+
+            // Añadir a la columna correspondiente
+            let contenedor;
+            if (actividad.estatus === 'pendiente') {
+                contenedor = document.getElementById('actividades_pendientes');
+            } else if (actividad.estatus === 'en_progreso') {
+                contenedor = document.getElementById('actividades_progreso');
+            } else if (actividad.estatus === 'completada') {
+                contenedor = document.getElementById('actividades_completadas');
             }
-            
-            // Insertar en id="badgeImportancia{indice}"
-            const badgeImportancia = nuevoArticle.querySelector(`#badgeImportancia${indice}`);
-            badgeImportancia.textContent = importancia;
-            
-            // Cambiar colores del badge según importancia
-            badgeImportancia.classList.remove('text-amber-700', 'bg-amber-400/20');
-            if (importancia === 'Alta') {
-                badgeImportancia.classList.add('text-red-700', 'bg-red-400/20');
-            } else if (importancia === 'Media') {
-                badgeImportancia.classList.add('text-amber-700', 'bg-amber-400/20');
-            } else {
-                badgeImportancia.classList.add('text-green-700', 'bg-green-400/20');
+
+            if (contenedor) {
+                contenedor.appendChild(article);
             }
-            
-            // Insertar fecha_entrega en formato 00/00/0000 en id="fechaEntrega{indice}"
-            if (actividad.fecha_entrega) {
-                const fecha = new Date(actividad.fecha_entrega);
-                const fechaFormato = `${String(fecha.getDate()).padStart(2, '0')}/${String(fecha.getMonth() + 1).padStart(2, '0')}/${fecha.getFullYear()}`;
-                nuevoArticle.querySelector(`#fechaEntrega${indice}`).textContent = fechaFormato;
-            }
-            
-            // Insertar descripción entre comillas en id="descripcionActividad{indice}"
-            const descripcion = nuevoArticle.querySelector(`#descripcionActividad${indice}`);
-            descripcion.textContent = `"${actividad.descripcion || ''}"`;
-            
-            // Insertar estatus en id="estadoActividad{indice}"
-            const select = nuevoArticle.querySelector(`#estadoActividad${indice}`);
-            select.value = actividad.estatus;
-            
-            // Quitar atributos de clase en id="guardar_cambiosAct{indice}" y id="eliminarAct{indice}"
-            const guardarBtn = nuevoArticle.querySelector(`#guardar_cambiosAct${indice}`);
-            const eliminarBtn = nuevoArticle.querySelector(`#eliminarAct${indice}`);
-            
-            guardarBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-            eliminarBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none');
-            
-            // Agregar al contenedor
-            contenedor.appendChild(nuevoArticle);
         });
+
+        actualizar_contadores();
+        configurar_drag_drop();
 
     } catch (error) {
         console.error('Error de conexión:', error);
     }
 }
 
-// - - - FUNCIONES FETCH - - -
+// - - - CREAR ELEMENTO DE ACTIVIDAD - - -
+function crear_actividad(indice, actividad) {
+    const template = document.getElementById('template_actividad');
+    const article = template.querySelector('article').cloneNode(true);
 
-async function guardarActividad(indice) {
-    try {
-        // Obtener el elemento de la actividad
-        const contenedor = document.getElementById(`contenedorDetalle${indice}`);
-        const actividadId = contenedor.dataset.actividadId;
+    // Asignar ID único
+    article.id = `actividad_${indice}`;
+    article.dataset.actividadId = actividad.id;
+    article.dataset.estatus = actividad.estatus;
+
+    // Actualizar contenido
+    article.querySelector('.titulo').textContent = actividad.nombre;
+
+    // Importancia y badge
+    let importancia = 'Baja';
+    let colorClases = 'text-green-700 bg-green-400/20';
+
+    if (actividad.importancia !== null) {
+        if (actividad.importancia >= 67) {
+            importancia = 'Alta';
+            colorClases = 'text-red-700 bg-red-400/20';
+        } else if (actividad.importancia >= 34) {
+            importancia = 'Media';
+            colorClases = 'text-amber-700 bg-amber-400/20';
+        }
+    }
+
+    const badge = article.querySelector('.badge');
+    badge.textContent = importancia;
+    badge.className = `badge text-xs font-bold rounded-lg px-3 py-1.25 ${colorClases}`;
+
+    // Fecha
+    if (actividad.fecha_entrega) {
+        const fecha = new Date(actividad.fecha_entrega);
+        const fechaFormato = `${String(fecha.getDate()).padStart(2, '0')}/${String(fecha.getMonth() + 1).padStart(2, '0')}/${fecha.getFullYear()}`;
+        article.querySelector('.fecha').textContent = fechaFormato;
+    }
+
+    // Descripción
+    const descripcion = article.querySelector('.descripcion');
+    descripcion.textContent = `"${actividad.descripcion || ''}"`;
+
+    // Botón eliminar
+    const btnEliminar = article.querySelector('.btn-eliminar');
+    btnEliminar.onclick = () => mostrarEliminar(actividad.id);
+
+    return article;
+}
+
+// - - - ACTUALIZAR CONTADORES - - -
+function actualizar_contadores() {
+    const pendientes = document.getElementById('actividades_pendientes').children.length;
+    const progreso = document.getElementById('actividades_progreso').children.length;
+    const completadas = document.getElementById('actividades_completadas').children.length;
+
+    document.getElementById('numero_pendientes').textContent = pendientes;
+    document.getElementById('numero_progreso').textContent = progreso;
+    document.getElementById('numero_completadas').textContent = completadas;
+}
+
+// - - - DRAG & DROP - - -
+function configurar_drag_drop() {
+    const articles = document.querySelectorAll('article[data-actividad-id]');
+    const dropZones = [
+        document.getElementById('actividades_pendientes'),
+        document.getElementById('actividades_progreso'),
+        document.getElementById('actividades_completadas')
+    ];
+
+    articles.forEach(article => {
+        article.addEventListener('dragstart', handleDragStart);
+        article.addEventListener('dragend', handleDragEnd);
+    });
+
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', handleDragOver);
+        zone.addEventListener('drop', handleDrop);
+        zone.addEventListener('dragenter', handleDragEnter);
+        zone.addEventListener('dragleave', handleDragLeave);
+    });
+}
+
+let draggedElement = null;
+
+function handleDragStart(e) {
+    draggedElement = this;
+    this.style.opacity = '0.5';
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd(e) {
+    draggedElement = null;
+    this.style.opacity = '1';
+    
+    // Limpiar clases de drop zones
+    document.querySelectorAll('[id^="actividades_"]').forEach(zone => {
+        zone.classList.remove('bg-blue-50', 'border-2', 'border-blue-300');
+    });
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+}
+
+function handleDragEnter(e) {
+    if (this.id.startsWith('actividades_')) {
+        this.classList.add('bg-blue-50', 'border-2', 'border-blue-300');
+    }
+}
+
+function handleDragLeave(e) {
+    if (e.target === this) {
+        this.classList.remove('bg-blue-50', 'border-2', 'border-blue-300');
+    }
+}
+
+function handleDrop(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+
+    const dropZone = this;
+
+    if (draggedElement && draggedElement !== this) {
+        // Determinar nuevo estatus según la zona de drop
+        let nuevoEstatus = '';
         
-        // Obtener el nuevo estado
-        const select = document.getElementById(`estadoActividad${indice}`);
-        const nuevoEstatus = select.value;
-
-        console.log('ID:', actividadId);
-
-        // Realizar PATCH
-        const response = await fetch(`https://sgea.onrender.com/actividad/${actividadId}/status`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ estatus: nuevoEstatus })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
+        if (dropZone.id === 'actividades_pendientes') {
+            nuevoEstatus = 'pendiente';
+        } else if (dropZone.id === 'actividades_progreso') {
+            nuevoEstatus = 'en_progreso';
+        } else if (dropZone.id === 'actividades_completadas') {
+            nuevoEstatus = 'completada';
         }
 
-        console.log(`Actividad ${actividadId} actualizada a estado: ${nuevoEstatus}`);
-        alert('Estado actualizado correctamente.');
+        // Mover elemento
+        dropZone.appendChild(draggedElement);
 
-        window.location.href = `view_activities.html?id=${id}`;
-        
+        // Actualizar estado global
+        const actividadId = draggedElement.dataset.actividadId;
+        if (actividadesEstado[actividadId]) {
+            actividadesEstado[actividadId].estatus_actual = nuevoEstatus;
+        }
+
+        draggedElement.dataset.estatus = nuevoEstatus;
+
+        // Actualizar contadores
+        actualizar_contadores();
+    }
+
+    dropZone.classList.remove('bg-blue-50', 'border-2', 'border-blue-300');
+    return false;
+}
+
+// - - - FUNCIONES FETCH - - -
+
+async function guardarActividades() {
+
+    const btnGuardar = document.getElementById('btnGuardar_cambios');
+
+    try {
+        // Filtrar actividades que fueron modificadas
+        const actividadesModificadas = Object.entries(actividadesEstado)
+            .filter(([_, datos]) => datos.estatus_actual !== datos.estatus_original)
+            .map(([actividadId, datos]) => ({
+                id: actividadId,
+                estatus: datos.estatus_actual
+            }));
+
+        if (actividadesModificadas.length === 0) {
+            alert('No hay cambios para guardar.');
+            return;
+        }
+
+        btnGuardar.disabled = true;
+        btnGuardar.textContent = 'Guardando...';
+
+        // Actualizar cada actividad modificada
+        for (const actividad of actividadesModificadas) {
+            const response = await fetch(`https://sgea.onrender.com/actividad/${actividad.id}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                },
+                body: JSON.stringify({ estatus: actividad.estatus })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error actualizando actividad ${actividad.id}: ${response.statusText}`);
+            }
+
+            // Actualizar el estado original
+            actividadesEstado[actividad.id].estatus_original = actividad.estatus;
+        }
+
+        window.location.href = `view_activities.html?id=${id}&equipo=${equipoID}`;
+
     } catch (error) {
-        console.error('Error al guardar actividad:', error);
+        console.error('Error al guardar actividades:', error);
         alert('Error al guardar los cambios. Intenta de nuevo.');
     }
 }
 
-async function eliminarActividad(indice) {
+async function eliminarActividad(actividadId) {
     try {
-        // Obtener el elemento de la actividad
-        const contenedor = document.getElementById(`contenedorDetalle${indice}`);
-        const actividadId = contenedor.dataset.actividadId;
-        
-        // Confirmar eliminación
-        const confirmar = confirm('¿Estás seguro de que deseas eliminar esta actividad?');
-        if (!confirmar) {
-            return;
-        }
-        
-        // Realizar DELETE
         const response = await fetch(`https://sgea.onrender.com/actividad/${actividadId}`, {
             method: 'DELETE',
             headers: {
@@ -210,16 +353,13 @@ async function eliminarActividad(indice) {
                 'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
             }
         });
-        
+
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
-        
-        console.log(`Actividad ${actividadId} eliminada`);
-        alert('Actividad eliminada correctamente.');
-        
-        window.location.href = `view_activities.html?id=${id}`;
-        
+
+        window.location.href = `view_activities.html?id=${id}&equipo=${equipoID}`;
+
     } catch (error) {
         console.error('Error al eliminar actividad:', error);
         alert('Error al eliminar la actividad. Intenta de nuevo.');
@@ -240,6 +380,13 @@ async function crearActividad(e) {
         const tiempo = document.getElementById('tiempo').value.trim();
         const calificacion = document.getElementById('calificacion').value.trim();
         const equipo = document.getElementById('equipo').value.trim();
+
+        let equipo_id;
+
+        if (equipo == "equipo") {
+            equipo_id = params.get("equipo");
+        }
+
         const descripcion = document.getElementById('descripcion').value.trim();
 
         // Extraer usuario_id del token JWT
@@ -285,7 +432,7 @@ async function crearActividad(e) {
             ...(puntaje_contenido && { puntaje_contenido }),
             ...(descripcion && { descripcion }),
             ...(tiempo_estimado && { tiempo_estimado }),
-            ...(equipo && { equipo_asignado: equipo })
+            ...(equipo_id && { equipoId: equipo_id })
         };
 
         // Realizar POST
@@ -307,7 +454,7 @@ async function crearActividad(e) {
         // Limpiar formulario
         document.querySelector('form').reset();
 
-        window.location.href = `view_activities.html?id=${id}`;
+        window.location.href = `view_activities.html?id=${id}&equipo=${equipoID}`;
 
     } catch (error) {
         console.error('Error al crear actividad:', error);
@@ -315,50 +462,28 @@ async function crearActividad(e) {
     }
 }
 
-// - - - FUNCIONES DE DOM - - -
-
-function generar_actividad(indice) {
-    // Clonamos el elemento template
-    const template = document.getElementById('contenedorDetalle1');
-    const clon = template.cloneNode(true);
-    
-    // Actualizamos los IDs del clon con el nuevo índice
-    clon.id = `contenedorDetalle${indice}`;
-    
-    // Actualizamos los IDs de los elementos secundarios
-    const tituloTarea = clon.querySelector('#tituloTarea1');
-    tituloTarea.id = `tituloTarea${indice}`;
-    
-    const badgeImportancia = clon.querySelector('#badgeImportancia1');
-    badgeImportancia.id = `badgeImportancia${indice}`;
-    
-    const fechaEntrega = clon.querySelector('#fechaEntrega1');
-    fechaEntrega.id = `fechaEntrega${indice}`;
-    
-    const descripcionActividad = clon.querySelector('#descripcionActividad1');
-    descripcionActividad.id = `descripcionActividad${indice}`;
-    
-    const estadoActividad = clon.querySelector('#estadoActividad1');
-    estadoActividad.id = `estadoActividad${indice}`;
-    
-    const guardarBtn = clon.querySelector('#guardar_cambiosAct');
-    guardarBtn.id = `guardar_cambiosAct${indice}`;
-    guardarBtn.onclick = function() { guardarActividad(indice); };
-    
-    const eliminarBtn = clon.querySelector('#eliminarAct');
-    eliminarBtn.id = `eliminarAct${indice}`;
-    eliminarBtn.onclick = function() { eliminarActividad(indice); };
-    
-    return clon;
-}
-
-// - - - FUNCION CREAR ACTIVIDAD - - -
-
-// - - - FUNCIONES DE ENLACES - - -
-
 function cerrar_sesion() {
     window.location.href = 'index.html';
     sessionStorage.clear()
+}
+
+function mostrarEliminar(id) {
+    const divBorrar = document.getElementById('deleteModal');
+
+    console.log(id);
+
+    const btnEliminar = document.getElementById('btnEliminar_emergente');
+    btnEliminar.onclick = () => eliminarActividad(id);
+
+    divBorrar.style.display="flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+function ocultarEliminar() {
+    const divBorrar = document.getElementById('deleteModal');
+    divBorrar.style.display="none";
+    document.body.style.overflow = "auto";
 }
 
 function mostrarActividad() {
