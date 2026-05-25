@@ -470,13 +470,10 @@ function cerrar_sesion() {
 function mostrarEliminar(id) {
     const divBorrar = document.getElementById('deleteModal');
 
-    console.log(id);
-
     const btnEliminar = document.getElementById('btnEliminar_emergente');
     btnEliminar.onclick = () => eliminarActividad(id);
 
     divBorrar.style.display="flex";
-
     document.body.style.overflow = "hidden";
 }
 
