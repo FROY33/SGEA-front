@@ -94,40 +94,45 @@
         </section>
         
         <section class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-            <div class="w-auto rounded-lg shadow mt-10 xl:p-0 bg-white"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-20">
-                <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-                    <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Actividades en equipo</h2>
-                    <p id="actividadesPendientes" class="font-light text-gray-500 sm:text-xl">No tienen actividades pendientes.</p>
+            <div class="w-auto rounded-lg shadow mt-10 xl:p-0 bg-white"><div class="py-8 px-10 max-w-7xl sm:py-16 sm:px-20">
+                <div id="flag_actividadesPendientes" class="mx-auto max-w-screen-sm text-center sm:mb-16 mb-8">
+                    <h2 class="mb-4 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900">Actividades en equipo</h2>
+                    <p id="actividadesPendientes" class="hidden font-light text-gray-500 sm:text-xl">No tienen actividades pendientes.</p>
                 </div>
                 <div id="contenedorActividades" class="grid gap-6 justify-items-center">
 
-                    <!-- Template oculto para actividades -->
                     <div id="template_actividad" class="hidden">
-                        <article class="bg-white w-fit max-w-sm p-8.75 rounded-l-lg shadow-md">
-                            <div class="flex justify-between items-start mb-5">
+
+                        <!-- ARTICLE -->
+                        <article class="bg-white w-full lg:w-fit max-w-sm p-6 lg:p-8.75 rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none shadow-md">
+                            <div class="flex justify-between items-start mb-4 lg:mb-5 gap-3">
                                 <div>
                                     <span class="text-sm text-gray-500 font-semibold">Detalles de actividad</span>
-                                    <h2 class="titulo text-xl font-bold text-gray-900 mt-3">Actividad de ejemplo</h2>
+                                    <h2 class="titulo text-xl font-bold text-gray-900 mt-2 lg:mt-3">Actividad de ejemplo</h2>
                                 </div>
-                                <span class="badge text-xs font-bold rounded-lg px-3 py-1.25 text-amber-700 bg-amber-400/20">Media</span>
+                                <span class="badge text-xs font-bold rounded-lg px-2.5 lg:px-3 py-1 lg:py-1.25 text-amber-700 bg-amber-400/20 whitespace-nowrap">Media</span>
                             </div>
 
-                            <div class="bg-gray-50 p-5 rounded-md border border-gray-200 mb-6">
-                                <p class="mb-2.5 text-sm text-gray-500"><strong>Estatus: </strong><span class="estatus">Pendiente</span></p>
-                                <p class="mb-2.5 text-sm text-gray-500"><strong>Entrega: </strong><span class="fecha">10/11/2026</span></p>
+                            <div class="bg-gray-50 p-4 lg:p-5 rounded-md border border-gray-200 mb-5 lg:mb-6">
+                                <p class="mb-2 text-sm text-gray-500"><strong>Estatus: </strong><span class="estatus">Pendiente</span></p>
+                                <p class="mb-2 text-sm text-gray-500"><strong>Entrega: </strong><span class="fecha">10/11/2026</span></p>
                                 <p class="descripcion text-sm text-gray-500 leading-relaxed italic">"Descripción de la actividad"</p>
                             </div>
 
-                            <button class="btn-crear py-2 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">Crear subtarea</button>
+                            <button class="btn-crear py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                Crear subtarea
+                            </button>
                         </article>
-                        <section class="bg-gray-100 w-fit max-w-sm p-4 rounded-r-lg shadow-md">
-                            <form class="bg-white p-4 rounded-lg h-full">
-                                <h2 class="titulo text-xl font-bold text-gray-900 mb-2">Subtareas</h2>
 
+                        <!-- SECTION -->
+                        <section class="bg-gray-100 w-full lg:w-fit max-w-sm px-5 py-4 rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none shadow-md">
+                            <form class="bg-white p-3 lg:p-4 rounded-lg h-full flex flex-col">
+                                <h2 class="titulo text-xl font-bold text-gray-900 mb-2">Subtareas</h2>
                                 <div class="flex items-start my-2">
                                     <div class="flex items-center h-5">
                                         <input id="subtarea1" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
                                     </div>
+
                                     <div class="ml-3 text-sm">
                                         <label for="subtarea1" class="text-gray-500">Crear documento</label>
                                     </div>
@@ -137,8 +142,9 @@
                                     <div class="flex items-center h-5">
                                         <input id="subtarea2" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
                                     </div>
+
                                     <div class="ml-3 text-sm">
-                                        <label for="subtarea2" class="text-gray-500">Desarrollo y conslusiones</label>
+                                        <label for="subtarea2" class="text-gray-500">Desarrollo y conclusiones</label>
                                     </div>
                                 </div>
 
@@ -207,11 +213,11 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button type="button" onclick="add_subtarea()" class="p-1.5 inline-flex items-center pr-4 text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                            <button type="button" onclick="add_subtarea()" class="p-1.5 cursor-pointer inline-flex items-center pr-4 text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
                                 <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                                 Añadir subtarea
                             </button>
-                            <button id="guardar_subtarea_btn" type="button" class="py-1.5 px-3.5 inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                            <button id="guardar_subtarea_btn" type="button" class="py-2 px-3.5 cursor-pointer inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
                                 Guardar
                             </button>
                         </div>
@@ -255,8 +261,8 @@
                     </div>
 
                     <div class="flex justify-center items-center space-x-4">
-                        <button type="button" onclick="ocultarCalificar()" class="py-2 px-3 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300">Cancelar</button>
-                        <button id="btnCalificar" type="button" onclick="calificar_equipo()" class="py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300">Guardar</button>
+                        <button type="button" onclick="ocultarCalificar()" class="py-2 px-3 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300 cursor-pointer">Cancelar</button>
+                        <button id="btnCalificar" type="button" onclick="calificar_equipo()" class="py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300 cursor-pointer">Guardar</button>
                     </div>
                 </div>
             </div>

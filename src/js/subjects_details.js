@@ -226,7 +226,6 @@ async function eliminar_materia() {
         }
 
         window.location.href = 'subjects.html';
-        alert('Materia eliminada correctamente.');
 
     } catch (error) {
         console.error('Error de conexión:', error);

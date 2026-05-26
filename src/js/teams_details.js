@@ -81,8 +81,6 @@ async function crear_actividad(indice, actividad) {
 
         const subtareas = await response.json();
 
-        console.log(subtareas);
-
         const form = section.querySelector('form');
         const subtareasContainer = form.querySelectorAll('.flex.items-start.my-2');
 
@@ -92,20 +90,39 @@ async function crear_actividad(indice, actividad) {
         // Si hay subtareas, agregarlas
         if (subtareas && subtareas.length > 0) {
             subtareas.forEach((subtarea, index) => {
+                const miembro = equipoActualGlobal.miembros_equipo.find(m => m.usuario_id == subtarea.asignado_a);
+
+                let checked = '';
+
+                if (subtarea.completado) {
+                    checked = 'checked';
+                }
+
                 const div = document.createElement('div');
                 div.className = 'flex items-start my-2';
 
                 div.innerHTML = `
                     <div class="flex items-center h-5">
-                        <input id="subtarea_${actividad.id}_${index}" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
+                        <input id="subtarea_${actividad.id}_${index}" type="checkbox" ${checked} class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
                     </div>
                     <div class="ml-3 text-sm">
-                        <label for="subtarea_${actividad.id}_${index}" class="text-gray-500">${subtarea.nombre}</label>
+                        <label for="subtarea_${actividad.id}_${index}" class="text-gray-500">${subtarea.nombre} (${miembro.nombre_miembro})</label>
                     </div>
                 `;
 
                 form.appendChild(div);
             });
+
+            const button_guardarCambios = document.createElement('button');
+            button_guardarCambios.type = 'button';
+            button_guardarCambios.id = `btnGuardar${actividad.id}`;
+            button_guardarCambios.className = 'mt-auto py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm';
+            button_guardarCambios.textContent = 'Guardar cambios';
+
+            button_guardarCambios.onclick = () => check_subtareas(actividad.id, subtareas);
+
+            form.appendChild(button_guardarCambios);
+
         } else {
             // Si no hay subtareas, mostrar mensaje
             const mensajeDiv = document.createElement('div');
@@ -124,7 +141,7 @@ async function crear_actividad(indice, actividad) {
 
     // Retornar fragment con ambos elementos
     const fragment = document.createElement('div');
-    fragment.classList.add('flex');
+    fragment.classList.add('hidden', 'flex-col', 'lg:flex-row', 'items-stretch', 'div_actividad');
     fragment.appendChild(article);
     fragment.appendChild(section);
     
@@ -143,13 +160,16 @@ async function cargar_actividades() {
 
         const data = await response.json();
 
-        console.log(data);
-
         const contenedor = document.getElementById('contenedorActividades');
 
-        // Si no hay actividades, mostrar el template de ejemplo
+        // Si no hay actividades, mostrar el mensaje
         if (!data || data.length === 0) {
-            document.getElementById('actividadesPendientes').textContent = 'No tienen actividades pendientes.';
+            document.getElementById('actividadesPendientes').classList.remove('hidden');
+
+            const divFlag = document.getElementById('flag_actividadesPendientes');
+            divFlag.classList.remove('sm:mb-16');
+            divFlag.classList.replace('mb-8', 'mb-2');
+
             return;
         }
 
@@ -163,9 +183,6 @@ async function cargar_actividades() {
 
             contenedor.appendChild(fragment);
         }
-
-        // Actualizar mensaje si hay actividades
-        document.getElementById('actividadesPendientes').textContent = '';
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
@@ -302,6 +319,10 @@ async function cargar_equipo() {
             elemento.classList.add("hidden");
         });
 
+        document.querySelectorAll(".div_actividad").forEach((elemento) => {
+            elemento.classList.replace("hidden", "flex");
+        });
+
         document.querySelectorAll(".info_equipo").forEach((elemento) => {
             elemento.classList.remove("hidden");
         });
@@ -337,6 +358,49 @@ function llenarSelectMiembros(equipoActual) {
 
 // - - - FUNCIONES FETCH - - -
 
+async function check_subtareas(actividad_id, subtareas) {
+
+    const btnGuardar = document.getElementById(`btnGuardar${actividad_id}`);
+
+    // Cambiar estado del botón
+    btnGuardar.disabled = true;
+    btnGuardar.textContent = 'Guardando...';
+
+    try {
+        // Iterar sobre todas las subtareas
+        for (let index = 0; index < subtareas.length; index++) {
+            const subtarea = subtareas[index];
+            
+            // Obtener el input checkbox correspondiente
+            const checkbox = document.getElementById(`subtarea_${actividad_id}_${index}`);
+            
+            if (checkbox) {
+                const completado = checkbox.checked;
+                
+                // Hacer PATCH a la API
+                await fetch(`https://sgea.onrender.com/actividad/${actividad_id}/subtareas/${subtarea.id}/completado`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                    },
+                    body: JSON.stringify({
+                        completado: completado
+                    })
+                });
+            }
+        }
+
+        alert('Cambios guardados con éxito.');
+
+        btnGuardar.disabled = false;
+        btnGuardar.textContent = 'Guardar cambios';
+
+    } catch (error) {
+        console.error('Error al actualizar subtareas:', error);
+    }
+}
+
 async function save_subtarea(id_actividad) {
     const saveBtn = document.getElementById('guardar_subtarea_btn');
 
@@ -351,12 +415,14 @@ async function save_subtarea(id_actividad) {
             const miembroInput = linea.querySelector('[name="miembro"]');
             const tiempoInput = linea.querySelector('[name="tiempo"]');
 
-            subtareas_actuales.push({
-                id: nombreInput.dataset.subtareaId || null,
-                nombre: nombreInput.value,
-                usuario_id: miembroInput.value,
-                tiempo_estimado: Number(tiempoInput.value)
-            });
+            if (nombreInput.value && miembroInput.value && tiempoInput.value) {
+                subtareas_actuales.push({
+                    id: nombreInput.dataset.subtareaId || null,
+                    nombre: nombreInput.value,
+                    usuario_id: miembroInput.value,
+                    tiempo_estimado: Number(tiempoInput.value)
+                });
+            }
         });
 
         // Cambiar estado del botón
@@ -426,7 +492,7 @@ async function save_subtarea(id_actividad) {
             // -------------------------------------
 
             for (const subtareaId of subtareas_eliminadas) {
-                await fetch(`https://sgea.onrender.com/actividad/${id_actividad}/subtareas/${subtarea.id}`, {
+                await fetch(`https://sgea.onrender.com/actividad/${id_actividad}/subtareas/${subtareaId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -436,17 +502,13 @@ async function save_subtarea(id_actividad) {
             }
         }
 
-        // Recargar actividades
-        await cargar_actividades();
-
-        // Cambiar estado del botón
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'Guardar';
-
-        ocultarSubtareas();
+        setTimeout(() => {
+            window.location.href = `teams_details.html?id=${id}&materia=${materiaId}`;
+        }, "500");
 
     } catch (error) {
         console.error('Error al guardar subtareas:', error);
+        alert('Ocurrio un error al guardar las subtareas, recuerde llenar todos los campos.');
     }
 }
 
@@ -568,12 +630,24 @@ function borrar_linea_subtarea(lineNumber) {
     const container = document.getElementById('subtareas-lines-container');
     const lines = container.querySelectorAll('[id^="subtarea-line-"]');
 
+    const lineElement = document.getElementById(`subtarea-line-${lineNumber}`);
+
     // Debe existir al menos una línea
     if (lines.length <= 1) {
+        const nombreInput = lineElement.querySelector('[name="nombre"]');
+        nombreInput.value = '';
+
+        lineElement.querySelector('[name="tiempo"]').value = '';
+        lineElement.querySelector('[name="miembro"]').selectedIndex = 0;
+
+
+        const subtareaId = nombreInput.dataset.subtareaId;
+        subtareas_eliminadas.push(subtareaId);
+
+        nombreInput.dataset.subtareaId = null;
+
         return;
     }
-
-    const lineElement = document.getElementById(`subtarea-line-${lineNumber}`);
     
     if (lineElement) {
         // Obtener id real de la subtarea
