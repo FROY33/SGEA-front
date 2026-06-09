@@ -1,3 +1,5 @@
+document.getElementById('nombreHeader').textContent = "Bienvenido " + sessionStorage.getItem('user_name') + "!";
+
 // - - - FUNCIONES GENERALES - - - 
 
 async function cargar_ne() {
@@ -74,8 +76,48 @@ async function cargar_ne() {
 
         document.body.appendChild(container);
 
+        await cargar_avatar_header();
+
     } catch (error) {
         console.error('Error de conexión:', error);
+    }
+}
+
+async function cargar_avatar_header() {
+    try {
+        const response = await fetch('https://sgea.onrender.com/perfil', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        document.getElementById('correoHeader').textContent = data.usuario;
+
+        // Actualizar el avatar
+        if (data.avatar_url) {
+            document.getElementById('avatarHeader').src = data.avatar_url;
+        }
+
+    } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+    }
+}
+
+function menu_perfil() {
+    const menu = document.getElementById('menuHeader');
+
+    if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+    } else {
+        menu.classList.add('hidden');
     }
 }
 

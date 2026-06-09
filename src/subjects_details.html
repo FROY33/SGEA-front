@@ -21,9 +21,36 @@
                     <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
                     <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Sereno</span>
                 </a>
-                <div class="flex items-center space-x-6">
-                    <a onclick="cerrar_sesion()" class="text-sm font-medium text-fg-brand hover:underline cursor-pointer">Cerrar sesión</a>
+                
+                <!-- Foto de perfil -->
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <span id="nombreHeader" class="mr-4 font-light"></span>
+                    <button id="buttonHeader" type="button" onclick="menu_perfil()" class="cursor-pointer flex text-sm bg-gray-200 focus:ring-3 focus:ring-gray-500/40 rounded-full md:me-0">
+                        <img class="w-9 h-9 rounded-full" src="assets/user_avatar.png" id="avatarHeader" alt="user photo">
+                    </button>
+
+                    <!-- Menu -->
+                    <div id="menuHeader" class="z-50 hidden absolute top-18 bg-white border border-gray-100 rounded-2xl shadow-lg w-44">
+                        <div class="px-4 py-3 text-sm border-b border-gray-200">
+                            <span class="block text-body truncate" id="correoHeader">usuario@gmail.com.com</span>
+                        </div>
+                        <ul class="p-2 text-sm text-body font-medium">
+                            <li>
+                                <a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mi perfil</a>
+                            </li>
+                            <li>
+                                <a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis equipos</a>
+                            </li>
+                            <li>
+                                <a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis materias</a>
+                            </li>
+                            <li>
+                                <a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
         </nav>
         <nav class="bg-gray-50 border-y border-gray-300">
@@ -266,11 +293,11 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
+     <!-- FOOTER -->
     <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
-        <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+        <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
             <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
-            <span class="self-center text-xl text-heading font-semibold whitespace-nowrap ml-3">Sereno</span>
+            <span class="self-center text-xl font-semibold whitespace-nowrap ml-3">Sereno</span>
         </a>
         <p class="my-6 text-gray-500">El mejor Task Manager de toda la UPIIZ.</p>
         <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900">
@@ -281,10 +308,7 @@
                 <a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a>
             </li>
             <li>
-                <a href="#actividades" class="mr-4 hover:underline md:mr-6 ">Actividades</a>
-            </li>
-            <li>
-                <a href="#calendario" class="mr-4 hover:underline md:mr-6">Calendario</a>
+                <a href="calendar.html" class="mr-4 hover:underline md:mr-6">Calendario</a>
             </li>
             <li>
                 <a href="#informe_completo" class="mr-4 hover:underline md:mr-6">Informe de estrés</a>

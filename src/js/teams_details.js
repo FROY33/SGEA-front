@@ -65,8 +65,13 @@ async function crear_actividad(indice, actividad) {
     const descripcion = article.querySelector('.descripcion');
     descripcion.textContent = `"${actividad.descripcion || ''}"`;
 
+    // const token = sessionStorage.getItem('access_token');
+    // const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    // const usuario_id = decodedToken.sub;
+
     // Botón eliminar
     const btnCrear = article.querySelector('.btn-crear');
+    // usuario_id == equipoActualGlobal.creador_id ? btnCrear.disabled = false : btnCrear.disabled = true;
     btnCrear.onclick = () => mostrarSubtareas(actividad.id);
 
     // Cargar subtareas
@@ -116,7 +121,7 @@ async function crear_actividad(indice, actividad) {
             const button_guardarCambios = document.createElement('button');
             button_guardarCambios.type = 'button';
             button_guardarCambios.id = `btnGuardar${actividad.id}`;
-            button_guardarCambios.className = 'mt-auto py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm';
+            button_guardarCambios.className = 'lg:mt-auto mt-4 py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm';
             button_guardarCambios.textContent = 'Guardar cambios';
 
             button_guardarCambios.onclick = () => check_subtareas(actividad.id, subtareas);
@@ -298,12 +303,14 @@ async function cargar_equipo() {
             const avatar = await obtener_avatar(miembro.usuario_id);
             const integrante = document.createElement("div");
 
+            const creador = miembro.usuario_id == equipoActual.creador_id ? true : false;
+
             integrante.className =
                 "flex justify-left items-center";
 
             integrante.innerHTML = `
-                <img class="w-10 h-10 mr-4 rounded-full" src="${avatar}">
-                <p class="font-light text-lg hidden md:block text-gray-500">${miembro.nombre_miembro}</p>
+                <img class="w-10 h-10 mr-4 rounded-full ${creador ? 'border-3 border-gray-500/60' : ''}" src="${avatar}">
+                <p class="font-light text-lg hidden md:block text-gray-500 ${creador ? 'font-semibold' : ''}" ${creador ? 'title="Creador de equipo"' : ''}>${miembro.nombre_miembro}</p>
             `;
 
             contenedor.appendChild(integrante);

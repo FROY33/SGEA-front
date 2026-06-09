@@ -636,6 +636,11 @@ function borrar_linea_integrante(lineNumber) {
 // - - - FUNCIONES DE ENLACES - - -
 
 function abrir_actividades() {
+    if (!rubrica_flag) {
+        alert('Debes agregar la rúbrica de evaluación antes de empezar a crear actividades');
+        return;
+    }
+
     window.location.href = `view_activities.html?id=${id}&equipo=${equipo_id}`;
 }
 
