@@ -345,47 +345,9 @@ async function guardarActividades() {
 }
 
 async function eliminarActividad(actividadId) {
-    try {
-        const responseG = await fetch(`https://sgea.onrender.com/perfiles/estresores/2`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            }
-        });
-
-        if (!responseG.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-        const estresor = await responseG.json();
-        peso = estresor.peso;
-        const responseA = await fetch(`https://sgea.onrender.com/actividad/usuario/${sessionStorage.getItem('user_id')}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            }
-        });
-
-        const actividades = await response.json();
-        numActividades = actividades.length;
-
-        const responseP = await fetch(`https://sgea.onrender.com/perfiles/estresores/2`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ peso: peso - peso/numActividades })
-        });
-
-        if (!responseP.ok) {
-            throw new Error(`Error: ${responseP.statusText}`);
-        }
-
-    } catch (error) {
-        console.error('Error al actulizar el nivel de estrés:', error);
-    }
+    const token = sessionStorage.getItem('access_token');
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const usuario_id = decodedToken.sub;
     
     try {
         const response = await fetch(`https://sgea.onrender.com/actividad/${actividadId}`, {
@@ -398,6 +360,50 @@ async function eliminarActividad(actividadId) {
 
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
+        }
+
+        try {
+            const responseG = await fetch(`https://sgea.onrender.com/perfil/estresores/2`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                }
+            });
+
+            if (!responseG.ok) {
+                throw new Error(`Error: ${responseG.statusText}`);
+            }
+
+            const estresor = await responseG.json();
+            let peso = estresor[0].peso;
+
+            const responseA = await fetch(`https://sgea.onrender.com/actividad/usuario/${usuario_id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                }
+            });
+
+            const actividades = await responseA.json();
+            numActividades = actividades.length;
+
+            const responseP = await fetch(`https://sgea.onrender.com/perfil/estresores/2`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                },
+                body: JSON.stringify({ peso: peso - peso/numActividades })
+            });
+
+            if (!responseP.ok) {
+                throw new Error(`Error: ${responseP.statusText}`);
+            }
+
+        } catch (error) {
+            console.error('Error al actulizar el nivel de estrés:', error);
         }
 
         window.location.href = `view_activities.html?id=${id}&equipo=${equipoID}`;
