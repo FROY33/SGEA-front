@@ -1,6 +1,4 @@
-// conectar-google.js
 
-// 1. Función para obtener el UUID real del alumno desde la sesión de Supabase Auth
 function obtenerUsuarioIdActual() {
   // Supabase guarda por defecto la sesión en el localStorage bajo la llave 'sb-auth-token'
   const sessionString = localStorage.getItem('sb-auth-token'); 
@@ -16,7 +14,6 @@ function obtenerUsuarioIdActual() {
   }
 }
 
-// 2. Escuchador del evento clic en el botón "Conectar Calendar"
 document.getElementById('btnConectarGoogle').addEventListener('click', (e) => {
   const usuarioId = obtenerUsuarioIdActual();
   
@@ -26,7 +23,6 @@ document.getElementById('btnConectarGoogle').addEventListener('click', (e) => {
     return;
   }
 
-  // 3. Feedback visual para el estudiante
   e.target.disabled = true;
   e.target.textContent = 'Redirigiendo a Google...';
 
@@ -35,7 +31,7 @@ document.getElementById('btnConectarGoogle').addEventListener('click', (e) => {
   const redirectUri = 'https://sgea.onrender.com/auth/google/callback';
   const scope = encodeURIComponent('https://www.googleapis.com/auth/calendar.events');
 
-  // 5. Construcción de la URL dinámica inyectando el UUID en el parámetro 'state'
+ 
   const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline&prompt=consent&state=${usuarioId}`;
 
   // 6. Redirección final

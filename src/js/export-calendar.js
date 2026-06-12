@@ -1,4 +1,3 @@
-const API_URL = 'https://sgea.onrender.com';
 
 document.getElementById('btnExportarTodas').addEventListener('click', async () => {
   const token = obtenerTokenSupabase();
