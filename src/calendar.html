@@ -97,14 +97,7 @@
                     <div class="col-span-12 xl:col-span-5 pt-8">
                         <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Próximas
                             Actividades</h2>
-                        <div class="actividad" data-id="ACT_ID_AQUI">
-                            <span class="nombre">Nombre de la actividad</span>
-                            <span class="fecha">Fecha de entrega</span>
-                            <button class="btn-exportar" data-id="ACT_ID_AQUI">
-                                📅 Exportar a Google Calendar
-                            </button>
-                            <button id="btnExportarTodas">Exportar todas las actividades</button>
-                        </div>
+                        
                         <div id="eventosContainer" class="flex gap-5 flex-col">
                             <!-- Skeleton de carga -->
                             <div class="p-6 rounded-xl bg-white animate-pulse">
@@ -234,6 +227,14 @@
                     <button id="btnConectarGoogle" class="mr-4 hover:underline md:mr-6">Conectar Google
                         Calendar</button>
                 </li>
+                <li>
+                    <button id="btnExportarActividades  ">Exportar una actividad</button>
+                </li>
+                <li>
+                    <button id="btnExportarTodas">Exportar todas las actividades</button>
+                </li>
+
+
             </ul>
             <span class="text-sm text-gray-500 sm:text-center">© 2026 <a class="hover:underline">Sereno™</a>. All Rights
                 Reserved.</span>
