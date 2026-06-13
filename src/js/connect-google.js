@@ -1,90 +1,73 @@
-function obtenerUsuarioIdActual() {
-
-    // Buscar automáticamente la clave de sesión de Supabase
-    const claveSesion = Object.keys(localStorage)
-        .find(key =>
-            key.startsWith('sb-') &&
-            key.includes('auth-token')
-        );
-
-    if (!claveSesion) {
-        console.error('No se encontró ninguna sesión de Supabase en localStorage');
-        return null;
-    }
-
-    console.log('Clave encontrada:', claveSesion);
-
-    const sessionString = localStorage.getItem(claveSesion);
-
-    if (!sessionString) {
-        console.error('La sesión está vacía');
-        return null;
-    }
-
-    try {
-
-        const session = JSON.parse(sessionString);
-
-        console.log('Contenido de sesión:', session);
-
-        // Diferentes formatos según la versión de Supabase
-        const usuarioId =
-            session?.user?.id ||
-            session?.currentSession?.user?.id ||
-            session?.session?.user?.id ||
-            null;
-
-        console.log('Usuario ID encontrado:', usuarioId);
-
-        return usuarioId;
-
-    } catch (error) {
-        console.error('Error al parsear la sesión:', error);
-        return null;
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 
     const btn = document.getElementById('btnconectargoogle');
 
     if (!btn) {
-        console.error('No existe el botón btnconectargoogle');
+        console.error('No se encontró el botón btnconectargoogle');
         return;
     }
 
     btn.addEventListener('click', () => {
 
-    const token = sessionStorage.getItem('access_token');
+        try {
 
-const decodedToken = JSON.parse(
-    atob(token.split('.')[1])
-);
+            const token = sessionStorage.getItem('access_token');
 
-const usuarioId = decodedToken.sub;
+            if (!token) {
+                console.error('No se encontró access_token en sessionStorage');
+                return;
+            }
 
-const clientId =
-'957656718778-r5k64rslpr2vnf44c7ga0gq976jh12iq.apps.googleusercontent.com';
+            const decodedToken = JSON.parse(
+                atob(token.split('.')[1])
+            );
 
-const redirectUri =
-encodeURIComponent(
-'https://sgea.onrender.com/auth/google/callback'
-);
+            const usuarioId = decodedToken.sub;
 
-const scope =
-encodeURIComponent(
-'https://www.googleapis.com/auth/calendar.events'
-);
+            if (!usuarioId) {
+                console.error('No se encontró el ID del usuario en el token');
+                return;
+            }
 
-const googleAuthUrl =
-`https://accounts.google.com/o/oauth2/v2/auth` +
-`?client_id=${clientId}` +
-`&redirect_uri=${redirectUri}` +
-`&response_type=code` +
-`&scope=${scope}` +
-`&access_type=offline` +
-`&prompt=consent` +
-`&state=${usuarioId}`;
+            console.log('Usuario ID:', usuarioId);
 
-console.log(googleAuthUrl);
-});});
+            btn.disabled = true;
+            btn.textContent = 'Redirigiendo a Google...';
+
+            const clientId =
+                '957656718778-r5k64rslpr2vnf44c7ga0gq976jh12iq.apps.googleusercontent.com';
+
+            const redirectUri = encodeURIComponent(
+                'https://sgea.onrender.com/auth/google/callback'
+            );
+
+            const scope = encodeURIComponent(
+                'https://www.googleapis.com/auth/calendar.events'
+            );
+
+            const googleAuthUrl =
+                `https://accounts.google.com/o/oauth2/v2/auth` +
+                `?client_id=${clientId}` +
+                `&redirect_uri=${redirectUri}` +
+                `&response_type=code` +
+                `&scope=${scope}` +
+                `&access_type=offline` +
+                `&prompt=consent` +
+                `&state=${encodeURIComponent(usuarioId)}`;
+
+            console.log('OAuth URL:', googleAuthUrl);
+
+            window.location.href = googleAuthUrl;
+
+        } catch (error) {
+
+            console.error(
+                'Error obteniendo usuario desde el JWT:',
+                error
+            );
+
+        }
+
+    });
+
+});
