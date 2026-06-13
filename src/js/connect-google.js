@@ -53,45 +53,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
 
-        const usuarioId = obtenerUsuarioIdActual();
+    const token = sessionStorage.getItem('access_token');
 
-        if (!usuarioId) {
-            console.error(
-                'No se pudo redirigir: No se encontró un ID de usuario activo.'
-            );
-            return;
-        }
+    const decodedToken = JSON.parse(
+        atob(token.split('.')[1])
+    );
 
-        btn.disabled = true;
-        btn.textContent = 'Redirigiendo a Google...';
+    const usuarioId = decodedToken.sub;
 
-        const clientId =
-            '957656718778-r5k64rslpr2vnf44c7ga0gq976jh12iq.apps.googleusercontent.com';
+    console.log("ID:", usuarioId);
 
-        const redirectUri = encodeURIComponent(
-            'https://sgea.onrender.com/auth/google/callback'
-        );
-
-        const scope = encodeURIComponent(
-            'https://www.googleapis.com/auth/calendar.events'
-        );
-
-        const state = encodeURIComponent(usuarioId);
-
-        const googleAuthUrl =
-            `https://accounts.google.com/o/oauth2/v2/auth` +
-            `?client_id=${clientId}` +
-            `&redirect_uri=${redirectUri}` +
-            `&response_type=code` +
-            `&scope=${scope}` +
-            `&access_type=offline` +
-            `&prompt=consent` +
-            `&state=${state}`;
-
-        console.log('URL OAuth:', googleAuthUrl);
-
-        window.location.href = googleAuthUrl;
-    });
+});
 });
