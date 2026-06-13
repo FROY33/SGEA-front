@@ -1,6 +1,6 @@
 
 document.getElementById('btnExportarTodas').addEventListener('click', async () => {
-
+  const API_URL = 'https://sgea.onrender.com'; 
   const token = sessionStorage.getItem('access_token');
 
   if (!token) {
