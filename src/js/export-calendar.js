@@ -1,6 +1,5 @@
 
 document.getElementById('btnExportarTodas').addEventListener('click', async () => {
-  const API_URL = 'https://sgea.onrender.com'; 
   const token = sessionStorage.getItem('access_token');
 
   if (!token) {
@@ -16,7 +15,7 @@ document.getElementById('btnExportarTodas').addEventListener('click', async () =
   try {
 
     const response = await fetch(
-      `${API_URL}/actividades/exportar-todas`,
+      'https://sgea.onrender.com/actividad/exportar-todas',
       {
         method: 'POST',
         headers: {
