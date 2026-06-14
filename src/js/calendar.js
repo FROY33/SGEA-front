@@ -176,7 +176,7 @@ function mostrar_eventos_proximos() {
     if (eventosPróximos.length === 0) {
         const mensaje = document.createElement('div');
         mensaje.className = 'p-6 rounded-xl bg-white text-center';
-        mensaje.innerHTML = '<p class="text-gray-600">No hay actividades próximas en los próximos 7 días</p>';
+        mensaje.innerHTML = '<p class="text-gray-600 bg-gray-50 p-4 rounded-2xl">No hay actividades próximas en los próximos 7 días</p>';
         eventosContainer.appendChild(mensaje);
         return;
     }
