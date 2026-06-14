@@ -10,6 +10,7 @@
 
     <!-- Título y logo -->
     <title>Materias - Sereno</title>
+    <link rel="icon" href="assets/icono.ico" type="image/x-icon">
 </head>
 
 <body class="bg-gray-50">
@@ -20,9 +21,36 @@
                     <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
                     <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Sereno</span>
                 </a>
-                <div class="flex items-center space-x-6">
-                    <a onclick="cerrar_sesion()" class="text-sm font-medium text-fg-brand hover:underline cursor-pointer">Cerrar sesión</a>
+                
+                <!-- Foto de perfil -->
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <span id="nombreHeader" class="mr-4 font-light"></span>
+                    <button id="buttonHeader" type="button" onclick="menu_perfil()" class="cursor-pointer flex text-sm bg-gray-200 focus:ring-3 focus:ring-gray-500/40 rounded-full md:me-0">
+                        <img class="w-9 h-9 rounded-full" src="assets/user_avatar.png" id="avatarHeader" alt="user photo">
+                    </button>
+
+                    <!-- Menu -->
+                    <div id="menuHeader" class="z-50 hidden absolute top-18 bg-white border border-gray-100 rounded-2xl shadow-lg w-44">
+                        <div class="px-4 py-3 text-sm border-b border-gray-200">
+                            <span class="block text-body truncate" id="correoHeader">usuario@gmail.com.com</span>
+                        </div>
+                        <ul class="p-2 text-sm text-body font-medium">
+                            <li>
+                                <a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mi perfil</a>
+                            </li>
+                            <li>
+                                <a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis equipos</a>
+                            </li>
+                            <li>
+                                <a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis materias</a>
+                            </li>
+                            <li>
+                                <a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
         </nav>
         <nav class="bg-gray-50 border-y border-gray-300">
@@ -30,18 +58,106 @@
                 <div class="flex items-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
                         <li>
-                            <a href="dashboard.html" class="text-heading hover:underline" aria-current="page">Inicio</a>
+                            <a href="dashboard.html" class="text-heading hover:underline" >Inicio</a>
                         </li>
                         <li>
                             <a href="profile.html" class="text-heading hover:underline">Perfil</a>
                         </li>
                         <li>
-                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
+                            <a href="subjects.html" class="text-heading hover:underline" aria-current="page">Materias</a>
+                        </li>
+                        <li>
+                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <style>
+    :root {
+        --sereno-sage: #8aab96;
+        --sereno-sage-light: #c8ddd0;
+        --sereno-sage-dark: #5f8a6f;
+        --sereno-beige: #c4ae8a;
+        --sereno-beige-light: #ede5d8;
+    }
+
+    body {
+        background-color: #f7f9f8 !important;
+        background-image:
+            radial-gradient(circle at 20% 20%, rgba(138, 171, 150, 0.07) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(141, 164, 181, 0.07) 0%, transparent 50%),
+            radial-gradient(circle at 60% 10%, rgba(196, 174, 138, 0.05) 0%, transparent 40%);
+    }
+
+    nav.bg-gray-50 {
+        border-top: 2px solid var(--sereno-sage-light) !important;
+        background-color: #f7f9f8 !important;
+    }
+
+    nav a[aria-current="page"] {
+        color: var(--sereno-sage-dark) !important;
+        font-weight: 600;
+        border-bottom: 2px solid var(--sereno-sage);
+        padding-bottom: 2px;
+    }
+
+    /* Card de cada materia: borde superior beige sutil */
+    #contenedorMaterias article {
+        border-top: 3px solid var(--sereno-beige) !important;
+        box-shadow: 0 2px 12px rgba(196, 174, 138, 0.12), 0 1px 4px rgba(0,0,0,0.05) !important;
+    }
+
+    /* Badge "Materia" en tono beige */
+    #contenedorMaterias article span.bg-gray-100 {
+        background-color: var(--sereno-beige-light) !important;
+        color: #8a6f4a !important;
+    }
+
+    /* Link "Detalles" en sage */
+    #contenedorMaterias article a.font-medium {
+        color: var(--sereno-sage-dark) !important;
+    }
+
+    /* Botón "Crear materia" principal */
+    button[onclick="mostrarCrear()"] {
+        background-color: var(--sereno-sage) !important;
+        border-color: var(--sereno-sage) !important;
+        color: white !important;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
+    }
+    button[onclick="mostrarCrear()"]:hover {
+        background-color: var(--sereno-sage-dark) !important;
+    }
+
+    /* Botón "Crear materia" dentro del modal */
+    button[onclick="save_materia()"] {
+        background-color: var(--sereno-sage) !important;
+        border-color: var(--sereno-sage) !important;
+        color: white !important;
+        transition: background-color 0.2s ease;
+    }
+    button[onclick="save_materia()"]:hover {
+        background-color: var(--sereno-sage-dark) !important;
+    }
+
+    /* Card sección principal */
+    main > section {
+        border-left: 4px solid var(--sereno-sage) !important;
+        box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
+    }
+
+    footer {
+        border-top: 2px solid var(--sereno-sage-light) !important;
+    }
+    footer a:hover {
+        color: var(--sereno-sage-dark) !important;
+    }
+</style>
     </header>
 
     <!-- MATERIAS -->
@@ -50,11 +166,11 @@
             <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis materias</h2>
                 <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todas tus materias.</p>
-            </div> 
+            </div>
             <div class="grid gap-8 lg:grid-cols-2" id="contenedorMaterias">
 
                 <!-- Materias insertadas con js -->
-                <article id="materia1_article" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md">
+                <article id="materia_ejemplo" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md max-w-xl">
                     <div class="flex justify-between items-center mb-5 text-gray-500">
                         <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Materia</span>
                     </div>
@@ -62,7 +178,7 @@
                     <p class="mb-5 font-light text-gray-500">No tienes actividades pendientes.</p>
                     <div class="flex justify-between items-center">
                         <div class="flex items-center space-x-4">
-                            <img class="w-7 h-7 rounded-full" src="assets/user_avatar.png" alt="User Avatar"/>
+                            <img class="avatarUsuario w-7 h-7 rounded-full" src="assets/user_avatar.png" alt="User Avatar"/>
                             <span class="font-medium" id="nombreUsuario"></span>
                         </div>
                         <a href="subjects_details.html" class="inline-flex items-center font-medium text-gray-800 hover:underline">
@@ -71,16 +187,54 @@
                     </div>
                 </article>
 
+            </div>
+
+            <div id="loading" class="gap-8 lg:grid-cols-2 hidden">
+                <div class="max-w-sm p-4 animate-pulse md:p-6">
+                    <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full"></div>
+                    <div class="flex items-center mt-4">
+                        <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        <div>
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                            <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+                <div class="max-w-sm p-4 animate-pulse md:p-6">
+                    <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full"></div>
+                    <div class="flex items-center mt-4">
+                        <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        <div>
+                            <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                            <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div></div>
             <div class="flex justify-center mx-6 mb-6">
-                <button onclick="mostrarCrear()" class="w-full text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+                <button onclick="mostrarCrear()" class="w-full cursor-pointer text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
                 Crear materia
                 </button>
             </div>
         </section>
 
         <!-- Div para crear materia (OCULTO) -->
-        <div id="divCrearMateria" tabindex="-1" aria-hidden="true" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+        <div id="divCrearMateria" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
             <div class="relative p-4 w-full max-w-2xl h-fit md:h-auto">
 
                 <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
@@ -88,7 +242,7 @@
                     <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
                         <h3 class="text-lg font-semibold text-gray-900">Crear materia</h3>
                         <button type="button" onclick="ocultarCrear()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
 
@@ -99,7 +253,7 @@
                                 <input type="text" name="nombre_materia" id="nombre_materia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Nombre de la materia" required="">
                             </div>
                             <div class="w-full">
-                                <label for="calificacion_profesor" class="block mb-2 text-sm font-medium text-gray-900">Calificación profesor</label>
+                                <label for="calificacion_profesor" class="block mb-2 text-sm font-medium text-gray-900">Calificación profesor (opcional)</label>
                                 <select id="calificacion_profesor" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
                                     <option value="" selected="">Selecciona una opción</option>
                                     <option value="1">1</option>
@@ -110,7 +264,7 @@
                                 </select>
                             </div>
                             <div class="w-full">
-                                <label for="dificultad_examenes" class="block mb-2 text-sm font-medium text-gray-900">Dificultad de examenes</label>
+                                <label for="dificultad_examenes" class="block mb-2 text-sm font-medium text-gray-900">Dificultad de examenes (opcional)</label>
                                 <select id="dificultad_examenes" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
                                     <option value="" selected="">Selecciona una opción</option>
                                     <option value="1">1</option>
@@ -121,7 +275,7 @@
                                 </select>
                             </div>
                             <div class="w-full">
-                                <label for="autonomia_percibida" class="block mb-2 text-sm font-medium text-gray-900">Autonomía percibida</label>
+                                <label for="autonomia_percibida" class="block mb-2 text-sm font-medium text-gray-900">Autonomía percibida (opcional)</label>
                                 <select id="autonomia_percibida" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
                                     <option value="" selected="">Selecciona una opción</option>
                                     <option value="1">1</option>
@@ -132,7 +286,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" onclick="save_materia()" class="p-1.5 ml-auto inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                        <button type="submit" onclick="save_materia()" class="cursor-pointer p-1.5 ml-auto inline-flex pr-4 items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
                             <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                             Crear materia
                         </button>
@@ -142,11 +296,11 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
+     <!-- FOOTER -->
     <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
-        <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+        <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
             <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
-            <span class="self-center text-xl text-heading font-semibold whitespace-nowrap ml-3">Sereno</span>
+            <span class="self-center text-xl font-semibold whitespace-nowrap ml-3">Sereno</span>
         </a>
         <p class="my-6 text-gray-500">El mejor Task Manager de toda la UPIIZ.</p>
         <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900">
@@ -154,13 +308,10 @@
                 <a href="subjects.html" class="mr-4 hover:underline md:mr-6 ">Materias</a>
             </li>
             <li>
-                <a href="#equipos" class="mr-4 hover:underline md:mr-6">Equipos</a>
+                <a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a>
             </li>
             <li>
-                <a href="#actividades" class="mr-4 hover:underline md:mr-6 ">Actividades</a>
-            </li>
-            <li>
-                <a href="#calendario" class="mr-4 hover:underline md:mr-6">Calendario</a>
+                <a href="calendar.html" class="mr-4 hover:underline md:mr-6">Calendario</a>
             </li>
             <li>
                 <a href="#informe_completo" class="mr-4 hover:underline md:mr-6">Informe de estrés</a>
@@ -175,5 +326,6 @@
 
 <!-- Scripts -->
 <script src="js/subjects.js"></script>
+<script src="main.js"></script>
 
 </html>

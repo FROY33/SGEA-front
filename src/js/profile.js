@@ -1,5 +1,7 @@
-const divNombre = document.getElementById('nombreUsuario');
-divNombre.textContent = sessionStorage.getItem('user_name');
+const divNombre1 = document.getElementById('nombreUsuario1');
+const divNombre2 = document.getElementById('nombreUsuario2');
+divNombre1.textContent = sessionStorage.getItem('user_name');
+divNombre2.textContent = sessionStorage.getItem('user_name');
 
 // Cargar datos del perfil desde el endpoint
 async function cargarPerfil() {
@@ -42,6 +44,14 @@ async function cargarPerfil() {
         document.getElementById('semestre').value = data.semestre;
         document.getElementById('promedio').value = data.promedio_general;
 
+        document.querySelectorAll(".loading").forEach((elemento) => {
+            elemento.classList.add("hidden");
+        });
+
+        document.querySelectorAll(".info_perfil").forEach((elemento) => {
+            elemento.classList.remove("hidden");
+        });
+
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
     }
@@ -53,11 +63,13 @@ document.addEventListener('DOMContentLoaded', cargarPerfil);
 function mostrarPerfil() {
     const divPerfil = document.getElementById('divEditarPerfil');
     divPerfil.style.display="flex";
+    document.body.style.overflow = "hidden";
 }
 
 function ocultarPerfil() {
     const divPerfil = document.getElementById('divEditarPerfil');
     divPerfil.style.display="none";
+    document.body.style.overflow = "auto";
 }
 
 function cerrar_sesion() {
@@ -96,7 +108,13 @@ async function upload_avatar(file) {
 // Función para actualizar el perfil
 async function update_perfil(event) {
     event.preventDefault();
-    
+
+    const btnActualizar = document.getElementById('btnActualizar');
+
+    // Cambiar estado del botón
+    btnActualizar.disabled = true;
+    btnActualizar.innerHTML = '<svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>Actualizando...'
+
     try {
         // Obtener valores del formulario
         const usuario = document.getElementById('name').value.trim();
@@ -136,14 +154,16 @@ async function update_perfil(event) {
             console.log('Subiendo avatar:', file.name);
             await upload_avatar(file);
         }
-
-        alert('¡Perfil actualizado correctamente!');
         
         // Recargar los datos del perfil
         await cargarPerfil();
         
         // Cerrar el modal
         ocultarPerfil();
+
+        // Cambiar estado del botón
+        btnActualizar.disabled = true;
+        btnActualizar.innerHTML = '<svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>Actualizar perfil'
 
     } catch (error) {
         console.error('Error al actualizar el perfil:', error);

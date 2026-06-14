@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const questionsContainer = document.getElementById('questionsContainer');
     const groups = document.querySelectorAll('.questions-group');
     const prevBtn = document.getElementById('prevBtn');
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
-    prevBtn.addEventListener('click', function(e) {
+    prevBtn.addEventListener('click', function (e) {
         e.preventDefault();
 
         if (currentGroup > 0) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    nextBtn.addEventListener('click', async function(e) {
+    nextBtn.addEventListener('click', async function (e) {
         e.preventDefault();
 
         if (!isGroupAnswered()) {
@@ -108,22 +108,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         return values.length ? sum / values.length : 0;
                     }
 
-                    const factor1 = Math.round(avgForQuestionRange(1)); // preguntas 1-3 -> id 3
-                    const factor2 = Math.round(avgForQuestionRange(4)); // preguntas 4-6 -> id 4
-                    const factor3 = Math.round(avgForQuestionRange(7)); // preguntas 7-9 -> id 5
-                    const factor4 = Math.round(avgForQuestionRange(10)); // preguntas 10-12 -> id 2
+                    const factor1 = avgForQuestionRange(1); // preguntas 1-3 -> id 3
+                    const factor2 = avgForQuestionRange(4); // preguntas 4-6 -> id 4
+                    const factor3 = avgForQuestionRange(7); // preguntas 7-9 -> id 5
+                    const factor4 = avgForQuestionRange(10); // preguntas 10-12 -> id 2
 
                     // Los que aún no calculamos los dejamos en medio
                     const payload = {
                         factores: [
-                            { factor_id: 1, peso: 3 },
                             { factor_id: 2, peso: factor4 },
                             { factor_id: 3, peso: factor1 },
                             { factor_id: 4, peso: factor2 },
-                            { factor_id: 5, peso: factor3 },
-                            { factor_id: 6, peso: 3 },
-                            { factor_id: 7, peso: 3 },
-                            { factor_id: 8, peso: 3 }
+                            { factor_id: 5, peso: factor3 }
                         ]
                     };
 
@@ -151,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     alert('Error de conexión. Intenta nuevamente.');
                     nextBtn.disabled = false;
                     nextBtn.textContent = 'Enviar';
-                }              
+                }
             } else {
                 alert('Por favor, completa todas las preguntas.');
             }

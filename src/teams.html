@@ -9,15 +9,17 @@
     <link href="./output.css" rel="stylesheet">
 
     <!-- Título y logo -->
-    <title>Dashboard - Sereno</title>
+    <title>Equipos - Sereno</title>
     <link rel="icon" href="assets/icono.ico" type="image/x-icon">
     <style>
     :root {
         --sereno-sage: #8aab96;
         --sereno-sage-light: #c8ddd0;
-        --sereno-blue: #8da4b5;
-        --sereno-beige: #c4ae8a;
         --sereno-sage-dark: #5f8a6f;
+        --sereno-beige: #c4ae8a;
+        --sereno-beige-light: #ede5d8;
+        --sereno-blue: #8da4b5;
+        --sereno-blue-light: #dce6ed;
     }
 
     body {
@@ -40,27 +42,39 @@
         padding-bottom: 2px;
     }
 
-    main section {
+    /* Card principal */
+    main > section {
         border-left: 4px solid var(--sereno-sage) !important;
         box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
     }
 
-    main a[href="#informe_completo"] {
-        background-color: var(--sereno-sage) !important;
-        border-color: var(--sereno-sage) !important;
-        color: white !important;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
-        box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
+    /* Tarjeta de equipo: borde izquierdo azul */
+    #contenedorEquipos article .rounded-l-lg {
+        border-left: 3px solid var(--sereno-blue) !important;
+        box-shadow: 0 2px 12px rgba(141, 164, 181, 0.15) !important;
     }
-    main a[href="#informe_completo"]:hover {
-        background-color: var(--sereno-sage-dark) !important;
-        box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
+
+    /* Badge "Equipo" en tono azul */
+    #contenedorEquipos article span.bg-gray-100 {
+        background-color: var(--sereno-blue-light) !important;
+        color: #4a6a80 !important;
+    }
+
+    /* Panel lateral "Ver detalles" en sage */
+    #contenedorEquipos article .rounded-r-lg {
+        background-color: var(--sereno-sage-light) !important;
+        transition: background-color 0.2s ease;
+    }
+    #contenedorEquipos article .rounded-r-lg:hover {
+        background-color: var(--sereno-sage) !important;
+    }
+    #contenedorEquipos article .rounded-r-lg span {
+        color: var(--sereno-sage-dark) !important;
     }
 
     footer {
         border-top: 2px solid var(--sereno-sage-light) !important;
     }
-
     footer a:hover {
         color: var(--sereno-sage-dark) !important;
     }
@@ -73,15 +87,15 @@
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-7xl p-4">
                 <a href="dashboard.html" class="flex items-center space-x-3">
                     <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
-                    <span class="self-center text-xl font-semibold whitespace-nowrap">Sereno</span>
+                    <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Sereno</span>
                 </a>
-
+                
                 <!-- Foto de perfil -->
                 <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <span id="nombreHeader" class="mr-4 font-light"></span>
                     <button id="buttonHeader" type="button" onclick="menu_perfil()" class="cursor-pointer flex text-sm bg-gray-200 focus:ring-3 focus:ring-gray-500/40 rounded-full md:me-0">
                         <img class="w-9 h-9 rounded-full" src="assets/user_avatar.png" id="avatarHeader" alt="user photo">
-                    </button> 
+                    </button>
 
                     <!-- Menu -->
                     <div id="menuHeader" class="z-50 hidden absolute top-18 bg-white border border-gray-100 rounded-2xl shadow-lg w-44">
@@ -112,16 +126,16 @@
                 <div class="flex items-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
                         <li>
-                            <a href="dashboard.html" class="hover:underline" aria-current="page">Inicio</a>
+                            <a href="dashboard.html" class="text-heading hover:underline" >Inicio</a>
                         </li>
                         <li>
-                            <a href="profile.html" class="hover:underline">Perfil</a>
+                            <a href="profile.html" class="text-heading hover:underline">Perfil</a>
                         </li>
                         <li>
-                            <a href="subjects.html" class="hover:underline">Materias</a>
+                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
                         </li>
                         <li>
-                            <a href="teams.html" class="hover:underline">Equipos</a>
+                            <a href="teams.html" class="text-heading hover:underline" aria-current="page">Equipos</a>
                         </li>
                         <li>
                             <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
@@ -132,37 +146,58 @@
         </nav>
     </header>
 
+    <!-- EQUIPOS -->
     <main class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-
-        <!-- NIVEL DE ESTRES -->
-        <section class="w-fit rounded-lg shadow mt-36 xl:p-0 bg-white">
-            <div class="gap-8 items-center py-8 px-4 mx-auto max-w-7xl xl:gap-16 md:grid md:grid-cols-2 sm:py-14 lg:px-14">
-                <img class="h-100 w-200 object-contain" src="assets/logo.jpeg" alt="sereno image">
-                <div class="mt-4 md:mt-0 flex flex-col">
-
-                    <div class="max-w-sm animate-pulse loading mb-6">
-                        <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
-                        <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
-                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
-                        <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
-                        <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
-                        <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
-                        <span class="sr-only">Loading...</span>
-                    </div>
-
-                    <div class="info_dashboard hidden">
-                        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">Nivel de estrés: <span id="nivelEstres">Medio</span></h2>
-                        <p class="mb-6 font-light text-gray-500 text-justify md:text-lg">No olvides hacer ejercicio! La actividad física puede aumentar las endorfinas y otras sustancias químicas neuronales naturales que aumentan su sensación de bienestar.</p>
-                    </div>
-
-                    <a href="#informe_completo" class="flex max-w-fit text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5">Ver informe completo</a>
-                    
-                </div>
+        <section class="w-auto rounded-lg shadow mt-36 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-20">
+            <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+                <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis equipos</h2>
+                <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todos tus equipos.</p>
             </div>
-        </section>
+            <div id="contenedorEquipos" class="grid gap-6 justify-items-center">
+
+                <article id="equipo_ejemplo" class="flex w-full max-w-2xl">
+                    <div class="rounded-l-lg bg-white py-4 pl-4 pr-6 mt-8 shadow-md w-full">
+                        <div class="flex justify-between items-center mb-5 text-gray-500">
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Equipo</span>
+                        </div>
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Equipo <span id="nombre_equipo">ejemplo</span></h2>
+                        <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 md:pb-5"></div>
+                        <p class="mt-2 font-light text-gray-500">Integrantes: <span id="integrantes_equipo">Aqui se mostrarán los integrantes</span></p>
+                        <div class="mt-6 mb-2">
+                            <div class="flex -space-x-4 rtl:space-x-reverse">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <img class="w-10 h-10 rounded-full" src="assets/user_avatar.png">
+                                <span class="flex items-center justify-center w-10 h-10 text-xs font-medium text-gray-500 border border-gray-300 bg-gray-100 rounded-full">+1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center rounded-r-lg min-w-23 bg-gray-100 shadow-md"><span class="rotate-270 text-gray-400 w-full hover:text-gray-500">Ver detalles</span></div>
+                </article>
+
+            </div>
+            
+            <div id="loading" class="hidden max-w-sm p-4 animate-pulse md:p-6">
+                <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                <div class="h-2 bg-neutral-400 rounded-full"></div>
+                <div class="flex items-center mt-4">
+                    <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                    <div>
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                        <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                    </div>
+                </div>
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div></section>
     </main>
 
-    <!-- FOOTER -->
+     <!-- FOOTER -->
     <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
         <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
             <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
@@ -191,6 +226,7 @@
 </body>
 
 <!-- Scripts -->
-<script src="js/dashboard.js"></script>
+<script src="js/teams.js"></script>
+<script src="main.js"></script>
 
 </html>

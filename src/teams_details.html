@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Metadatos -->
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Archivo generado css tailwind -->
+    <link href="./output.css" rel="stylesheet">
+
+    <!-- Título y logo -->
+    <title>Equipos - Sereno</title>
+    <link rel="icon" href="assets/icono.ico" type="image/x-icon">
+</head>
+
+<body class="bg-gray-50">
+    <header class="fixed w-full z-20 top-0 inset-s-0">
+        <nav class="bg-white">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-7xl p-4">
+                <a href="dashboard.html" class="flex items-center space-x-3">
+                    <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
+                    <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Sereno</span>
+                </a>
+                
+                <!-- Foto de perfil -->
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <span id="nombreHeader" class="mr-4 font-light"></span>
+                    <button id="buttonHeader" type="button" onclick="menu_perfil()" class="cursor-pointer flex text-sm bg-gray-200 focus:ring-3 focus:ring-gray-500/40 rounded-full md:me-0">
+                        <img class="w-9 h-9 rounded-full" src="assets/user_avatar.png" id="avatarHeader" alt="user photo">
+                    </button>
+
+                    <!-- Menu -->
+                    <div id="menuHeader" class="z-50 hidden absolute top-18 bg-white border border-gray-100 rounded-2xl shadow-lg w-44">
+                        <div class="px-4 py-3 text-sm border-b border-gray-200">
+                            <span class="block text-body truncate" id="correoHeader">usuario@gmail.com.com</span>
+                        </div>
+                        <ul class="p-2 text-sm text-body font-medium">
+                            <li>
+                                <a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mi perfil</a>
+                            </li>
+                            <li>
+                                <a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis equipos</a>
+                            </li>
+                            <li>
+                                <a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis materias</a>
+                            </li>
+                            <li>
+                                <a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+        <nav class="bg-gray-50 border-y border-gray-300">
+            <div class="max-w-7xl px-4 py-3 mx-auto">
+                <div class="flex items-center">
+                    <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
+                        <li>
+                            <a href="dashboard.html" class="text-heading hover:underline" aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="profile.html" class="text-heading hover:underline">Perfil</a>
+                        </li>
+                        <li>
+                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
+                        </li>
+                        <li>
+                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="bg-white mt-35 shadow">
+            <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6"><div class="max-w-full">
+
+                <div class="hidden info_equipo">
+                    <div class="flex items-center mb-6">
+                        <h2 id="nombre_equipo" class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3">Equipo ejemplo</h2>
+                    </div>
+                    <p id="nombre_materia" class="flex-col mb-8 font-light text-gray-500 sm:text-xl">Materia: Materia ejemplo</p>
+                </div>
+                <div class="max-w-sm animate-pulse mb-8 loading">
+                    <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full max-w-90 mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full max-w-82.5 mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full max-w-75 mb-2.5"></div>
+                    <div class="h-2 bg-neutral-400 rounded-full max-w-90"></div>
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div id="btn_calificar" class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 mb-10">
+                    <a onclick="mostrarCalificar()" class="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 text-base font-medium text-center border border-gray-300 text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-300">
+                        Calificar dinámica de equipo
+                    </a>
+                </div>
+                <div class="animate-pulse loading">
+                    <div class="h-2.5 bg-neutral-400 rounded-full max-w-160 mb-2.5 mx-auto"></div>
+                    <div class="h-2.5 mx-auto bg-neutral-400 rounded-full max-w-135"></div>
+                    <div class="flex items-center justify-center mt-4">
+                        <svg class="w-7 h-7 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                        <div class="w-20 h-2.5 bg-neutral-400 rounded-full me-3"></div>
+                        <div class="w-24 h-2 bg-neutral-400 rounded-full"></div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="hidden info_equipo">
+                    <div id="integrantes_equipo" class="flex gap-x-6 justify-around rounded-lg border border-gray-200 bg-gray-50 px-8 py-4"></div>
+                    <div class="flex flex-col items-center mt-12">
+                        <p id="ne_equipo" class="font-semibold text-gray-500 sm:text-xl">Nivel de estrés del equipo: Medio</p>
+                        <div id="contenedor_ne_equipo" class="mt-6"></div>
+                    </div>
+                </div>
+
+            </div></div>
+        </section>
+        
+        <section class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
+            <div class="w-auto rounded-lg shadow mt-10 xl:p-0 bg-white"><div class="py-8 px-10 max-w-7xl sm:py-16 sm:px-20">
+                <div id="flag_actividadesPendientes" class="mx-auto max-w-screen-sm text-center sm:mb-16 mb-8">
+                    <h2 class="mb-4 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900">Actividades en equipo</h2>
+                    <p id="actividadesPendientes" class="hidden font-light text-gray-500 sm:text-xl">No tienen actividades pendientes.</p>
+                </div>
+                <div id="contenedorActividades" class="grid gap-6 justify-items-center">
+
+                    <div id="template_actividad" class="hidden">
+
+                        <!-- ARTICLE -->
+                        <article class="bg-white w-full lg:w-fit max-w-sm p-6 lg:p-8.75 rounded-t-lg lg:rounded-l-lg lg:rounded-tr-none shadow-md">
+                            <div class="flex justify-between items-start mb-4 lg:mb-5 gap-3">
+                                <div>
+                                    <span class="text-sm text-gray-500 font-semibold">Detalles de actividad</span>
+                                    <h2 class="titulo text-xl font-bold text-gray-900 mt-2 lg:mt-3">Actividad de ejemplo</h2>
+                                </div>
+                                <span class="badge text-xs font-bold rounded-lg px-2.5 lg:px-3 py-1 lg:py-1.25 text-amber-700 bg-amber-400/20 whitespace-nowrap">Media</span>
+                            </div>
+
+                            <div class="bg-gray-50 p-4 lg:p-5 rounded-md border border-gray-200 mb-5 lg:mb-6">
+                                <p class="mb-2 text-sm text-gray-500"><strong>Estatus: </strong><span class="estatus">Pendiente</span></p>
+                                <p class="mb-2 text-sm text-gray-500"><strong>Entrega: </strong><span class="fecha">10/11/2026</span></p>
+                                <p class="descripcion text-sm text-gray-500 leading-relaxed italic">"Descripción de la actividad"</p>
+                            </div>
+
+                            <button class="btn-crear py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                Crear subtarea
+                            </button>
+                        </article>
+
+                        <!-- SECTION -->
+                        <section class="bg-gray-100 w-full lg:w-fit max-w-sm px-5 py-4 rounded-b-lg lg:rounded-r-lg lg:rounded-bl-none shadow-md">
+                            <form class="bg-white p-3 lg:p-4 rounded-lg h-full flex flex-col">
+                                <h2 class="titulo text-xl font-bold text-gray-900 mb-2">Subtareas</h2>
+                                <div class="flex items-start my-2">
+                                    <div class="flex items-center h-5">
+                                        <input id="subtarea1" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
+                                    </div>
+
+                                    <div class="ml-3 text-sm">
+                                        <label for="subtarea1" class="text-gray-500">Crear documento</label>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start my-2">
+                                    <div class="flex items-center h-5">
+                                        <input id="subtarea2" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50">
+                                    </div>
+
+                                    <div class="ml-3 text-sm">
+                                        <label for="subtarea2" class="text-gray-500">Desarrollo y conclusiones</label>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </section>
+                    </div>
+
+                    <div class="max-w-sm p-4 animate-pulse md:p-6 loading">
+                        <div class="flex items-center justify-center h-48 max-w-sm bg-neutral-400 rounded-lg animate-pulse mb-4 sm:mb-6">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="h-2.5 bg-neutral-400 rounded-full w-48 mb-4"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full mb-2.5"></div>
+                        <div class="h-2 bg-neutral-400 rounded-full"></div>
+                        <div class="flex items-center mt-4">
+                            <svg class="w-8 h-8 text-neutral-400 me-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                            <div>
+                                <div class="h-2.5 bg-neutral-400 rounded-full w-32 mb-2"></div>
+                                <div class="w-48 h-2 bg-neutral-400 rounded-full"></div>
+                            </div>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+                </div>
+                 
+            </div></div>
+        </section>
+
+        <!-- Div para crear eliminar y actualizar subtareas (OCULTO) -->
+        <div id="divSubtareas" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+            <div class="relative p-4 w-full max-w-2xl h-fit md:h-auto">
+
+                <!-- Vista para RUBRICA -->
+                <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
+
+                    <div class="flex justify-between items-center pb-4 rounded-t border-b mb-15">
+                        <h3 class="text-lg font-semibold text-gray-900">Subtareas</h3>
+                        <button type="button" onclick="ocultarSubtareas()" class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-200 hover:text-gray-900">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+
+                    <form>
+                        <div id="subtareas-lines-container">
+                            <div id="subtarea-line-1" class="grid gap-4 mb-4 grid-cols-[1fr_1fr_1fr_auto]">
+                                <div class="w-full">
+                                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre:</label>
+                                    <input type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Nombre de la subtarea" required="">
+                                </div>
+                                <div class="w-full">
+                                    <label for="miembro" class="block mb-2 text-sm font-medium text-gray-900">Miembro asignado:</label>
+                                    <select id="miembro" name="miembro" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block text-sm w-full p-2.5">
+                                    </select>
+                                </div>
+                                <div class="w-full">
+                                    <label for="tiempo" class="block mb-2 text-sm font-medium text-gray-900">Tiempo estimado:</label>
+                                    <input type="number" name="tiempo" id="tiempo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Tiempo en horas" required="">
+                                </div>
+                                <div class="w-full flex items-center">
+                                    <button type="button" onclick="borrar_linea_subtarea(1)" class="bg-red-100 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-red-200 text-gray-900">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="add_subtarea()" class="p-1.5 cursor-pointer inline-flex items-center pr-4 text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                Añadir subtarea
+                            </button>
+                            <button id="guardar_subtarea_btn" type="button" class="py-2 px-3.5 cursor-pointer inline-flex items-center text-gray-900 bg-gray-50 border border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmación: calificar equipo -->
+        <div id="calificarModal" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">
+            <div class="relative p-4 w-full max-w-md h-auto">
+                <!-- Modal content -->
+                <div class="relative p-4 text-center bg-white rounded-lg shadow sm:p-5">
+                    <button type="button" onclick="ocultarCalificar()" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="calificarModal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                    <svg class="mx-auto w-11 h-11 text-gray-400 mb-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z"/></svg>
+
+                    <div class="text-gray-500">Dinámica de equipo</div>
+                    <div class="flex w-full justify-center py-4">
+                        <div class="flex items-center me-4">
+                            <input id="inline-1-radio" type="radio" value="1" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-1-radio" class="select-none ms-2 text-sm font-medium text-gray-900">1</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-2-radio" type="radio" value="2" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-2-radio" class="select-none ms-2 text-sm font-medium text-heading">2</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-3-radio" type="radio" value="3" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-3-radio" class="select-none ms-2 text-sm font-medium text-heading">3</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-4-radio" type="radio" value="4" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-4-radio" class="select-none ms-2 text-sm font-medium text-heading">4</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-5-radio" type="radio" value="5" name="inline-radio-group" class="w-4 h-4 bg-gray-50 rounded-full checked:border-gray-500 border checked:border-2 border-gray-300 appearance-none">
+                            <label for="inline-5-radio" class="select-none ms-2 text-sm font-medium text-heading">5</label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center items-center space-x-4">
+                        <button type="button" onclick="ocultarCalificar()" class="py-2 px-3 text-sm font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300 cursor-pointer">Cancelar</button>
+                        <button id="btnCalificar" type="button" onclick="calificar_equipo()" class="py-2 px-3 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg border border-gray-300 hover:bg-gray-300 cursor-pointer">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+     <!-- FOOTER -->
+    <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10"><div class="mx-auto max-w-7xl text-center">
+        <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+            <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
+            <span class="self-center text-xl font-semibold whitespace-nowrap ml-3">Sereno</span>
+        </a>
+        <p class="my-6 text-gray-500">El mejor Task Manager de toda la UPIIZ.</p>
+        <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900">
+            <li>
+                <a href="subjects.html" class="mr-4 hover:underline md:mr-6 ">Materias</a>
+            </li>
+            <li>
+                <a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a>
+            </li>
+            <li>
+                <a href="calendar.html" class="mr-4 hover:underline md:mr-6">Calendario</a>
+            </li>
+            <li>
+                <a href="#informe_completo" class="mr-4 hover:underline md:mr-6">Informe de estrés</a>
+            </li>
+            <li>
+                <a onclick="cerrar_sesion()" class="mr-4 hover:underline md:mr-6 cursor-pointer">Cerrar sesión</a>
+            </li>
+        </ul>
+        <span class="text-sm text-gray-500 sm:text-center">© 2026 <a class="hover:underline">Sereno™</a>. All Rights Reserved.</span>
+    </div></footer>
+</body>
+
+<!-- Scripts -->
+<script src="js/teams_details.js"></script>
+<script src="main.js"></script>
+
+</html>
