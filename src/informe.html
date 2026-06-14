@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <title>Informe de Estrés - Sereno</title>
+    <link rel="icon" href="assets/icono.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; }
+        .metric-card { background: #f9fafb; border-radius: 8px; padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 16px; }
+        .metric-label { font-size: 12px; color: #6b7280; margin: 0 0 2px; }
+        .metric-value { font-size: 20px; font-weight: 500; margin: 0; color: #111827; }
+        .metric-sub { font-size: 12px; margin: 2px 0 0; }
+        .section-title { font-size: 13px; font-weight: 500; color: #6b7280; margin: 0 0 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .btn-pdf { display: inline-flex; align-items: center; gap: 6px; background: #0F6E56; color: #E1F5EE; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; }
+        .btn-pdf:hover { background: #085041; }
+        .animo-card { background: #E1F5EE; border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 12px; }
+        .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
+        .badge-mid { background: #FAEEDA; color: #633806; }
+        .divider { width: 1px; background: #e5e7eb; align-self: stretch; }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <header class="fixed w-full z-20 top-0 inset-s-0">
+        <nav class="bg-white">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-7xl p-4">
+                <a href="dashboard.html" class="flex items-center space-x-3">
+                    <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
+                    <span class="self-center text-xl font-semibold whitespace-nowrap">Sereno</span>
+                </a>
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <span id="nombreHeader" class="mr-4 font-light"></span>
+                    <button id="buttonHeader" type="button" onclick="menu_perfil()" class="cursor-pointer flex text-sm bg-gray-200 focus:ring-3 focus:ring-gray-500/40 rounded-full md:me-0">
+                        <img class="w-9 h-9 rounded-full" src="assets/user_avatar.png" id="avatarHeader" alt="user photo">
+                    </button>
+                    <div id="menuHeader" class="z-50 hidden absolute top-18 bg-white border border-gray-100 rounded-2xl shadow-lg w-44">
+                        <div class="px-4 py-3 text-sm border-b border-gray-200">
+                            <span class="block truncate" id="correoHeader">usuario@gmail.com</span>
+                        </div>
+                        <ul class="p-2 text-sm font-medium">
+                            <li><a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mi perfil</a></li>
+                            <li><a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis equipos</a></li>
+                            <li><a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis materias</a></li>
+                            <li><a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <nav class="bg-gray-50 border-y border-gray-300">
+            <div class="max-w-7xl px-4 py-3 mx-auto">
+                <div class="flex items-center">
+                    <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
+                        <li><a href="dashboard.html" class="hover:underline">Inicio</a></li>
+                        <li><a href="profile.html" class="hover:underline">Perfil</a></li>
+                        <li><a href="subjects.html" class="hover:underline">Materias</a></li>
+                        <li><a href="teams.html" class="hover:underline">Equipos</a></li>
+                        <li><a href="calendar.html" class="hover:underline">Calendario</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 mt-36 mb-16">
+
+        <!-- ENCABEZADO -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Informe de estrés</h1>
+                <p class="text-sm text-gray-500 mt-1" id="periodoInforme">Junio 2026</p>
+            </div>
+            <button class="btn-pdf" onclick="exportarPDF()">&#8681; Exportar PDF</button>
+        </div>
+
+        <!-- TARJETAS RESUMEN EN UNA FILA HORIZONTAL -->
+        <div class="card mb-6" style="padding: 0;">
+            <div style="display: flex; align-items: stretch;">
+                <div class="metric-card" style="flex: 1; border-radius: 0; background: transparent;">
+                    <div>
+                        <p class="metric-label">Promedio NE</p>
+                        <p class="metric-value" id="promedioNE">5.2</p>
+                        <p class="metric-sub"><span class="badge badge-mid">Medio</span></p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric-card" style="flex: 1; border-radius: 0; background: transparent;">
+                    <div>
+                        <p class="metric-label">Día más estresante</p>
+                        <p class="metric-value" id="diaMasEstresante">14 jun</p>
+                        <p class="metric-sub text-gray-500" id="valorDiaMax">NE: 8.4</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric-card" style="flex: 1; border-radius: 0; background: transparent;">
+                    <div>
+                        <p class="metric-label">Tendencia</p>
+                        <p class="metric-value" style="color: #0F6E56;" id="tendencia">↓ Mejora</p>
+                        <p class="metric-sub" style="color: #0F6E56;" id="diffTendencia">−1.2 vs semana anterior</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric-card" style="flex: 1; border-radius: 0; background: transparent;">
+                    <div>
+                        <p class="metric-label">Capturas</p>
+                        <p class="metric-value" id="totalCapturas">18</p>
+                        <p class="metric-sub" style="color: #6b7280;">este mes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRÁFICA EVOLUCIÓN -->
+        <div class="card mb-6">
+            <p class="section-title">Evolución del nivel de estrés</p>
+            <div style="position: relative; width: 100%; height: 240px;">
+                <canvas id="chartLinea" role="img" aria-label="Gráfica de línea mostrando la evolución del nivel de estrés durante el mes">Evolución del nivel de estrés mensual.</canvas>
+            </div>
+            <div style="display: flex; gap: 16px; margin-top: 12px; font-size: 12px; color: #6b7280;">
+                <span style="display: flex; align-items: center; gap: 4px;">
+                    <span style="width: 20px; height: 2px; background: #0F6E56; display: inline-block;"></span> Nivel de estrés (NE)
+                </span>
+            </div>
+        </div>
+
+        <!-- GRÁFICA ESTRESORES -->
+        <div class="card mb-6">
+            <p class="section-title">Distribución por estresor</p>
+            <div style="position: relative; width: 100%; height: 220px;">
+                <canvas id="chartBarras" role="img" aria-label="Gráfica de barras mostrando la proporción de cada estresor académico">Estresores: Exámenes 35%, Tareas 28%, Proyectos 20%, Exposiciones 10%, Otros 7%.</canvas>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; font-size: 12px; color: #6b7280;">
+                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #1D9E75; display:inline-block;"></span> Exámenes</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #5DCAA5; display:inline-block;"></span> Tareas</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #9FE1CB; display:inline-block;"></span> Proyectos</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #B5D4F4; display:inline-block;"></span> Exposiciones</span>
+                <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; border-radius: 2px; background: #D3D1C7; display:inline-block;"></span> Otros</span>
+            </div>
+        </div>
+
+        <!-- MENSAJE DE ÁNIMO -->
+        <div class="animo-card">
+            <div style="font-size: 28px; color: #0F6E56; flex-shrink: 0; display: flex; align-items: center;">&#128512;</div>
+            <p style="font-size: 13px; color: #0F6E56; margin: 0; line-height: 1.6;" id="textoAnimo">¡Vas muy bien! Tu nivel de estrés ha bajado esta semana. Recuerda que pequeños descansos entre actividades pueden marcar una gran diferencia. ¡Sigue así!</p>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="p-4 mt-10 bg-white border-t border-gray-300 md:p-8 lg:p-10">
+        <div class="mx-auto max-w-7xl text-center">
+            <a href="dashboard.html" class="flex justify-center items-center text-2xl font-semibold text-gray-900">
+                <img src="assets/logo_cuadrado.jpeg" class="h-7 rounded-xs" alt="Sereno Logo"/>
+                <span class="self-center text-xl font-semibold whitespace-nowrap ml-3">Sereno</span>
+            </a>
+            <p class="my-6 text-gray-500">El mejor Task Manager de toda la UPIIZ.</p>
+            <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900">
+                <li><a href="subjects.html" class="mr-4 hover:underline md:mr-6">Materias</a></li>
+                <li><a href="teams.html" class="mr-4 hover:underline md:mr-6">Equipos</a></li>
+                <li><a href="calendar.html" class="mr-4 hover:underline md:mr-6">Calendario</a></li>
+                <li><a href="#" class="mr-4 hover:underline md:mr-6">Informe de estrés</a></li>
+                <li><a onclick="cerrar_sesion()" class="mr-4 hover:underline md:mr-6 cursor-pointer">Cerrar sesión</a></li>
+            </ul>
+            <span class="text-sm text-gray-500 sm:text-center">© 2026 <a class="hover:underline">Sereno™</a>. All Rights Reserved.</span>
+        </div>
+    </footer>
+</body>
+
+<script src="js/informe.js"></script>
+<script>
+    const diasLinea = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18'];
+    const valoresNE = [4.2, 5.1, 6.3, 7.0, 5.8, 4.5, 3.9, 5.2, 6.8, 8.4, 7.1, 5.5, 4.8, 4.1, 3.8, 4.4, 5.0, 4.2];
+
+    new Chart(document.getElementById('chartLinea'), {
+        type: 'line',
+        data: {
+            labels: diasLinea,
+            datasets: [{
+                label: 'NE',
+                data: valoresNE,
+                borderColor: '#0F6E56',
+                backgroundColor: 'rgba(15,110,86,0.07)',
+                borderWidth: 2,
+                pointBackgroundColor: '#0F6E56',
+                pointRadius: 4,
+                tension: 0,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { autoSkip: false, maxRotation: 0, font: { size: 11 } }, grid: { display: false } },
+                y: { min: 0, max: 10, ticks: { stepSize: 2, font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.05)' } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('chartBarras'), {
+        type: 'bar',
+        data: {
+            labels: ['Exámenes', 'Tareas', 'Proyectos', 'Exposiciones', 'Otros'],
+            datasets: [{
+                label: '%',
+                data: [35, 28, 20, 10, 7],
+                backgroundColor: ['#1D9E75','#5DCAA5','#9FE1CB','#B5D4F4','#D3D1C7'],
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+                y: { ticks: { callback: v => v + '%', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.05)' } }
+            }
+        }
+    });
+
+    function exportarPDF() {
+        window.print();
+    }
+</script>
+
+</html>
