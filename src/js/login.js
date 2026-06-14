@@ -1,4 +1,11 @@
 const loginBtn = document.getElementById('loginBtn');
+const em = localStorage.getItem('email');
+const pass = localStorage.getItem('password');
+
+if (em && pass) {
+    document.getElementById('email').value = em;
+    document.getElementById('password').value = pass;
+}
 
 async function login() {
 
@@ -31,6 +38,12 @@ async function login() {
 
         if (response.ok) {
             alert('Abriendo sesión...');
+
+            if (document.getElementById('remember').checked) {
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+            }
+
             sessionStorage.setItem('access_token', data.access_token);
             sessionStorage.setItem('refresh_token', data.refresh_token);
             const user = getUserNameFromToken(data.access_token);
