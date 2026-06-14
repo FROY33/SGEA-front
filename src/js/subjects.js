@@ -66,9 +66,36 @@ async function cargarMaterias() {
         }
 
         if (response.ok && Array.isArray(materias)) {
-            materias.forEach(materia => {
-                renderizarMateria(materia);
-            });
+            for (const materia of materias) {
+
+                // Cambiado a let para poder asignarle valor dentro del try
+                let actividades = []; 
+
+                // Para mostrar si hay actividades pendientes
+                try {
+                    const response = await fetch(`https://sgea.onrender.com/actividad/materia/${materia.id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Error: ${response.status}`);
+                    }
+
+                    const todasLasActividades = await response.json();
+            
+                    // FILTRO: Guarda solo los elementos con estatus 'pendiente'
+                    actividades = todasLasActividades.filter(act => act.estatus === 'pendiente');
+
+                } catch (error) {
+                    console.error('Error de conexión:', error);
+                }
+
+                renderizarMateria(materia, actividades);
+            }
         } else {
             console.error('Error al obtener materias');
         }
@@ -84,7 +111,7 @@ async function cargarMaterias() {
     }
 }
 
-function renderizarMateria(materia) {
+function renderizarMateria(materia, actividades) {
     const nuevoArticle = document.createElement('article');
     nuevoArticle.id = materia.id;
     nuevoArticle.className = 'p-6 bg-white rounded-lg border border-gray-200 shadow-md max-w-xl';
@@ -93,7 +120,7 @@ function renderizarMateria(materia) {
             <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded">Materia</span>
         </div>
         <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><a href="subjects_details.html">${materia.nombre}</a></h2>
-        <p class="mb-5 font-light text-gray-500">No tienes actividades pendientes.</p>
+        <p class="mb-5 font-light text-gray-500">${ actividades.length === 0 ? 'No tienes actividades pendientes.' : 'Tienes ' + actividades.length + ' actividades pendientes.'}</p>
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <img class="avatarUsuario w-7 h-7 rounded-full" src="assets/user_avatar.png" alt="User Avatar"/>
