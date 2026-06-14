@@ -11,6 +11,57 @@
     <!-- Título y logo -->
     <title>Equipos - Sereno</title>
     <link rel="icon" href="assets/icono.ico" type="image/x-icon">
+
+    <style>
+        :root {
+            --sereno-sage: #8aab96;
+            --sereno-sage-light: #c8ddd0;
+            --sereno-sage-dark: #5f8a6f;
+            --sereno-beige: #c4ae8a;
+            --sereno-beige-light: #ede5d8;
+            --sereno-blue: #8da4b5;
+            --sereno-blue-light: #dce6ed;
+        }
+
+        body {
+            background-color: #f7f9f8 !important;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(138, 171, 150, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(141, 164, 181, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 60% 10%, rgba(196, 174, 138, 0.05) 0%, transparent 40%);
+        }
+
+        nav.bg-gray-50 {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+            background-color: #f7f9f8 !important;
+        }
+
+        nav a[aria-current="page"] {
+            color: var(--sereno-sage-dark) !important;
+            font-weight: 600;
+            border-bottom: 2px solid var(--sereno-sage);
+            padding-bottom: 2px;
+        }
+
+        main > section {
+            border-bottom: 4px solid var(--sereno-sage) !important;
+            box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
+        }
+
+        /* Card principal */
+        main > div > section {
+            border-left: 4px solid var(--sereno-sage) !important;
+            box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
+        }
+
+        footer {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+        }
+
+        footer a:hover {
+            color: var(--sereno-sage-dark) !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -58,16 +109,19 @@
                 <div class="flex items-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
                         <li>
-                            <a href="dashboard.html" class="text-heading hover:underline" aria-current="page">Inicio</a>
+                            <a href="dashboard.html" class="hover:text-sereno-sage">Inicio</a>
                         </li>
                         <li>
-                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
+                            <a href="profile.html" class="hover:text-sereno-sage">Perfil</a>
                         </li>
                         <li>
-                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                            <a href="subjects.html" class="hover:text-sereno-sage">Materias</a>
                         </li>
                         <li>
-                            <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
+                            <a href="teams.html" class="hover:text-sereno-sage" aria-current="page">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html" class="hover:text-sereno-sage">Calendario</a>
                         </li>
                     </ul>
                 </div>
@@ -77,11 +131,11 @@
 
     <main>
         <section class="bg-white mt-38 shadow">
-            <div class="flex justify-center w-full h-24 sm:h-32 md:h-40" style="background: linear-gradient(115deg, #878180 0%, #878180 10%, #98B4D0 10%, #98B4D0 20%, #DDE1C0 20%, #DDE1C0 30%, #F3FBF4 30%, #F3FBF4 70%, #DDE1C0 70%, #DDE1C0 80%, #98B4D0 80%, #98B4D0 90%, #878180 90%, #878180 100%);">
+            <div class="flex justify-center w-full h-20 sm:h-24 md:h-34" style="background: linear-gradient(115deg, #878180 0%, #878180 10%, #98B4D0 10%, #98B4D0 20%, #DDE1C0 20%, #DDE1C0 30%, #F3FBF4 30%, #F3FBF4 70%, #DDE1C0 70%, #DDE1C0 80%, #98B4D0 80%, #98B4D0 90%, #878180 90%, #878180 100%);">
                 <a class="flex" href="dashboard.html"><img class="h-auto" src="assets/logo_solo.jpeg"></a>
             </div>
 
-            <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6"><div class="max-w-full">
+            <div class="py-6 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6"><div class="max-w-full">
 
                 <div class="hidden info_equipo">
                     <div class="flex items-center mb-6">
@@ -124,8 +178,8 @@
             </div></div>
         </section>
         
-        <section class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-            <div class="w-auto rounded-lg shadow mt-10 xl:p-0 bg-white"><div class="py-8 px-10 max-w-7xl sm:py-16 sm:px-20">
+        <div class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
+            <section class="w-auto rounded-lg shadow mt-10 xl:p-0 bg-white"><div class="py-8 px-10 max-w-7xl sm:py-16 sm:px-20">
                 <div id="flag_actividadesPendientes" class="mx-auto max-w-screen-sm text-center sm:mb-16 mb-8">
                     <h2 class="mb-4 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900">Actividades en equipo</h2>
                     <p id="actividadesPendientes" class="hidden font-light text-gray-500 sm:text-xl">No tienen actividades pendientes.</p>
@@ -203,8 +257,8 @@
 
                 </div>
                  
-            </div></div>
-        </section>
+            </div></section>
+        </div>
 
         <!-- Div para crear eliminar y actualizar subtareas (OCULTO) -->
         <div id="divSubtareas" tabindex="-1" class="hidden bg-gray-600/40 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full">

@@ -11,6 +11,98 @@
     <!-- Título y logo -->
     <title>Materias - Sereno</title>
     <link rel="icon" href="assets/icono.ico" type="image/x-icon">
+
+    <style>
+        :root {
+            --sereno-sage: #8aab96;
+            --sereno-sage-light: #c8ddd0;
+            --sereno-blue: #8da4b5;
+            --sereno-beige: #c4ae8a;
+            --sereno-beige-dark: #b69c72;
+            --sereno-sage-dark: #5f8a6f;
+        }
+
+        body {
+            background-color: #f7f9f8 !important;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(138, 171, 150, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(141, 164, 181, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 60% 10%, rgba(196, 174, 138, 0.05) 0%, transparent 40%);
+        }
+
+        nav.bg-gray-50 {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+            background-color: #f7f9f8 !important;
+        }
+
+        nav a[aria-current="page"] {
+            color: var(--sereno-sage-dark) !important;
+            font-weight: 600;
+            border-bottom: 2px solid var(--sereno-sage);
+            padding-bottom: 2px;
+        }
+
+        /* Botón "Crear materia" principal */
+        a[onclick="mostrarEditar()"] {
+            background-color: var(--sereno-sage) !important;
+            border-color: var(--sereno-sage) !important;
+            color: white !important;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
+        }
+
+        a[onclick="mostrarEditar()"]:hover {
+            background-color: var(--sereno-sage-dark) !important;
+        }
+
+        /* Botón "Crear materia" dentro del modal */
+        a[onclick="abrir_actividades()"] {
+            background-color: var(--sereno-sage) !important;
+            border-color: var(--sereno-sage) !important;
+            color: white !important;
+            transition: background-color 0.2s ease;
+        }
+        
+        a[onclick="abrir_actividades()"]:hover {
+            background-color: var(--sereno-sage-dark) !important;
+        }
+
+        a[onclick="mostrarEliminar()"] {
+            background-color: var(--sereno-beige) !important;
+            border-color: var(--sereno-beige) !important;
+            color: white !important;
+            transition: background-color 0.2s ease;
+        }
+        
+        a[onclick="mostrarEliminar()"]:hover {
+            background-color: var(--sereno-beige-dark) !important;
+        }
+
+        main section {
+            border-bottom: 4px solid var(--sereno-sage) !important;
+            box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
+        }
+
+        main a[href="#informe_completo"] {
+            background-color: var(--sereno-sage) !important;
+            border-color: var(--sereno-sage) !important;
+            color: white !important;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
+        }
+        main a[href="#informe_completo"]:hover {
+            background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
+        }
+
+        footer {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+        }
+
+        footer a:hover {
+            color: var(--sereno-sage-dark) !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -58,16 +150,19 @@
                 <div class="flex items-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
                         <li>
-                            <a href="dashboard.html" class="text-heading hover:underline" aria-current="page">Inicio</a>
+                            <a href="dashboard.html" class="hover:text-sereno-sage">Inicio</a>
                         </li>
                         <li>
-                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
+                            <a href="profile.html" class="hover:text-sereno-sage">Perfil</a>
                         </li>
                         <li>
-                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                            <a href="subjects.html" class="hover:text-sereno-sage" aria-current="page">Materias</a>
                         </li>
                         <li>
-                            <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
+                            <a href="teams.html" class="hover:text-sereno-sage">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html" class="hover:text-sereno-sage">Calendario</a>
                         </li>
                     </ul>
                 </div>
@@ -77,11 +172,11 @@
 
     <main>
         <section class="bg-white mt-38 shadow">
-            <div class="flex justify-center w-full h-24 sm:h-32 md:h-40" style="background: linear-gradient(115deg, #878180 0%, #878180 10%, #98B4D0 10%, #98B4D0 20%, #DDE1C0 20%, #DDE1C0 30%, #F3FBF4 30%, #F3FBF4 70%, #DDE1C0 70%, #DDE1C0 80%, #98B4D0 80%, #98B4D0 90%, #878180 90%, #878180 100%);">
+            <div class="flex justify-center w-full h-20 sm:h-24 md:h-34" style="background: linear-gradient(115deg, #878180 0%, #878180 10%, #98B4D0 10%, #98B4D0 20%, #DDE1C0 20%, #DDE1C0 30%, #F3FBF4 30%, #F3FBF4 70%, #DDE1C0 70%, #DDE1C0 80%, #98B4D0 80%, #98B4D0 90%, #878180 90%, #878180 100%);">
                 <a class="flex" href="dashboard.html"><img class="h-auto" src="assets/logo_solo.jpeg"></a>
             </div>
 
-            <div class="py-8 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
+            <div class="py-6 px-4 mx-auto max-w-7xl sm:py-16 lg:px-6">
                 <div class="max-w-full">
                     <div id="titulo_materia" class="items-center mb-4 hidden">
                         <h2 class="mb-2 sm:text-4xl text-3xl tracking-tight font-extrabold text-gray-900 pe-3 materia_nombre">Materia ejemplo</h2>

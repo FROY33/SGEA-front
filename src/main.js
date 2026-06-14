@@ -1,4 +1,4 @@
-document.getElementById('nombreHeader').textContent = "Bienvenido " + sessionStorage.getItem('user_name') + "!";
+document.getElementById('nombreHeader').textContent = "Hola " + sessionStorage.getItem('user_name') + "!";
 
 // - - - FUNCIONES GENERALES - - - 
 

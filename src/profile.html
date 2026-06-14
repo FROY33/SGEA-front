@@ -11,6 +11,77 @@
     <!-- Título y logo -->
     <title>Mi Perfil - Sereno</title>
     <link rel="icon" href="assets/icono.ico" type="image/x-icon">
+    <style>
+        :root {
+            --sereno-sage: #8aab96;
+            --sereno-sage-light: #c8ddd0;
+            --sereno-blue: #8da4b5;
+            --sereno-beige: #c4ae8a;
+            --sereno-sage-dark: #5f8a6f;
+        }
+
+        body {
+            background-color: #f7f9f8 !important;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(138, 171, 150, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(141, 164, 181, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 60% 10%, rgba(196, 174, 138, 0.05) 0%, transparent 40%);
+        }
+
+        nav.bg-gray-50 {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+            background-color: #f7f9f8 !important;
+        }
+
+        nav a[aria-current="page"] {
+            color: var(--sereno-sage-dark) !important;
+            font-weight: 600;
+            border-bottom: 2px solid var(--sereno-sage);
+            padding-bottom: 2px;
+        }
+
+        main > section {
+            box-shadow: 0 4px 24px rgba(138, 171, 150, 0.15), 0 1px 4px rgba(0,0,0,0.06) !important;
+        }
+
+        button[onclick="mostrarPerfil()"] {
+            background-color: var(--sereno-sage) !important;
+            border-color: var(--sereno-sage) !important;
+            color: white !important;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
+        }
+        button[onclick="mostrarPerfil()"]:hover {
+            background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
+        }
+
+        button[onclick="mostrarPerfil()"] svg path {
+            stroke: white;
+        }
+
+        .rounded-lg.border.border-gray-200.bg-gray-50 {
+            background-color: rgba(200, 221, 208, 0.2) !important;
+            border-color: var(--sereno-sage-light) !important;
+        }
+
+        #btnActualizar {
+            background-color: var(--sereno-sage) !important;
+            border-color: var(--sereno-sage) !important;
+            color: white !important;
+            transition: background-color 0.2s ease;
+        }
+        #btnActualizar:hover {
+            background-color: var(--sereno-sage-dark) !important;
+        }
+
+        footer {
+            border-top: 2px solid var(--sereno-sage-light) !important;
+        }
+        footer a:hover {
+            color: var(--sereno-sage-dark) !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -58,16 +129,19 @@
                 <div class="flex items-center">
                     <ul class="flex flex-row font-medium mt-0 space-x-8 text-sm">
                         <li>
-                            <a href="dashboard.html" class="text-heading hover:underline" aria-current="page">Inicio</a>
+                            <a href="dashboard.html" class="hover:text-sereno-sage">Inicio</a>
                         </li>
                         <li>
-                            <a href="subjects.html" class="text-heading hover:underline">Materias</a>
+                            <a href="profile.html" class="hover:text-sereno-sage" aria-current="page">Perfil</a>
                         </li>
                         <li>
-                            <a href="teams.html" class="text-heading hover:underline">Equipos</a>
+                            <a href="subjects.html" class="hover:text-sereno-sage">Materias</a>
                         </li>
                         <li>
-                            <a href="calendar.html" class="text-heading hover:underline">Calendario</a>
+                            <a href="teams.html" class="hover:text-sereno-sage">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html" class="hover:text-sereno-sage">Calendario</a>
                         </li>
                     </ul>
                 </div>
@@ -76,7 +150,7 @@
     </header>
 
     <main>
-        <section class="bg-white antialiased py-8 mt-35 shadow">
+        <section class="bg-white antialiased py-8 mt-38 shadow">
             <div class="mx-auto max-w-5xl px-4 2xl:px-0 pb-4">
 
                 <h2 class="mb-4 text-xl font-semibold text-gray-900 sm:text-2xl md:mb-6">Mi Perfil</h2>
