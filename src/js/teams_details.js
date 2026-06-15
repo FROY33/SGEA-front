@@ -65,13 +65,7 @@ async function crear_actividad(indice, actividad) {
     const descripcion = article.querySelector('.descripcion');
     descripcion.textContent = `"${actividad.descripcion || ''}"`;
 
-    // const token = sessionStorage.getItem('access_token');
-    // const decodedToken = JSON.parse(atob(token.split('.')[1]));
-    // const usuario_id = decodedToken.sub;
-
-    // Botón eliminar
     const btnCrear = article.querySelector('.btn-crear');
-    // usuario_id == equipoActualGlobal.creador_id ? btnCrear.disabled = false : btnCrear.disabled = true;
     btnCrear.onclick = () => mostrarSubtareas(actividad.id);
 
     // Cargar subtareas

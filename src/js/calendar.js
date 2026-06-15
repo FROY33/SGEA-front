@@ -1,16 +1,22 @@
 // - - - ESTADO GLOBAL - - -
 let currentDate = new Date();
 let allActividades = [];
+let vistActual = 'mes'; // 'mes' o 'semana'
 const meses = [
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 ];
+const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
 
 // - - - CARGAR DATOS - - -
 async function cargar_datos_calendario() {
     try {
         await cargar_actividades();
-        generarCalendario();
+        if (vistActual === 'mes') {
+            generarCalendario();
+        } else {
+            generarVistaSemanal();
+        }
         mostrar_eventos_proximos();
         
         // Ocultar skeletons
@@ -98,6 +104,10 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
         container.classList.add('border-r', 'border-b');
     }
     
+    // Marcar el día actual (Hoy)
+    const hoy = new Date();
+    const esHoy = date.getDate() === hoy.getDate() && date.getMonth() === hoy.getMonth() && date.getFullYear() === hoy.getFullYear();
+    
     // Añadir clase para esquinas redondeadas
     const calendarGrid = document.getElementById('calendarGrid');
     const cellIndex = Array.from(calendarGrid.children).length;
@@ -108,6 +118,12 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
     // Número del día
     const daySpan = document.createElement('span');
     daySpan.className = `text-xs font-semibold ${isOutsideMonth ? 'text-gray-400' : 'text-gray-900'}`;
+    
+    // Estilo extra para el número si es hoy
+    if (esHoy) {
+        daySpan.classList.add('bg-sereno-sage', 'text-white', 'rounded-full', 'w-fit', 'py-1', 'px-1.5');
+    }
+    
     daySpan.textContent = day;
     container.appendChild(daySpan);
     
@@ -120,7 +136,7 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
         
         actividadesDelDia.slice(0, 2).forEach(actividad => {
             const badge = document.createElement('span');
-            badge.className = 'text-xs font-medium px-2 py-1 rounded truncate bg-gray-50 text-sereno-sage';
+            badge.className = 'text-xs font-medium px-2 py-1 rounded truncate hover:shadow-md bg-gray-50 text-sereno-sage';
             badge.textContent = actividad.nombre;
             badge.title = actividad.nombre;
             activitiesContainer.appendChild(badge);
@@ -142,13 +158,25 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
 }
 
 function obtener_actividades_del_dia(fecha) {
-    const fechaFormato = fecha.toISOString().split('T')[0];
-    
-    return allActividades.filter(actividad => {
+    const actividades = allActividades.filter(actividad => {
         if (!actividad.fecha_entrega) return false;
         
-        const actividadFecha = new Date(actividad.fecha_entrega).toISOString().split('T')[0];
-        return actividadFecha === fechaFormato && actividad.estatus === 'pendiente';
+        // Corrección del desfase: Crear fecha local para la actividad ignorando horas
+        const fechaActividad = new Date(actividad.fecha_entrega);
+        
+        // Comparación estricta de año, mes y día en formato local
+        const mismoDia = fechaActividad.getDate() === fecha.getDate() &&
+                         fechaActividad.getMonth() === fecha.getMonth() &&
+                         fechaActividad.getFullYear() === fecha.getFullYear();
+        
+        return mismoDia && (actividad.estatus === 'pendiente' || actividad.estatus === 'en_progreso');
+    });
+    
+    // Ordenar por importancia (mayor a menor)
+    return actividades.sort((a, b) => {
+        const importanciaA = a.importancia || 0;
+        const importanciaB = b.importancia || 0;
+        return importanciaB - importanciaA;
     });
 }
 
@@ -212,16 +240,124 @@ function mostrar_eventos_proximos() {
     });
 }
 
-// - - - NAVEGACIÓN DE MESES - - -
+// - - - VISTA SEMANAL - - -
+
+function resetearALunesActual() {
+    currentDate = new Date();
+}
+
+function generarVistaSemanal() {
+    let fechaDomingo = new Date(currentDate);
+
+    // 2. Calcular el sábado sumando 6 días al domingo de forma nativa
+    const fechaSabado = new Date(fechaDomingo);
+    fechaSabado.setDate(fechaSabado.getDate() + 6);
+
+    // 3. Construir el formato usando las variables de los objetos Date ya calculados
+    const formatoFechas = `${String(fechaDomingo.getDate()).padStart(2, '0')}/${String(fechaDomingo.getMonth() + 1).padStart(2, '0')} - ${String(fechaSabado.getDate()).padStart(2, '0')}/${String(fechaSabado.getMonth() + 1).padStart(2, '0')}`;
+    document.getElementById('weekRange').textContent = formatoFechas;
+    
+    // Generar encabezados de los días
+    for (let i = 0; i < 7; i++) {
+        const fecha = new Date(fechaDomingo);
+        fecha.setDate(fecha.getDate() + i);
+        
+        const numDia = fecha.getDate();
+        document.getElementById(`day${i}Date`).textContent = numDia;
+    }
+    
+    // Limpiar grid semanal
+    const weeklyGrid = document.getElementById('weeklyGrid');
+    weeklyGrid.innerHTML = '';
+    
+    // Generar celda por cada día
+    for (let i = 0; i < 7; i++) {
+        const fecha = new Date(fechaDomingo);
+        fecha.setDate(fecha.getDate() + i);
+        
+        const container = document.createElement('div');
+        container.className = `flex flex-col p-2 min-h-32 ${i < 6 ? 'border-r' : ''} border-b border-sereno-sage-light transition-all duration-300 hover:bg-gray-50`;
+        
+        // Obtener actividades del día ordenadas por importancia
+        const actividades = obtener_actividades_del_dia(fecha);
+        
+        // Mostrar cada actividad apilada verticalmente
+        actividades.forEach(actividad => {
+            const badge = document.createElement('div');
+            badge.className = 'text-xs font-medium px-2 py-1.5 rounded truncate mb-1 cursor-pointer transition-all hover:shadow-md bg-gray-50 text-sereno-sage';
+            badge.title = actividad.nombre;
+            badge.textContent = actividad.nombre;
+            container.appendChild(badge);
+        });
+        
+        weeklyGrid.appendChild(container);
+    }
+}
+
+// - - - CAMBIO DE VISTA - - -
+function cambiarVista(vista) {
+    vistActual = vista;
+    
+    // Actualizar botones
+    const btnWeek = document.getElementById('btnWeekView');
+    const btnMonth = document.getElementById('btnMonthView');
+    
+    if (vista === 'semana') {
+        btnWeek.classList.remove('bg-gray-50', 'text-sereno-sage');
+        btnWeek.classList.add('bg-sereno-sage', 'text-white');
+        btnMonth.classList.remove('bg-sereno-sage', 'text-white');
+        btnMonth.classList.add('bg-gray-50', 'text-sereno-sage');
+        
+        document.getElementById('monthlyView').classList.add('hidden');
+        document.getElementById('weeklyView').classList.remove('hidden');
+        document.getElementById('monthYear').classList.add('hidden');
+        document.getElementById('weekRange').classList.remove('hidden');
+        
+        // Resetear currentDate al lunes de la semana actual
+        resetearALunesActual();
+        generarVistaSemanal();
+    } else {
+        btnMonth.classList.remove('bg-gray-50', 'text-sereno-sage');
+        btnMonth.classList.add('bg-sereno-sage', 'text-white');
+        btnWeek.classList.remove('bg-sereno-sage', 'text-white');
+        btnWeek.classList.add('bg-gray-50', 'text-sereno-sage');
+        
+        document.getElementById('monthlyView').classList.remove('hidden');
+        document.getElementById('weeklyView').classList.add('hidden');
+        document.getElementById('monthYear').classList.remove('hidden');
+        document.getElementById('weekRange').classList.add('hidden');
+        
+        generarCalendario();
+    }
+}
+
+// - - - NAVEGACIÓN - - -
+function previousPeriod() {
+    if (vistActual === 'mes') {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        generarCalendario();
+    } else {
+        currentDate.setDate(currentDate.getDate() - 7);
+        generarVistaSemanal();
+    }
+}
+
+function nextPeriod() {
+    if (vistActual === 'mes') {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        generarCalendario();
+    } else {
+        currentDate.setDate(currentDate.getDate() + 7);
+        generarVistaSemanal();
+    }
+}
 
 function previousMonth() {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    generarCalendario();
+    previousPeriod();
 }
 
 function nextMonth() {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    generarCalendario();
+    nextPeriod();
 }
 
 // - - - CIERRE DE SESIÓN - - -

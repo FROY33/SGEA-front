@@ -158,8 +158,9 @@
                         <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-5">
                             <div class="flex items-center gap-4">
                                 <h5 id="monthYear" class="text-xl leading-8 font-semibold text-gray-900">Enero 2024</h5>
+                                <h5 id="weekRange" class="text-xl leading-8 font-semibold text-gray-900 hidden"></h5>
                                 <div class="flex items-center">
-                                    <button onclick="previousMonth()"
+                                    <button onclick="previousPeriod()"
                                         class="text-sereno-sage p-1 rounded transition-all duration-300 hover:text-white hover:bg-sereno-sage">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 16 16" fill="none">
@@ -168,7 +169,7 @@
                                             </path>
                                         </svg>
                                     </button>
-                                    <button onclick="nextMonth()"
+                                    <button onclick="nextPeriod()"
                                         class="text-sereno-sage p-1 rounded transition-all duration-300 hover:text-white hover:bg-sereno-sage">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 16 16" fill="none">
@@ -180,11 +181,11 @@
                                 </div>
                             </div>
                             <div class="flex items-center rounded-md p-1 bg-gray-50 gap-px">
-                                <button class="py-2.5 px-5 rounded-lg bg-gray-50 text-sereno-sage text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Semana</button>
-                                <button class="py-2.5 px-5 rounded-lg bg-sereno-sage text-white text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Mes</button>
+                                <button id="btnWeekView" onclick="cambiarVista('semana')" class="cursor-pointer py-2.5 px-5 rounded-lg bg-gray-50 text-sereno-sage text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Semana</button>
+                                <button id="btnMonthView" onclick="cambiarVista('mes')" class="cursor-pointer py-2.5 px-5 rounded-lg bg-sereno-sage text-white text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Mes</button>
                             </div>
                         </div>
-                        <div class="border border-sereno-sage rounded-xl">
+                        <div class="border border-sereno-sage rounded-xl" id="monthlyView">
                             <div class="grid grid-cols-7 rounded-t-3xl border-b border-sereno-sage">
                                 <div class="py-3.5 border border-sereno-sage rounded-tl-xl bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Dom
@@ -211,6 +212,43 @@
 
                             <div class="grid grid-cols-7 rounded-b-xl" id="calendarGrid">
                                 <!-- Los días se generarán dinámicamente con JS -->
+                            </div>
+
+                        </div>
+                        <div class="border border-sereno-sage rounded-xl hidden" id="weeklyView">
+                            <div class="grid grid-cols-7 rounded-t-3xl border-b border-sereno-sage">
+                                <div class="py-3.5 px-2 border border-sereno-sage rounded-tl-xl bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day0Label">Dom</span>
+                                    <span id="day0Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day1Label">Lun</span>
+                                    <span id="day1Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day2Label">Mar</span>
+                                    <span id="day2Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day3Label">Mié</span>
+                                    <span id="day3Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day4Label">Jue</span>
+                                    <span id="day4Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day5Label">Vie</span>
+                                    <span id="day5Date" class="text-xs"></span>
+                                </div>
+                                <div class="py-3.5 px-2 border border-sereno-sage rounded-tr-xl bg-gray-50 flex flex-col items-center justify-center text-xs sm:text-sm font-medium text-sereno-sage">
+                                    <span id="day6Label">Sáb</span>
+                                    <span id="day6Date" class="text-xs"></span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-7 rounded-b-xl" id="weeklyGrid">
+                                <!-- Las actividades de la semana se generarán dinámicamente con JS -->
                             </div>
 
                         </div>

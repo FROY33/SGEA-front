@@ -44,26 +44,30 @@
             padding-bottom: 2px;
         }
 
-        a[onclick="mostrarCalificar()"], button:is([id*="btnCalificar"], [class*="btn-crear"], [class*="boton-guardar"], [id*="guardar_subtarea_btn"], [onclick*="add_subtarea()"]) {
+        a[onclick="mostrarCalificar()"], button:is([id*="btnCalificar"], [class*="btn-crear"], [id*="guardar_subtarea_btn"], [onclick*="add_subtarea()"]) {
             background-color: var(--sereno-sage) !important;
             border-color: var(--sereno-sage) !important;
             color: white !important;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
         }
         
-        a[onclick="mostrarCalificar()"]:hover, button:is([id*="btnCalificar"], [class*="btn-crear"], [class*="boton-guardar"], [id*="guardar_subtarea_btn"], [onclick*="add_subtarea()"]):hover {
+        a[onclick="mostrarCalificar()"]:hover, button:is([id*="btnCalificar"], [class*="btn-crear"], [id*="guardar_subtarea_btn"], [onclick*="add_subtarea()"]):hover {
             background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
-        button[id*="ocultar_calf"] {
+        button:is([class*="boton-guardar"], [id*="ocultar_calf"]) {
             background-color: var(--sereno-beige) !important;
             border-color: var(--sereno-beige) !important;
             color: white !important;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
         }
         
-        button[id*="ocultar_calf"]:hover {
+        button:is([id*="ocultar_calf"], [class*="boton-guardar"]):hover {
             background-color: var(--sereno-beige-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
         main > section {

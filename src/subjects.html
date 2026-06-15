@@ -17,6 +17,7 @@
             --sereno-sage: #8aab96;
             --sereno-sage-light: #c8ddd0;
             --sereno-sage-dark: #5f8a6f;
+            --sereno-beige-dark: #b69c72;
             --sereno-beige: #c4ae8a;
             --sereno-beige-light: #ede5d8;
         }
@@ -52,6 +53,7 @@
 
         button[onclick="mostrarCrear()"]:hover {
             background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
         /* Botón "Crear materia" dentro del modal */
@@ -59,11 +61,13 @@
             background-color: var(--sereno-sage) !important;
             border-color: var(--sereno-sage) !important;
             color: white !important;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
         }
 
         button[onclick="save_materia()"]:hover {
             background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
         /* Card sección principal */
@@ -149,7 +153,7 @@
 
     <!-- MATERIAS -->
     <main class="flex flex-col w-full z-20 top-0 inset-s-0 items-center justify-center">
-        <section class="w-auto rounded-lg shadow mt-36 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-10">
+        <section class="w-auto rounded-lg shadow mt-38 xl:p-0 bg-white" id="Materias"><div class="py-8 px-10 max-w-7xl lg:py-16 lg:px-10">
             <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Mis materias</h2>
                 <p class="font-light text-gray-500 sm:text-xl">Aqui puedes ver todas tus materias.</p>

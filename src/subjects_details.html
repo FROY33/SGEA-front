@@ -53,17 +53,20 @@
 
         a:is([onclick*="mostrarEditar()"], [onclick*="abrir_actividades()"]):hover, button:is([id*="btnActualizar"], [onclick*="add_rubrica()"], [id*="guardar_rubrica_btn"], [id*="No_cancelar"], [onclick*="add_integrante()"], [id*="guardar_equipo_btn"]):hover {
             background-color: var(--sereno-sage-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
         a[onclick="mostrarEliminar()"], button[onclick*="eliminar_materia()"] {
             background-color: var(--sereno-beige) !important;
             border-color: var(--sereno-beige) !important;
             color: white !important;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(138, 171, 150, 0.35);
         }
         
         a[onclick="mostrarEliminar()"]:hover, button[onclick*="eliminar_materia()"]:hover {
             background-color: var(--sereno-beige-dark) !important;
+            box-shadow: 0 4px 12px rgba(95, 138, 111, 0.4);
         }
 
         main section {
