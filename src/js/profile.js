@@ -96,7 +96,6 @@ async function upload_avatar(file) {
         }
 
         const data = await res.json();
-        console.log('Avatar subido exitosamente:', data);
         return true;
 
     } catch (error) {
@@ -131,8 +130,6 @@ async function update_perfil(event) {
         if (carrera) body.carrera = carrera;
         if (semestre) body.semestre = parseInt(semestre);
 
-        console.log('Body a enviar:', body);
-
         // Actualizar los datos del perfil
         const response = await fetch('https://sgea.onrender.com/perfil', {
             method: 'PATCH',
@@ -151,7 +148,6 @@ async function update_perfil(event) {
         // Subir el avatar si se seleccionó un archivo
         if (avatarInput.files && avatarInput.files.length > 0) {
             const file = avatarInput.files[0];
-            console.log('Subiendo avatar:', file.name);
             await upload_avatar(file);
         }
         

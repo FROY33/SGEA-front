@@ -92,7 +92,7 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
     const container = document.createElement('div');
     container.className = `flex flex-col xl:aspect-square max-xl:min-h-15 p-2 relative ${
         isOutsideMonth ? 'bg-gray-50' : 'bg-white'
-    } border-r border-b border-indigo-200 transition-all duration-300 hover:bg-indigo-50 cursor-pointer`;
+    } border-r border-b border-sereno-sage-light transition-all duration-300 hover:bg-gray-50 cursor-pointer`;
     
     if (isOutsideMonth) {
         container.classList.add('border-r', 'border-b');
@@ -120,7 +120,7 @@ function crearElementoDia(day, isOutsideMonth, date, year, month) {
         
         actividadesDelDia.slice(0, 2).forEach(actividad => {
             const badge = document.createElement('span');
-            badge.className = 'text-xs font-medium px-2 py-1 rounded truncate bg-gray-50 text-primary-0';
+            badge.className = 'text-xs font-medium px-2 py-1 rounded truncate bg-gray-50 text-sereno-sage';
             badge.textContent = actividad.nombre;
             badge.title = actividad.nombre;
             activitiesContainer.appendChild(badge);
@@ -199,12 +199,12 @@ function mostrar_eventos_proximos() {
         const badge = element.querySelector('.evento-badge');
         if (evento.equipoId) {
             badge.textContent = 'Equipo';
-            badge.className = 'evento-badge px-2 py-1 text-xs font-medium rounded-lg bg-primary-300 text-gray-600';
-            element.querySelector('.evento-color').className = 'w-2.5 h-2.5 rounded-full bg-primary-0 evento-color';
+            badge.className = 'evento-badge px-2 py-1 text-xs font-medium rounded-lg bg-sereno-sage text-white';
+            element.querySelector('.evento-color').className = 'w-2.5 h-2.5 rounded-full bg-sereno-sage evento-color';
         } else {
             badge.textContent = 'Individual';
-            badge.className = 'evento-badge px-2 py-1 text-xs font-medium rounded-lg bg-primary-0/30 text-gray-600';
-            element.querySelector('.evento-color').className = 'w-2.5 h-2.5 rounded-full bg-primary-0 evento-color';
+            badge.className = 'evento-badge px-2 py-1 text-xs font-medium rounded-lg bg-sereno-beige text-white';
+            element.querySelector('.evento-color').className = 'w-2.5 h-2.5 rounded-full bg-sereno-beige evento-color';
         }
         
         const firstChild = element.querySelector('div');

@@ -121,7 +121,7 @@ async function crear_actividad(indice, actividad) {
             const button_guardarCambios = document.createElement('button');
             button_guardarCambios.type = 'button';
             button_guardarCambios.id = `btnGuardar${actividad.id}`;
-            button_guardarCambios.className = 'lg:mt-auto mt-4 py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm';
+            button_guardarCambios.className = 'boton-guardar lg:mt-auto mt-4 py-2.5 px-4 flex w-full justify-center border cursor-pointer text-gray-900 bg-gray-50 border-gray-300 hover:bg-gray-300 font-medium rounded-lg text-sm';
             button_guardarCambios.textContent = 'Guardar cambios';
 
             button_guardarCambios.onclick = () => check_subtareas(actividad.id, subtareas);

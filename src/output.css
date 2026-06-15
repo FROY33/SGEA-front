@@ -85,6 +85,8 @@
     --color-primary-0: #98B4D0;
     --color-primary-300: #F3FBF4;
     --color-sereno-sage: #8aab96;
+    --color-sereno-sage-light: #c8ddd0;
+    --color-sereno-beige: #c4ae8a;
   }
 }
 @layer base {
@@ -382,9 +384,6 @@
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
   }
-  .mt-35 {
-    margin-top: calc(var(--spacing) * 35);
-  }
   .mt-36 {
     margin-top: calc(var(--spacing) * 36);
   }
@@ -509,14 +508,8 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
-  .h-18 {
-    height: calc(var(--spacing) * 18);
-  }
   .h-20 {
     height: calc(var(--spacing) * 20);
-  }
-  .h-24 {
-    height: calc(var(--spacing) * 24);
   }
   .h-48 {
     height: calc(var(--spacing) * 48);
@@ -974,6 +967,12 @@
   .border-red-200 {
     border-color: var(--color-red-200);
   }
+  .border-sereno-sage {
+    border-color: var(--color-sereno-sage);
+  }
+  .border-sereno-sage-light {
+    border-color: var(--color-sereno-sage-light);
+  }
   .bg-amber-400 {
     background-color: var(--color-amber-400);
   }
@@ -1048,6 +1047,15 @@
   }
   .bg-red-500 {
     background-color: var(--color-red-500);
+  }
+  .bg-sereno-beige {
+    background-color: var(--color-sereno-beige);
+  }
+  .bg-sereno-sage {
+    background-color: var(--color-sereno-sage);
+  }
+  .bg-sereno-sage-light {
+    background-color: var(--color-sereno-sage-light);
   }
   .bg-transparent {
     background-color: transparent;
@@ -1188,6 +1196,9 @@
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
   }
+  .pb-8 {
+    padding-bottom: calc(var(--spacing) * 8);
+  }
   .pl-4 {
     padding-left: calc(var(--spacing) * 4);
   }
@@ -1315,6 +1326,9 @@
   .text-red-700 {
     color: var(--color-red-700);
   }
+  .text-sereno-sage {
+    color: var(--color-sereno-sage);
+  }
   .text-white {
     color: var(--color-white);
   }
@@ -1400,6 +1414,13 @@
       border-color: var(--color-gray-500);
     }
   }
+  .hover\:bg-gray-50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-50);
+      }
+    }
+  }
   .hover\:bg-gray-200 {
     &:hover {
       @media (hover: hover) {
@@ -1432,6 +1453,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-200);
+      }
+    }
+  }
+  .hover\:bg-sereno-sage {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-sereno-sage);
       }
     }
   }
@@ -1520,11 +1548,6 @@
   .sm\:h-24 {
     @media (width >= 40rem) {
       height: calc(var(--spacing) * 24);
-    }
-  }
-  .sm\:h-32 {
-    @media (width >= 40rem) {
-      height: calc(var(--spacing) * 32);
     }
   }
   .sm\:w-auto {
@@ -1692,11 +1715,6 @@
   .md\:h-34 {
     @media (width >= 48rem) {
       height: calc(var(--spacing) * 34);
-    }
-  }
-  .md\:h-40 {
-    @media (width >= 48rem) {
-      height: calc(var(--spacing) * 40);
     }
   }
   .md\:h-auto {

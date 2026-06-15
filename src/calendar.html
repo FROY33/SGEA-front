@@ -43,8 +43,8 @@
 
         /* Tarjetas de próximas actividades: borde izquierdo beige */
         #eventosContainer > div {
-            border-left: 3px solid var(--sereno-sage) !important;
-            box-shadow: 0 2px 12px rgba(196, 174, 138, 0.12) !important;
+            border-left: 4px solid var(--sereno-sage) !important;
+            box-shadow: 0 4px 20px rgba(142, 124, 94, 0.135) !important;
         }
 
         /* Sección principal: fondo limpio */
@@ -87,16 +87,16 @@
                         </div>
                         <ul class="p-2 text-sm text-body font-medium">
                             <li>
-                                <a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mi perfil</a>
+                                <a href="profile.html" class="inline-flex items-center w-full p-2 hover:underline hover:text-sereno-sage bg-gray-50 rounded-md">Mi perfil</a>
                             </li>
                             <li>
-                                <a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis equipos</a>
+                                <a href="teams.html" class="inline-flex items-center w-full p-2 hover:underline hover:text-sereno-sage bg-gray-50 rounded-md">Mis equipos</a>
                             </li>
                             <li>
-                                <a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Mis materias</a>
+                                <a href="subjects.html" class="inline-flex items-center w-full p-2 hover:underline hover:text-sereno-sage bg-gray-50 rounded-md">Mis materias</a>
                             </li>
                             <li>
-                                <a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline bg-gray-50 rounded-md">Cerrar sesión</a>
+                                <a onclick="cerrar_sesion()" class="cursor-pointer inline-flex items-center w-full p-2 hover:underline hover:text-sereno-sage bg-gray-50 rounded-md">Cerrar sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -130,7 +130,7 @@
     </header>
 
     <main>
-        <section class="bg-white mt-38 pb-6">
+        <section class="bg-white mt-38 pb-8">
             <div class="flex justify-center w-full h-20 sm:h-24 md:h-34" style="background: linear-gradient(115deg, #878180 0%, #878180 10%, #98B4D0 10%, #98B4D0 20%, #DDE1C0 20%, #DDE1C0 30%, #F3FBF4 30%, #F3FBF4 70%, #DDE1C0 70%, #DDE1C0 80%, #98B4D0 80%, #98B4D0 90%, #878180 90%, #878180 100%);">
                 <a class="flex" href="dashboard.html"><img class="h-auto" src="assets/logo_solo.jpeg"></a>
             </div>
@@ -160,7 +160,7 @@
                                 <h5 id="monthYear" class="text-xl leading-8 font-semibold text-gray-900">Enero 2024</h5>
                                 <div class="flex items-center">
                                     <button onclick="previousMonth()"
-                                        class="text-primary-0 p-1 rounded transition-all duration-300 hover:text-white hover:bg-primary-0">
+                                        class="text-sereno-sage p-1 rounded transition-all duration-300 hover:text-white hover:bg-sereno-sage">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 16 16" fill="none">
                                             <path d="M10.0002 11.9999L6 7.99971L10.0025 3.99719" stroke="currentcolor"
@@ -169,7 +169,7 @@
                                         </svg>
                                     </button>
                                     <button onclick="nextMonth()"
-                                        class="text-primary-0 p-1 rounded transition-all duration-300 hover:text-white hover:bg-primary-0">
+                                        class="text-sereno-sage p-1 rounded transition-all duration-300 hover:text-white hover:bg-sereno-sage">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 16 16" fill="none">
                                             <path d="M6.00236 3.99707L10.0025 7.99723L6 11.9998" stroke="currentcolor"
@@ -180,31 +180,31 @@
                                 </div>
                             </div>
                             <div class="flex items-center rounded-md p-1 bg-gray-50 gap-px">
-                                <button class="py-2.5 px-5 rounded-lg bg-gray-50 text-primary-0 text-sm font-medium transition-all duration-300 hover:bg-primary-0 hover:text-white">Semana</button>
-                                <button class="py-2.5 px-5 rounded-lg bg-primary-0 text-white text-sm font-medium transition-all duration-300 hover:bg-primary-0 hover:text-white">Mes</button>
+                                <button class="py-2.5 px-5 rounded-lg bg-gray-50 text-sereno-sage text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Semana</button>
+                                <button class="py-2.5 px-5 rounded-lg bg-sereno-sage text-white text-sm font-medium transition-all duration-300 hover:bg-sereno-sage hover:text-white">Mes</button>
                             </div>
                         </div>
-                        <div class="border border-primary-0 rounded-xl">
-                            <div class="grid grid-cols-7 rounded-t-3xl border-b border-primary-0">
-                                <div class="py-3.5 border border-primary-0 rounded-tl-xl bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                        <div class="border border-sereno-sage rounded-xl">
+                            <div class="grid grid-cols-7 rounded-t-3xl border-b border-sereno-sage">
+                                <div class="py-3.5 border border-sereno-sage rounded-tl-xl bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Dom
                                 </div>
-                                <div class="py-3.5 border border-primary-0 bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Lun
                                 </div>
-                                <div class="py-3.5 border border-primary-0 bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Mar
                                 </div>
-                                <div class="py-3.5 border border-primary-0 bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Mié
                                 </div>
-                                <div class="py-3.5 border border-primary-0 bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Jue
                                 </div>
-                                <div class="py-3.5 border border-primary-0 bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Vie
                                 </div>
-                                <div class="py-3.5 border border-primary-0 rounded-tr-xl bg-gray-50 flex items-center justify-center text-sm font-medium text-primary-0">
+                                <div class="py-3.5 border border-sereno-sage rounded-tr-xl bg-gray-50 flex items-center justify-center text-sm font-medium text-sereno-sage">
                                     Sáb
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
         <div class="p-6 rounded-xl bg-white">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2.5">
-                    <span class="w-2.5 h-2.5 rounded-full evento-color bg-primary-0"></span>
+                    <span class="w-2.5 h-2.5 rounded-full evento-color bg-sereno-sage"></span>
                     <p class="text-base font-medium text-gray-900 evento-fecha">--/-- --:--</p>
                 </div>
                 <span class="evento-badge px-2 py-1 text-xs font-medium rounded-lg bg-blue-100 text-primary-300">Individual</span>
@@ -254,7 +254,7 @@
                     <a href="calendar.html" class="mr-4 hover:underline md:mr-6">Calendario</a>
                 </li>
                 <li>
-                    <a href="#informe_completo" class="mr-4 hover:underline md:mr-6">Informe de estrés</a>
+                    <a href="stress_report.html" class="mr-4 hover:underline md:mr-6">Informe de estrés</a>
                 </li>
                 <li>
                     <a onclick="cerrar_sesion()" class="mr-4 hover:underline md:mr-6 cursor-pointer">Cerrar sesión</a>
