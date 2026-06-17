@@ -248,6 +248,10 @@ function resetearALunesActual() {
 
 function generarVistaSemanal() {
     let fechaDomingo = new Date(currentDate);
+    const dia = fechaDomingo.getDay(); 
+
+    // 1. Retroceder correctamente al domingo de la semana actual
+    fechaDomingo.setDate(fechaDomingo.getDate() - dia);
 
     // 2. Calcular el sábado sumando 6 días al domingo de forma nativa
     const fechaSabado = new Date(fechaDomingo);
