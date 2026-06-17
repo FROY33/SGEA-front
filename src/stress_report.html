@@ -133,6 +133,7 @@
             <div>
                 <h1 class="sm:text-4xl text-3xl font-extrabold text-gray-900">Informe de estrés</h1>
                 <p class="text-sm text-gray-500 mt-1" id="periodoInforme">Junio 2026</p>
+                <div id="loading_fechas" class="hidden animate-pulse mt-3 w-32 h-3 bg-neutral-300 rounded-xl"></div>
             </div>
             <button class="inline-flex items-center gap-1.5 text-emerald-50 border-0 rounded-lg py-2 px-4 text-sm font-medium cursor-pointer transition" onclick="exportarPDF()">
                 <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/></svg>
@@ -141,13 +142,13 @@
         </div>
 
         <!-- TARJETAS RESUMEN EN UNA FILA HORIZONTAL -->
-        <div class="bg-white border border-gray-300 rounded-xl p-0 mb-6">
+        <div id="resume" class="bg-white border border-gray-300 rounded-xl p-0 mb-6">
             <div class="flex items-stretch">
                 <div class="flex-1 bg-gray-50 rounded-s-xl p-3 lg:p-5 flex items-center gap-4">
                     <div>
                         <p class="text-xs text-gray-500 m-0 mb-0.5">Promedio NE</p>
                         <p class="text-xl font-medium m-0 text-gray-900" id="promedioNE">5.2</p>
-                        <p class="text-xs m-0 mt-0.5"><span class="inline-block text-xs py-0.5 px-2 rounded-full font-medium bg-yellow-100 text-yellow-800">Medio</span></p>
+                        <p class="text-xs m-0 mt-0.5 text-gray-500">Bajo</p>
                     </div>
                 </div>
                 <div class="w-px bg-gray-300 shrink-0"></div>
@@ -159,19 +160,11 @@
                     </div>
                 </div>
                 <div class="w-px bg-gray-300 shrink-0"></div>
-                <div class="flex-1 bg-gray-50 rounded-none p-3 lg:p-5 flex items-center gap-4">
-                    <div>
-                        <p class="text-xs text-gray-500 m-0 mb-0.5">Tendencia</p>
-                        <p class="text-xl font-medium m-0 text-emerald-700" id="tendencia">↓ Mejora</p>
-                        <p class="text-xs m-0 mt-0.5 text-emerald-700" id="diffTendencia"> −1.2 vs semana anterior</p>
-                    </div>
-                </div>
-                <div class="w-px bg-gray-300 shrink-0"></div>
                 <div class="flex-1 bg-gray-50 rounded-e-xl p-3 lg:p-5 flex items-center gap-4">
                     <div>
                         <p class="text-xs text-gray-500 m-0 mb-0.5">Capturas</p>
                         <p class="text-xl font-medium m-0 text-gray-900" id="totalCapturas">18</p>
-                        <p class="text-xs m-0 mt-0.5 text-gray-500">este mes</p>
+                        <p class="text-xs m-0 mt-0.5 text-gray-500">esta semana</p>
                     </div>
                 </div>
             </div>
@@ -181,7 +174,13 @@
         <div class="bg-white border border-gray-300 rounded-xl p-5 mb-6">
             <p class="text-xs font-medium text-gray-500 m-0 mb-4 uppercase tracking-wide">Evolución del nivel de estrés</p>
             <div class="relative w-full h-60">
-                <canvas id="chartLinea" role="img" aria-label="Gráfica de línea mostrando la evolución del nivel de estrés durante el mes">Evolución del nivel de estrés mensual.</canvas>
+                <canvas id="chartLinea" role="img" aria-label="Gráfica de línea mostrando la evolución del nivel de estrés durante la semana">Evolución del nivel de estrés semanal.</canvas>
+                <div class="sr-loading animate-pulse absolute inset-0 bg-white/60 flex flex-col gap-3 items-center justify-center">
+                    <div class="w-3/4 rounded-xl h-4 bg-neutral-300"></div>
+                    <div class="w-2/4 rounded-xl h-3 bg-neutral-300"></div>
+                    <div class="w-3/5 rounded-xl h-3 bg-neutral-300"></div>
+                    <div class="w-2/4 rounded-xl h-3 bg-neutral-300"></div>
+                </div>
             </div>
             <div class="flex gap-4 mt-3 text-xs text-gray-500">
                 <span class="flex items-center gap-1">
@@ -195,20 +194,22 @@
             <p class="text-xs font-medium text-gray-500 m-0 mb-4 uppercase tracking-wide">Distribución por estresor</p>
             <div class="relative w-full h-56">
                 <canvas id="chartBarras" role="img" aria-label="Gráfica de barras mostrando la proporción de cada estresor académico">Estresores: Exámenes 35%, Tareas 28%, Proyectos 20%, Exposiciones 10%, Otros 7%.</canvas>
+                <div class="sr-loading animate-pulse absolute inset-0 bg-white/60 flex flex-col gap-3 items-center justify-center">
+                    <div class="w-3/4 rounded-xl h-4 bg-neutral-300"></div>
+                    <div class="w-2/4 rounded-xl h-3 bg-neutral-300"></div>
+                    <div class="w-3/5 rounded-xl h-3 bg-neutral-300"></div>
+                    <div class="w-2/4 rounded-xl h-3 bg-neutral-300"></div>
+                </div>
             </div>
-            <div class="flex flex-wrap gap-3 mt-3 text-xs text-gray-500">
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-800 inline-block"></span> Exámenes</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 inline-block"></span> Tareas</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-400 inline-block"></span> Proyectos</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-blue-300 inline-block"></span> Exposiciones</span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-gray-300 inline-block"></span> Otros</span>
+            <div id="estresoresLegend" class="flex flex-wrap gap-3 mt-3 text-xs text-gray-500">
+                <div class="sr-loading animate-pulse w-100 h-3 bg-neutral-300 rounded-xl"></div>
             </div>
         </div>
 
         <!-- MENSAJE DE ÁNIMO -->
         <div class="bg-emerald-50 border border-emerald-600 rounded-xl p-5 flex items-center gap-3">
-            <div class="text-2xl text-emerald-700 shrink-0 flex items-center">😄</div>
-            <p class="text-xs text-emerald-700 m-0 leading-relaxed" id="textoAnimo">¡Vas muy bien! Tu nivel de estrés ha bajado esta semana. Recuerda que pequeños descansos entre actividades pueden marcar una gran diferencia. ¡Sigue así!</p>
+            <p class="text-xs text-emerald-700 m-0 leading-relaxed" id="textoAnimo"></p>
+            <div class="sr-loading animate-pulse w-3/4 h-3 bg-neutral-300 rounded-xl"></div>
         </div>
 
     </main>
