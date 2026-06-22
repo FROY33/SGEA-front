@@ -61,39 +61,12 @@ async function cargarMaterias() {
 
         const materias = await response.json();
 
-        let calidad_docente_prom = 0, autonomia_prom = 0
+        let calidad_docente_prom = 0, autonomia_prom = 0;
 
         materias.forEach(materia => {
-            calidad_docente_prom += materia.calificacion_profesor
-            autonomia_prom += materia.autonomia
+            calidad_docente_prom += materia.calificacion_profesor;
+            autonomia_prom += materia.autonomia;
         });
-
-        calidad_docente_prom = calidad_docente_prom/materias.length
-        autonomia_prom = autonomia_prom/materias.length
-
-        const payload = {
-            factores: [
-                { factor_id: 1, peso: calidad_docente_prom },
-                { factor_id: 8, peso: autonomia_prom }
-            ]
-        };
-
-        try {
-            const response = await fetch('https://sgea.onrender.com/perfil/estresores', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-            console.log(data)
-            
-        } catch (error) {
-            console.error('Error de conexión:', error);
-        }
 
         if (materias != "") {
             document.getElementById('materia_ejemplo').classList.add("hidden");
@@ -122,7 +95,7 @@ async function cargarMaterias() {
                     const todasLasActividades = await response.json();
 
                     // FILTRO: Guarda solo los elementos con estatus 'pendiente'
-                    actividades = todasLasActividades.filter(act => act.estatus === 'pendiente');
+                    actividades = todasLasActividades.filter(act => act.estatus === 'pendiente' || act.estatus === 'en_progreso');
 
                 } catch (error) {
                     console.error('Error de conexión:', error);
@@ -132,6 +105,33 @@ async function cargarMaterias() {
             }
         } else {
             console.error('Error al obtener materias');
+        }
+
+        factor1 = 5 - calidad_docente_prom/materias.length;
+        factor8 = 5 - autonomia_prom/materias.length;
+
+        const payload = {
+            factores: [
+                { factor_id: 1, peso: factor1 },
+                { factor_id: 8, peso: factor8 }
+            ]
+        };
+
+        try {
+            const response = await fetch('https://sgea.onrender.com/perfil/estresores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            console.log(data)
+            
+        } catch (error) {
+            console.error('Error de conexión:', error);
         }
 
         await cargarAvatar();
