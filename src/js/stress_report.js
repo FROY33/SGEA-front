@@ -75,7 +75,7 @@ async function cargarReporteSemanal() {
         const data = await resp.json();
 
         if (data.datos_insuficientes) {
-            mostrarDatosInsuficientes();
+            mostrarDatosInsuficientes();         
             return;
         }
 
@@ -162,6 +162,12 @@ async function cargarReporteSemanal() {
                 }
             }
         }
+
+        const loadingResume = document.querySelectorAll('.load_resume');
+        loadingResume.forEach(el => el.classList.replace('flex', 'hidden'));
+
+        const loadingInfoRes = document.querySelectorAll('.resume_load');
+        loadingInfoRes.forEach(el => el.classList.remove('hidden'));
 
         // Ocultar loading
         loadingEls.forEach(el => el.classList.add('hidden'));

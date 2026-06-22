@@ -184,12 +184,13 @@ function obtener_actividades_del_dia(fecha) {
 
 function mostrar_eventos_proximos() {
     const hoy = new Date();
+    hoy.setTime(hoy.getTime() - 24 * 60 * 60 * 1000);
     const unaSemanaDespues = new Date(hoy.getTime() + 7 * 24 * 60 * 60 * 1000);
     
     // Filtrar actividades de la próxima semana
     const eventosPróximos = allActividades
         .filter(actividad => {
-            if (!actividad.fecha_entrega) return false;
+            if (!actividad.fecha_entrega || actividad.estatus === 'completada') return false;
             const fecha = new Date(actividad.fecha_entrega);
             return fecha >= hoy && fecha <= unaSemanaDespues;
         })
