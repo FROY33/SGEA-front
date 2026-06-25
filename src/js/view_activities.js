@@ -453,9 +453,9 @@ async function crearActividad(e) {
         let puntaje_contenido = undefined;
         if (calificacion) {
             const mapeo = {
-                'util': 'Muy útil',
-                'interesante': 'Interesante',
-                'irrelevante': 'Poco relevante'
+                'util': 'muy',
+                'interesante': 'medio',
+                'irrelevante': 'poco'
             };
             puntaje_contenido = mapeo[calificacion];
         }
