@@ -61,9 +61,10 @@ async function cargarMaterias() {
 
         const materias = await response.json();
 
-        let calidad_docente_prom = 0, autonomia_prom = 0;
+        let calidad_docente_prom = 0, autonomia_prom = 0, dificultad_examenes_prom = 0;
 
         materias.forEach(materia => {
+            dificultad_examenes_prom += materia.dificultad;
             calidad_docente_prom += materia.calificacion_profesor;
             autonomia_prom += materia.autonomia;
         });
@@ -108,11 +109,13 @@ async function cargarMaterias() {
         }
 
         factor1 = 5 - calidad_docente_prom/materias.length;
+        factor6 = dificultad_examenes_prom/materias.length;
         factor8 = 5 - autonomia_prom/materias.length;
 
         const payload = {
             factores: [
                 { factor_id: 1, peso: factor1 },
+                { factor_id: 6, peso: factor6 },
                 { factor_id: 8, peso: factor8 }
             ]
         };
@@ -128,7 +131,7 @@ async function cargarMaterias() {
             });
 
             const data = await response.json();
-            console.log(data)
+            console.log(data);
             
         } catch (error) {
             console.error('Error de conexión:', error);
