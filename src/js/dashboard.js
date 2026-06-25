@@ -2,6 +2,32 @@ document.getElementById('nombreHeader').textContent = "Hola " + sessionStorage.g
 
 // - - - FUNCIONES GENERALES - - - 
 
+async function cargar_recomendacion() {
+    try {
+        const response = await fetch('https://sgea.onrender.com/reportes/recomendacion', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data)
+
+        if (!data.sin_datos) {
+            document.getElementById('recomendacion').innerText = data.mensaje_general;
+        }
+
+    } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+    }
+}
+
 async function cargar_ne() {
     try {
         const response = await fetch(`https://sgea.onrender.com/perfil/nivel-estres`, {
@@ -20,6 +46,8 @@ async function cargar_ne() {
         if (ne) {
             ne.textContent = data.categoria;
         }
+
+        await cargar_recomendacion();
 
         document.querySelector('.loading').classList.add("hidden");
         document.querySelector('.info_dashboard').classList.remove("hidden");

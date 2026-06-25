@@ -44,6 +44,8 @@ async function cargarPerfil() {
         document.getElementById('semestre').value = data.semestre;
         document.getElementById('promedio').value = data.promedio_general;
 
+        await cargar_recomendacion();
+
         document.querySelectorAll(".loading").forEach((elemento) => {
             elemento.classList.add("hidden");
         });
@@ -51,6 +53,32 @@ async function cargarPerfil() {
         document.querySelectorAll(".info_perfil").forEach((elemento) => {
             elemento.classList.remove("hidden");
         });
+
+    } catch (error) {
+        console.error('Error al cargar el perfil:', error);
+    }
+}
+
+async function cargar_recomendacion() {
+    try {
+        const response = await fetch('https://sgea.onrender.com/reportes/recomendacion', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data)
+
+        if (!data.sin_datos) {
+            document.getElementById('recomendacion').innerText = data.mensaje_general;
+        }
 
     } catch (error) {
         console.error('Error al cargar el perfil:', error);
